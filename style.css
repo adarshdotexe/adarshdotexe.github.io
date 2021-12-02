@@ -1,0 +1,83 @@
+body {
+    background: #101010;
+    font-family: 'Inter', sans-serif;
+    color: #FFFFFF;
+    padding-top: 6em;
+  }
+  
+  .container  {
+    max-width: 760px;
+  }
+  
+  .intro  {
+  padding: 2em 0 1em 0;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 38px;
+  line-height: 46px;
+  }
+  
+  .profile, .contact {
+  padding-bottom: 1em;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 34px;
+  }
+  
+  a:link {
+    color: #007bff;
+      text-decoration: none;
+      font-weight: 400;
+  } 
+  a:visited {
+      color: #428bca;
+  }
+  a:hover,
+  a:focus {
+    color: #0056b3;
+      text-decoration: none;
+  }
+  a:active {
+  }
+  
+  a.insta
+  {
+  color: #bc2a8d;
+  }
+  
+  a.insta:hover, a.insta:focus
+  {
+  color: #850e5f;
+  }
+  
+  a.github
+  {
+  color: #f5f5f5;
+  }
+  
+  a.github:hover, a.github:focus
+  {
+  color: #4078c0;
+  }
+  
+  a.linkedin
+  {
+  color: #0976b4;
+  }
+  
+  a.linkedin:hover, a.linkedin:focus
+  {
+  color: #086498;
+  }
+  
+  a.contact
+  {
+  color: #50BCFC;
+  }
+  
+  a.contact:hover, a.contact:focus
+  {
+  color: #19A3F5;
+  }
+  
