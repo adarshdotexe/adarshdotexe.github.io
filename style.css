@@ -53,16 +53,17 @@ body {
   
   a.github
   {
-  color: #f5f5f5;
+  color: #333c3c;
   }
   
   a.github:hover, a.github:focus
   {
-  color: #4078c0;
+  color: #f5f5f5;
   }
   
   a.linkedin
   {
+  white-space: nowrap;
   color: #0976b4;
   }
   
