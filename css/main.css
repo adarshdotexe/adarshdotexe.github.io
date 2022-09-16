@@ -1394,15 +1394,15 @@ input[type="text"],
 /* --- Skills Values --- */
 
 .skills-second-style .skill-container.skill-1 .skill-percentage {
-    width: 80%;
+    width: 70%;
 }
 
 .skills-second-style .skill-container.skill-2 .skill-percentage {
-    width: 85%;
+    width: 75%;
 }
 
 .skills-second-style .skill-container.skill-3 .skill-percentage {
-    width: 75%;
+    width: 80%;
 }
 
 .skills-second-style .skill-container.skill-4 .skill-percentage {
