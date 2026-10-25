@@ -1,74 +1,79 @@
-# Design notes: studied nonchalance
+# Design notes: Luique's vision, worn lightly
 
 > *Sprezzatura*: "a certain nonchalance, so as to conceal all art and make whatever one
-> does or says appear to be without effort." (Castiglione, 1528)
+> does or says appear to be without effort." (Castiglione, *The Book of the Courtier*, 1528)
 
-The work is real (a 175x speed-up, a RAG engine people use, a Springer chapter). The page
-should present it the way an Apple product page presents a chip: one big number, one
-plain sentence, a lot of air, and no shouting. Effort shows up as precision, never as
-decoration.
+The brief: keep the vision of the old BreezyCV site and of Luique (a rich personal
+portfolio with a strong hero, a portrait, services, numbers, a résumé timeline,
+achievements, projects, testimonials, writing and contact). Execute it with studied
+nonchalance and Apple's habits: rich animation and vector detail that blends into
+nothingness, and nothing that looks generated.
 
-## Principles
+**The rule:** every rich thing is load-bearing, and every load-bearing thing is quiet.
 
-1. **One idea per screen.** Each section makes one claim, then gets out of the way.
-2. **Type is the visual.** No stock photos or placeholder mountains. Big, tight, confident
-   headings and tabular numerals. Images only when they are real (the portrait).
-3. **Understatement over adjectives.** "1m 45s → 600 ms" says more than "blazing fast".
-   Show the measurement and let the reader say "wow".
-4. **Motion confirms, it never performs.** Gentle reveals, one counting number, and a
-   frosted bar. No preloader, cursor trail, typing carousel or particle field.
-5. **A wink, not a joke.** Keep the personality ("praying that my code works", the coffee,
-   "Batman"), but whisper it in the footnotes.
-6. **Nothing to maintain.** Static HTML/CSS and about 60 lines of JS. No build step, no
-   framework, so GitHub Pages serves it as is.
-7. **Respect the reader.** Dark mode follows the system, `prefers-reduced-motion` is
-   honoured, it works without JS, and no phone number or home address is published.
+## Concept: annotated silicon
 
-## Templates compared
+Adarsh works on chip power. Each of Luique's decorations is replaced by something from
+that world, so the ornament carries meaning:
 
-Scores are 1–5. Restraint and type are weighted most, because they are what sprezzatura
-is made of. I screenshotted BreezyCV, Luique, Spotlight, vCard and DevPortfolio for this
-pass; the others are rated from their public demos.
-
-| Template | Restraint | Type | Motion taste | Fit for this content | Ownability* | Wow | Verdict |
-|---|---|---|---|---|---|---|---|
-| **BreezyCV** (current, LMPixels) | 2 | 2 | 2 | 4 | 3 | 2 | Every section is present, but it reads like a template: skill bars, preloader, carousel, filler items |
-| **Luique** (bslthemes, $24, your reference) | 1 | 4 | 3 | 3 | 3 | 5 | Huge name and stat chips are great. Outline text, dot grids, scribble script and the green disc are too much |
-| **Tailwind Plus Spotlight** (paid) | 5 | 4 | 3 | 4 | 3 | 3 | The most Apple-like restraint. Photo strip and quiet "Work" card. A little generic |
-| **Magic UI portfolio** (free, MIT) | 4 | 3 | 4 | 5 | 3 | 3 | Blur-fade reveals and a timeline that matches the CV almost 1:1. Same as a thousand others |
-| **Magic Portfolio** (Once UI, free) | 3 | 4 | 4 | 4 | 2 | 4 | Polished effects, but a heavy design system to inherit |
-| **Brittany Chiang v4** (free, MIT) | 4 | 4 | 3 | 4 | 2 | 3 | Numbered sections and tabbed experience. So copied that it now signals "template" |
-| **Aceternity / Magic UI Pro** (paid) | 2 | 3 | 3 | 3 | 2 | 5 | Beams and spotlights. Easy to make loud, the opposite of sprezzatura |
-| **Framer templates** (paid) | 4 | 5 | 5 | 3 | 1 | 5 | Best craft, but you rent it: Framer hosting, not your repo |
-| **Cruip DevSpace** ($49) | 4 | 4 | 2 | 3 | 4 | 2 | Calm and good for writing-first sites |
-| **vCard** (codewithsadee, free) | 3 | 3 | 2 | 4 | 4 | 3 | A cleaner BreezyCV. Same sidebar-card idea, same limits |
-| **DevPortfolio** (free) | 4 | 2 | 1 | 3 | 5 | 1 | Honest but flat |
-| **3D portfolio** (Three.js) | 1 | 2 | 2 | 2 | 2 | 5 | A spectacle. It hides the work instead of showing it |
-
-\* Ownability: how easily it lives as plain files in this repo on GitHub Pages without
-a framework treadmill.
-
-## What was taken from each
-
-| From | Kept | Left behind |
+| Luique | Here | Why |
 |---|---|---|
-| Luique | The name set huge as the hero; the stat chips (as a quiet spec row); the accent dot after the logo; a warm off-white "paper" background | Outline type, script fonts, dot matrices, the coloured disc, the floating side toolbar |
-| Apple product pages | One big number per idea ("600 ms"); frosted sticky bar; bento grid; tight negative tracking; generous spacing | Scroll-jacking, autoplay video |
-| Spotlight | Restraint, short paragraphs, the "Work" list's rhythm | Rotated photo strip (no photos worth it yet) |
-| Magic UI | Soft blur-fade reveal with stagger; one compact timeline for work and education | shadcn/Next.js stack |
-| Brittany Chiang | Small mono eyebrow labels on sections; muted dates on the left | Numbered headings, teal-on-navy palette |
-| Framer | Hover micro-interactions: cards lift 2 px, arrows nudge ↗ | Hosting lock-in |
-| BreezyCV (your old site) | All the content and the jokes | Skill bars, testimonials, preloader, text carousel, contact form, phone and address |
+| Teal disc behind the photo | A hairline **wafer**: die grid, a flat edge, a dotted orbit turning once every 120 s | He works on silicon. The orbit is a second hand you only notice if you stare |
+| Stat chips ("12+ years") | **Datasheet annotations**: leader lines and a dimension bar. 1 m 45 s → 600 ms visibly shrinks once | "Yes, I measured", his own line, made literal |
+| Caveat script subtitle | One copper italic aside, "(yes, I measured)", with an underline that draws itself once | Exactly one human scribble on the page |
+| Giant faded section words, dot grids | A **power rail**: one copper trace down the margin, with a 45° jog and a via at each section. It draws as you read and the via of your section lights | Continuity, a reading-progress bar, and PCB manners, at 1 px |
+| Services carousel | Four static offerings, each with a 32 px copper line glyph that redraws on hover | Nothing hidden behind arrows |
+| Skill percentage bars | **Tools, with receipts**: each tool and where it shipped. The one honest bar survives: "Praying that my code works: 100%" | A percentage of a skill is fiction |
+| Counters | A numbers band, final at first paint | No odometers |
+| Portfolio grid with stock tiles | Three case studies with **hairline diagrams** (internal work can't have screenshots), then a dense "Also" index | Real evidence over thumbnails |
+| Resume accordion | Kept (Luique's best section), using native `<details>`. The current role's via breathes on a 3 s loop | Long CV, calm page |
+| Testimonial carousel | Three static italic quotes, labelled honestly ("best friend, so possibly biased") | A quote is text |
+| Contact form | Kept: three underline fields, plus a big email address with a quiet Copy button and the live time in Hyderabad | Asks less, gets more |
+| Footer | A 22 px coffee cup whose steam drifts on a 6 s loop; hover for his line | The closing wink |
+
+Dropped on purpose: preloader, cursor blob, typing carousel, pricing, offset shadows,
+outlined type, burger menu on desktop, icon fonts, emoji, glassmorphism, gradients,
+bento cards, mono eyebrow labels, blanket blur-fade reveals.
 
 ## System
 
-- **Type:** the platform's own UI font (SF Pro on Apple, Segoe UI Variable on Windows),
-  with Inter as a fallback. Display at `clamp(3.4rem, 11vw, 9.5rem)`, weight 700, tracking
-  `-0.045em`. Body 1.0625rem / 1.6. Numbers use `tabular-nums`.
-- **Colour:** paper `#f7f6f2` / ink `#1d1d1f` / muted `#6e6e73` / hairline 8 % ink.
-  Dark: `#0a0a0b` / `#f5f5f7` / `#a1a1a6`. One accent, NVIDIA green `#76b900`, used for
-  the dot, focus rings and the counter. Nothing else.
-- **Space:** an 8 px scale; sections get 160 px of vertical room on desktop.
-- **Motion:** 700 ms `cubic-bezier(.2,.7,.2,1)`, 16 px rise plus 6 px blur to sharp,
-  60 ms stagger. The hero counter runs 105.0 s → 0.6 s once. All of it is off under
-  reduced motion.
+- **Type:** Newsreader (variable, optical sizes) for display, quotes and asides; Hanken
+  Grotesk for text and UI. Neither is a 2025 default. The headline is a sentence with his
+  name in it, not "Hi, I'm".
+- **Colour:** warm paper `#F3EFE6`, ink `#1B1A17`, two greys, hairlines at 13 % ink.
+  The accent is copper `#B4532A` (the colour of the traces he analyses), on under 3 % of
+  pixels. Solder-mask green `#3F7D5A` appears only for "live" and "beat the baseline".
+  Dark mode is warm charcoal and follows the system; the toggle remembers your choice and
+  cross-fades with a View Transition.
+- **Motion:** two easings. Only these move: the orbit (120 s), the dimension bar (once),
+  the scribble (once), the rail (scroll-linked), the "live" via (3 s), the packets in the
+  diagrams, glyph redraw (on hover), the coffee steam (6 s), and a 10 px arrival for blocks
+  below the fold. No more than two things move at once. All of it stops under
+  `prefers-reduced-motion`, and the page reads fully without JS.
+- **Invisible details:** tabular figures for numbers and dates, the real × and → signs,
+  `text-wrap: balance/pretty`, hanging punctuation, `color-mix` hover tones, focus rings in
+  copper, no layout shift, sticky header with a hairline only after you scroll.
+
+## Copy
+
+Rewritten from a fact base (résumé, old site, GitHub and the Springer page), following a
+writing playbook drawn from Zinsser, Pinker, Williams, Orwell, Ogilvy, Apple's product copy
+and portfolios such as Rauno Freiberg's, Paco Coursey's, Julia Evans's and Dan Luu's.
+
+- Facts brag; the voice shrugs. Numbers always come with units and baselines.
+- One joke per section, at the end, mostly his own lines ("chaos needs tests",
+  "Like a lot. A LOT. of coffee.", "occasionally Batman").
+- New material that was missing before: the 12 interns, the 4.8/5 teaching rating with
+  120 students, the FY2025 top-contributor nod, the paper's actual finding (it beats
+  DeepMind's baseline at economy and building and struggles in combat), the merged NVIDIA
+  NIM PR to Continue, the NIM patches to vim-ai and Cline, xv6, and automeet.
+- Corrections: the Edge AI card no longer links to an unmodified MiVOLO fork.
+  d3-hwschematic now credits Michal Orsák's original. The phone number, street address and
+  age are gone.
+
+## Templates studied
+
+BreezyCV (the old site) and Luique (the reference) were taken apart section by section.
+Tailwind Spotlight, Magic UI, Brittany Chiang v4, Framer templates, rauno.me, paco.me,
+emilkowal.ski, linear.app, Apple product pages, Stripe Sessions and Teenage Engineering
+were studied for technique; the notes are in the research folder kept outside this repo.

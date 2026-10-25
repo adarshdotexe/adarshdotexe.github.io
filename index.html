@@ -11,227 +11,424 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="ZZE3YBez3cDJ4H-9Rp-yiPapp_-jmg1HnLvKzu8h3yg" />
-  <title>Adarsh Varshney</title>
-  <meta name="description" content="Adarsh Varshney, software engineer at NVIDIA. I build the tools power engineers open every morning, and make them suspiciously fast." />
+  <title>Adarsh Varshney · adarsh.exe</title>
+  <meta name="description" content="Adarsh Varshney builds the tools NVIDIA's power engineers run every day: a power-analysis platform 175× faster than before, and PACE, a retrieval chat engine that won NTech 2025." />
   <meta name="author" content="Adarsh Varshney" />
   <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Adarsh Varshney" />
-  <meta property="og:description" content="Software engineer at NVIDIA. Rust, React, RAG, and a lot of coffee." />
-  <meta property="og:image" content="img/portrait.jpg" />
+  <meta property="og:description" content="Tools for NVIDIA's power engineers, in Rust, React and Python. 1 min 45 s → 600 ms (yes, he measured)." />
+  <meta property="og:image" content="img/portrait-disc.jpg" />
   <link rel="icon" href="favicon.ico" />
-  <link rel="preconnect" href="https://rsms.me/" />
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap" />
   <link rel="stylesheet" href="styles.css" />
-  <script>document.documentElement.classList.add('js')</script>
+  <script>
+    (() => { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; document.documentElement.classList.add('js'); })();
+  </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="bar">
-    <nav class="bar-inner" aria-label="Primary">
-      <a class="brand" href="#top" aria-label="Adarsh Varshney, home">Adarsh<span class="dot" aria-hidden="true"></span></a>
-      <ul class="links">
-        <li><a href="#work">Work</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#recognition">Recognition</a></li>
-        <li><a href="#writing">Writing</a></li>
-      </ul>
-      <a class="pill" href="#contact">Say hello</a>
-    </nav>
+    <div class="bar-in">
+      <a class="mark" href="#top" aria-label="adarsh.exe, back to top">adarsh<span>.exe</span></a>
+      <nav aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#resume">Résumé</a>
+        <a href="#writing">Writing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="theme" type="button" aria-label="Switch between light and dark">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.5" /><path d="M10 3.5 A6.5 6.5 0 0 1 10 16.5 Z" /></svg>
+      </button>
+    </div>
   </header>
 
+  <!-- The power rail: one copper trace down the margin, a via at each section. Drawn by main.js. -->
+  <svg class="rail" aria-hidden="true" focusable="false"></svg>
+
   <main id="main">
-    <!-- Hero -->
-    <section class="hero" id="top">
-      <p class="eyebrow reveal">Software engineer · NVIDIA · Hyderabad</p>
-      <h1 class="display reveal">Adarsh<br />Varshney<span class="dot" aria-hidden="true"></span></h1>
-      <p class="lede reveal">I build the tools NVIDIA's power engineers open every morning, and make them <em>suspiciously</em> fast.</p>
 
-      <dl class="specs reveal" aria-label="A few numbers">
-        <div class="spec">
-          <dt>Per analysis run</dt>
-          <dd><span class="was">1m 45s</span><span class="counter" data-from="105" data-to="0.6" aria-label="600 milliseconds">600 ms</span></dd>
+    <!-- ───────── Hero ───────── -->
+    <section class="hero" id="top" data-via>
+      <div class="hero-copy">
+        <h1 class="headline"><span class="who">Adarsh Varshney</span> builds the tools NVIDIA’s power engineers run every day.</h1>
+        <p class="sub">Rust and React underneath, retrieval and agents on top. Lately, mostly, making slow things fast.</p>
+        <div class="ctas">
+          <a class="btn" href="AdarshVarshneyResume.pdf" target="_blank" rel="noopener">Download CV <small>PDF</small></a>
+          <a class="link-arrow" href="#contact">Write to me</a>
         </div>
-        <div class="spec">
-          <dt>Engineers using my tools daily</dt>
-          <dd>40</dd>
-        </div>
-        <div class="spec">
-          <dt>Less modelling effort</dt>
-          <dd>60&times;</dd>
-        </div>
-        <div class="spec">
-          <dt>NTech, NVIDIA's paper competition</dt>
-          <dd>Won <small>2025</small></dd>
-        </div>
-      </dl>
-    </section>
+      </div>
 
-    <!-- About -->
-    <section class="about" id="about" aria-labelledby="about-h">
-      <figure class="portrait reveal">
-        <img src="img/portrait.jpg" width="640" height="640" alt="Adarsh standing in a garden under a flowering tree" loading="lazy" decoding="async" />
+      <figure class="wafer-fig" aria-label="Portrait of Adarsh, with two measurements">
+        <svg class="wafer" viewBox="0 0 520 520" aria-hidden="true">
+          <defs>
+            <clipPath id="wafer-clip"><path d="M260 30 A230 230 0 1 1 259.9 30 Z" /></clipPath>
+            <pattern id="dies" width="26" height="26" patternUnits="userSpaceOnUse" x="13" y="13">
+              <rect x="2" y="2" width="22" height="22" rx="1" />
+            </pattern>
+          </defs>
+          <circle class="orbit" cx="260" cy="260" r="252" />
+          <g clip-path="url(#wafer-clip)"><rect class="die-grid" width="520" height="520" fill="url(#dies)" /></g>
+          <path class="wafer-edge" d="M 391.7 448.6 A 230 230 0 1 1 448.6 391.7 L 391.7 448.6 Z" />
+        </svg>
+        <img class="portrait" src="img/portrait-disc.jpg" width="680" height="680" alt="Adarsh, smiling, in a green shirt under a flowering tree" />
+
+        <!-- Datasheet annotations instead of stat chips -->
+        <div class="note n1">
+          <svg class="leader" viewBox="0 0 120 40" aria-hidden="true"><path d="M0 34 L32 4 H120" /></svg>
+          <p class="dim-label"><span class="was">1 m 45 s</span><span class="arrow-sep" aria-hidden="true"> → </span><span class="now">600 ms</span></p>
+          <svg class="dimline" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M1 1 V11 M1 6 H199 M199 1 V11" /></svg>
+          <p class="cap">per analysis run, after the rewrite <span class="scribble">(yes, I measured)<svg viewBox="0 0 140 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 22 4, 40 10, 62 6 S 104 3, 138 7" /></svg></span></p>
+        </div>
+        <div class="note n2">
+          <svg class="leader" viewBox="0 0 120 40" aria-hidden="true"><path d="M0 6 L32 36 H120" /></svg>
+          <p class="num">40</p>
+          <p class="cap">engineers open it every day</p>
+        </div>
       </figure>
-      <div class="about-copy">
-        <p class="label reveal">About</p>
-        <h2 id="about-h" class="h2 reveal">The childhood obsession with tech never wore off. Now it pays rent.</h2>
-        <p class="reveal">I'm on NVIDIA's Power Architecture Analysis team, where I turn slow, manual workflows into tools people actually want to open. Rust on the back, React on the front, Python for everything else. I develop AI-first: Claude Code and friends are permanent residents of my terminal.</p>
-        <p class="reveal">After hours I squeeze vision models onto Intel NUCs for retail analytics. Before all this: computer science at NIT Andhra Pradesh, class of 2024, and an unhealthy number of clubs.</p>
-        <p class="aside reveal">Also, occasionally, Batman.</p>
+    </section>
+
+    <!-- ───────── About ───────── -->
+    <section class="section about" id="about" data-via>
+      <div class="sec-head">
+        <h2>About</h2>
+      </div>
+      <div class="about-grid">
+        <div class="prose">
+          <p class="lead">I’m an engineer on NVIDIA’s Power Architecture Analysis team. The team analyses the power architecture of our chips, and I write the software it does that with.</p>
+          <p>Most of my days go into internal tools: a Rust back end, a React front end, and Python for everything else. When I rebuilt the team’s power-analysis platform, a run went from 1 min 45 s to 600 ms and building a model took a sixtieth of the effort. I also built PACE, a chat engine over the team’s scattered documentation that interns now learn the job with. I work AI-first; Claude Code has been a permanent resident of my terminal for a while.</p>
+          <p>Before NVIDIA I studied computer science at NIT Andhra Pradesh, taught data structures to 120 juniors, joined an unhealthy number of clubs, and wrote a Springer chapter about teaching an AI to play StarCraft II. After hours I put vision models on small computers for retail analytics.</p>
+          <p class="aside">Off the clock: competitive programmer, gamer, binge-watcher, collector of small trinkets from new places, and occasionally Batman.</p>
+        </div>
+        <dl class="facts">
+          <div><dt>Based in</dt><dd>Hyderabad, India <span class="clock" data-tz="Asia/Kolkata" aria-live="off"></span></dd></div>
+          <div><dt>Works at</dt><dd>NVIDIA, Power Architecture Analysis</dd></div>
+          <div><dt>Studied at</dt><dd>NIT Andhra Pradesh, B.Tech CSE, 2024</dd></div>
+          <div><dt>Speaks</dt><dd>Hindi, English, and enough Telugu to follow along</dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:adarshvarshney1104@gmail.com">adarshvarshney1104@gmail.com</a></dd></div>
+        </dl>
       </div>
     </section>
 
-    <!-- Work -->
-    <section class="section" id="work" aria-labelledby="work-h">
-      <header class="section-head">
-        <p class="label reveal">Work</p>
-        <h2 id="work-h" class="h2 reveal">Where the hours go.</h2>
-      </header>
-      <ol class="timeline">
-        <li class="row reveal">
-          <p class="when">2024 —</p>
-          <div>
-            <h3>ASIC Engineer <span class="at">NVIDIA, Power Architecture Analysis</span></h3>
-            <p>I build the tools our power engineers run all day. I rebuilt the analysis platform with a Rust backend and React frontend: runs went from 1m 45s to 600 ms and modelling effort dropped 60&times;. I built PACE, the RAG chat engine our interns ramp up on, won NTech 2025, and picked up a top-contributor nod along the way.</p>
-            <ul class="tags"><li>Rust</li><li>React</li><li>Python</li><li>RAG</li></ul>
-          </div>
+    <!-- ───────── What I do ───────── -->
+    <section class="section" id="what" data-via>
+      <div class="sec-head">
+        <h2>What I do</h2>
+      </div>
+      <ul class="services">
+        <li>
+          <svg class="glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 27 H29" /><path d="M3 23 H7 L9 9 L12 20 L15 13 L18 17 L21 6 L24 19 L26 14 L29 23" /></svg>
+          <h3>Internal tools that are fast</h3>
+          <p>Web platforms engineers live in all day. Rust where speed matters, React where people do. The power-analysis platform is the proof: 175× faster runs, 40 daily users.</p>
         </li>
-        <li class="row reveal">
-          <p class="when">2024 —</p>
-          <div>
-            <h3>Edge AI Developer <span class="at">Freelance</span></h3>
-            <p>Age and gender classification on Intel NUCs for retail visitor analytics. Public datasets in, ONNX and OpenVINO out.</p>
-            <ul class="tags"><li>ONNX</li><li>OpenVINO</li><li>Computer vision</li></ul>
-          </div>
+        <li>
+          <svg class="glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="7" cy="16" r="3" /><path d="M10 16 L20 7.5 M10 16 H20 M10 16 L20 24.5" /><rect x="20" y="5" width="9" height="5" /><rect x="20" y="13.5" width="9" height="5" /><rect x="20" y="22" width="9" height="5" /></svg>
+          <h3>Retrieval and agents</h3>
+          <p>Systems that answer questions from a team’s own knowledge, and agents that act on it. PACE won NTech 2025; I also added NVIDIA NIM embeddings to Continue, the open-source coding assistant.</p>
         </li>
-        <li class="row reveal">
-          <p class="when">2022</p>
-          <div>
-            <h3>The intern era <span class="at">MRM Procom · Testright Nanosystems</span></h3>
-            <p>An Android app to control smart devices, with 100% Espresso coverage because chaos needs tests. A custom camera module that cut R&amp;D time by 3–4 weeks and lifted diamond-classification accuracy by 23%.</p>
-          </div>
+        <li>
+          <svg class="glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 10 V4 H10 M22 4 H28 V10 M28 22 V28 H22 M10 28 H4 V22" /><circle cx="16" cy="13.5" r="4" /><path d="M9 26.5 C9 20.5 23 20.5 23 26.5" /></svg>
+          <h3>Vision at the edge</h3>
+          <p>Models that run where the cloud doesn’t: age and gender estimation on Intel NUCs, optimised with ONNX and OpenVINO, for retail visitor analytics.</p>
         </li>
-        <li class="row reveal">
-          <p class="when">2020 – 24</p>
-          <div>
-            <h3>B.Tech, Computer Science <span class="at">NIT Andhra Pradesh</span></h3>
-            <p>Minor in AI for signal processing. The final-year project, knowledge-infused reinforcement learning for StarCraft II, became a Springer chapter. CGPA 8.66.</p>
-          </div>
+        <li>
+          <svg class="glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8 L16 3 L28 8 L16 13 Z" /><path d="M8 10 V17 C8 20 24 20 24 17 V10" /><path d="M28 8 V16" /></svg>
+          <h3>Teaching and mentoring</h3>
+          <p>Lab sessions in data structures and competitive programming for 120 students, with lectures rated 4.8 out of 5. These days it’s interns and teammates.</p>
         </li>
-        <li class="row reveal">
-          <p class="when">2018 – 20</p>
-          <div>
-            <h3>Junior college <span class="at">FIITJEE, Hyderabad</span></h3>
-            <p>Two years without much social life, which explains the 98.88 percentile in JEE.</p>
-          </div>
-        </li>
+      </ul>
+    </section>
+
+    <!-- ───────── Numbers ───────── -->
+    <section class="numbers" aria-label="In numbers" data-via>
+      <ul>
+        <li><p class="n">60<span>×</span></p><p class="c">less effort to build a power model</p></li>
+        <li><p class="n">9.5<span>/10</span></p><p class="c">from the 12 interns who ramped up with PACE</p></li>
+        <li><p class="n">4.8<span>/5</span></p><p class="c">for lectures, from 120 students</p></li>
+        <li><p class="n">87</p><p class="c">ET Campus Stars, from 35,000+ applicants</p></li>
+        <li><p class="n">31<span>st</span></p><p class="c">in India at IEEEXtreme 16.0, of 14,683</p></li>
+      </ul>
+    </section>
+
+    <!-- ───────── Work ───────── -->
+    <section class="section" id="work" data-via>
+      <div class="sec-head">
+        <h2>Selected work</h2>
+      </div>
+
+      <article class="case">
+        <div class="case-copy">
+          <p class="case-k">NVIDIA · internal</p>
+          <h3>A power-analysis platform, 175× faster</h3>
+          <p>The team’s power engineers run analyses on this platform all day, and each run took 1 min 45 s. I rebuilt it with a Rust back end and a React front end.</p>
+          <p>A run now takes 600 ms. Building a model takes a sixtieth of the effort it did, and 40 engineers use it daily.</p>
+          <p class="quiet">A run used to be long enough to fetch a coffee. It no longer is, which has been hard on me.</p>
+          <p class="case-meta">Rust · React · TypeScript <span>Details are internal; the numbers are real.</span></p>
+        </div>
+        <figure class="diagram" aria-label="Diagram: engineers use a React interface backed by a Rust engine">
+          <svg viewBox="0 0 420 260">
+            <g class="d-boxes">
+              <rect x="20" y="105" width="86" height="50" /><rect x="167" y="105" width="86" height="50" /><rect x="314" y="105" width="86" height="50" />
+            </g>
+            <g class="d-text">
+              <text x="63" y="128">40</text><text x="63" y="143" class="s">engineers</text>
+              <text x="210" y="128">React</text><text x="210" y="143" class="s">interface</text>
+              <text x="357" y="128">Rust</text><text x="357" y="143" class="s">engine</text>
+            </g>
+            <path class="d-wire" d="M106 122 H167 M253 122 H314" />
+            <path class="d-wire back" d="M314 138 H253 M167 138 H106" />
+            <circle class="pkt" r="2.5"><animateMotion dur="2.4s" repeatCount="indefinite" path="M106 122 H167 M253 122 H314" /></circle>
+            <g class="d-dim">
+              <path d="M167 200 V212 M167 206 H400 M400 200 V212" class="before" />
+              <path d="M167 226 V238 M167 232 H169 M169 226 V238" class="after" />
+              <text x="400" y="194" class="s end">1 m 45 s</text>
+              <text x="178" y="236" class="s l">600 ms</text>
+            </g>
+          </svg>
+          <figcaption>A sketch, not the architecture. Bars drawn to scale.</figcaption>
+        </figure>
+      </article>
+
+      <article class="case flip">
+        <div class="case-copy">
+          <p class="case-k">NVIDIA · internal · Winner, NTech 2025</p>
+          <h3>PACE: the team’s memory, searchable</h3>
+          <p>What the team knew lived in code and Confluence pages, scattered and sometimes out of date. PACE (Power Architecture Chat Engine) is a retrieval-augmented chat engine over both, built on OpenWebUI, ChromaDB, LiteLLM and FastAPI.</p>
+          <p>Twelve interns ramped up with it and rated it 9.5 out of 10. Its wrong answers turned out to be useful too: they pointed at stale documents, so we refreshed them. I designed it as a base for agentic workflows, and it won NTech 2025, NVIDIA’s internal paper presentation competition.</p>
+          <p class="case-meta">Python · FastAPI · ChromaDB · LiteLLM · OpenWebUI</p>
+        </div>
+        <figure class="diagram" aria-label="Diagram: code and Confluence are embedded into ChromaDB, retrieved through LiteLLM and answered in OpenWebUI; stale answers flag documents for refresh">
+          <svg viewBox="0 0 420 260">
+            <g class="d-boxes">
+              <rect x="20" y="60" width="92" height="40" /><rect x="20" y="160" width="92" height="40" />
+              <rect x="164" y="110" width="92" height="40" />
+              <rect x="308" y="60" width="92" height="40" /><rect x="308" y="160" width="92" height="40" />
+            </g>
+            <g class="d-text">
+              <text x="66" y="85">code</text><text x="66" y="185">Confluence</text>
+              <text x="210" y="135">ChromaDB</text>
+              <text x="354" y="85">LiteLLM</text><text x="354" y="185">OpenWebUI</text>
+            </g>
+            <path class="d-wire" d="M112 80 C140 80 140 130 164 130 M112 180 C140 180 140 130 164 130 M256 130 C284 130 284 80 308 80 M354 100 V160" />
+            <path class="d-wire dashed" d="M308 214 C240 250 140 250 82 202" />
+            <text x="210" y="252" class="s mid">stale answers flag stale pages</text>
+            <circle class="pkt" r="2.5"><animateMotion dur="3.2s" repeatCount="indefinite" path="M112 80 C140 80 140 130 164 130 L256 130 C284 130 284 80 308 80" /></circle>
+          </svg>
+          <figcaption>Retrieval in five boxes, roughly.</figcaption>
+        </figure>
+      </article>
+
+      <article class="case">
+        <div class="case-copy">
+          <p class="case-k">Springer · 2026 · final-year project</p>
+          <h3>Teaching StarCraft II to think in tactics</h3>
+          <p>Most reinforcement-learning agents learn StarCraft II one click at a time. Ours chose between higher-level tactics instead: a tactic manager, built on a knowledge-infused policy gradient with upper-confidence-bound exploration, picked a tactic from the game state and the rewards it had seen.</p>
+          <p>We tested it against DeepMind’s baseline agent, a Grandmaster and a novice across five mini-games. It beat the baseline at gathering resources and building units, and struggled in fights, where adapting fast matters more than having a plan.</p>
+          <p class="cite">Varshney, A., Seshadri, K., Andraju, V. K. “Assessment of the Knowledge-Infused Policy Gradient Approach for StarCraft.” <i>ICT for Intelligent Systems</i> (ICTIS 2025), Springer, 2026, pp. 113–123. <a href="https://doi.org/10.1007/978-981-95-1357-4_9">doi:10.1007/978-981-95-1357-4_9</a></p>
+        </div>
+        <figure class="diagram" aria-label="Diagram: game state feeds a tactic manager that selects economy, build or attack tactics, each expanding into atomic actions">
+          <svg viewBox="0 0 420 260">
+            <g class="d-boxes">
+              <rect x="20" y="110" width="88" height="40" />
+              <rect x="150" y="110" width="104" height="40" />
+            </g>
+            <g class="d-text">
+              <text x="64" y="135">game state</text>
+              <text x="202" y="128">tactic</text><text x="202" y="142" class="s">manager · KIPG-UCB</text>
+              <text x="330" y="64" class="l">economy</text><text x="330" y="134" class="l">build</text><text x="330" y="204" class="l">attack</text>
+            </g>
+            <path class="d-wire" d="M108 130 H150 M254 130 C284 130 290 60 322 60 M254 130 H322 M254 130 C284 130 290 200 322 200" />
+            <g class="d-ticks"><path d="M380 56 h6 m4 0 h6 m4 0 h6 M380 126 h6 m4 0 h6 m4 0 h6 M380 196 h6 m4 0 h6" /></g>
+            <text x="330" y="84" class="s ok">beat the baseline</text>
+            <text x="330" y="154" class="s ok">beat the baseline</text>
+            <text x="330" y="224" class="s">needs work</text>
+          </svg>
+          <figcaption>Tactics fan out into the atomic actions most agents start from.</figcaption>
+        </figure>
+      </article>
+
+      <h3 class="also-h">Also</h3>
+      <ol class="also">
+        <li><a href="https://github.com/continuedev/continue/pull/2233"><span class="t">Continue</span><span class="d">Added NVIDIA NIM as an embeddings provider to the open-source coding assistant (36k stars). Merged.</span><span class="y">2024</span></a></li>
+        <li><a href="https://github.com/adarshdotexe/vim-ai"><span class="t">NIM in my editors</span><span class="d">Patches so vim-ai and Cline talk to NVIDIA NIM endpoints.</span><span class="y">2024–25</span></a></li>
+        <li><div><span class="t">Edge visitor analytics</span><span class="d">Age and gender estimation on Intel NUCs with ONNX and OpenVINO, for retail visitor analytics. Not open source.</span><span class="y">2024–</span></div></li>
+        <li><a href="https://github.com/adarshdotexe/dotfiles"><span class="t">dotfiles</span><span class="d">One command from a bare machine to my shell, on Rocky 8, Ubuntu, macOS or WSL. Works without sudo.</span><span class="y">2026</span></a></li>
+        <li><a href="https://github.com/adarshdotexe/d3-hwschematic"><span class="t">d3-hwschematic</span><span class="d">Reworked link and node rendering in Michal Orsák’s D3 and ELK hardware-schematic viewer.</span><span class="y">2024</span></a></li>
+        <li><a href="https://github.com/adarshdotexe/Mest-Friend"><span class="t">Mest-Friend</span><span class="d">The college mess, on Android: planned absences, QR meal coupons, menu votes, complaints with photos. Firebase.</span><span class="y">2022</span></a></li>
+        <li><a href="https://github.com/adarshdotexe/XV6-Modified"><span class="t">xv6, with ps</span><span class="d">A process-listing system call for MIT’s teaching OS, on RISC-V.</span><span class="y">2022</span></a></li>
+        <li><a href="https://github.com/adarshdotexe/python-scripts"><span class="t">automeet</span><span class="d">A bot that joined my online classes on schedule, so I didn’t have to. Plus a Discord bot that turns Markdown into LaTeX PDFs.</span><span class="y">2022</span></a></li>
+        <li><a href="https://github.com/adarshdotexe/Java-8-Games"><span class="t">Java 8 games</span><span class="d">Snake, 2048 and Tetris, in plain Java.</span><span class="y">2022</span></a></li>
       </ol>
-      <p class="more reveal"><a class="arrow" href="AdarshVarshneyResume.pdf" target="_blank" rel="noopener">Full résumé (PDF)</a></p>
     </section>
 
-    <!-- Projects -->
-    <section class="section" id="projects" aria-labelledby="projects-h">
-      <header class="section-head">
-        <p class="label reveal">Projects</p>
-        <h2 id="projects-h" class="h2 reveal">Selected work.</h2>
-      </header>
-
-      <div class="bento">
-        <article class="card card-xl reveal">
-          <p class="kicker">Power analysis platform · NVIDIA</p>
-          <p class="big"><span class="muted-strike">1m 45s</span> 600 ms</p>
-          <p class="card-copy">A rewrite in Rust and React of the platform power engineers live in. Same answers, 175&times; sooner.</p>
-        </article>
-
-        <article class="card card-tall reveal">
-          <p class="kicker">PACE · NVIDIA</p>
-          <h3>Power Architecture Chat Engine</h3>
-          <p class="card-copy">RAG over a team's scattered tribal knowledge. Winner of NTech 2025.</p>
-          <div class="chat" aria-hidden="true">
-            <p class="q">Where's the leakage model for the new node?</p>
-            <p class="a">In the 2024 methodology deck, section 3. Here's the summary…</p>
-          </div>
-          <p class="foot">Interns rate it 9.5/10. Interns are honest.</p>
-        </article>
-
-        <a class="card reveal" href="https://link.springer.com/chapter/10.1007/978-981-95-1357-4_9" target="_blank" rel="noopener">
-          <p class="kicker">Springer · 2026</p>
-          <h3>Knowledge-infused policy gradients for StarCraft II</h3>
-          <p class="card-copy">Teaching an RL agent what a human already knows.</p>
-          <span class="go" aria-hidden="true">↗</span>
-        </a>
-
-        <a class="card reveal" href="https://github.com/adarshdotexe/MiVOLO" target="_blank" rel="noopener">
-          <p class="kicker">Edge AI · Freelance</p>
-          <h3>Visitor analytics on a NUC</h3>
-          <p class="card-copy">Vision models, ONNX and OpenVINO, in a box the size of a sandwich.</p>
-          <span class="go" aria-hidden="true">↗</span>
-        </a>
-
-        <a class="card reveal" href="https://github.com/adarshdotexe/d3-hwschematic" target="_blank" rel="noopener">
-          <p class="kicker">Open source</p>
-          <h3>d3-hwschematic</h3>
-          <p class="card-copy">Hardware schematics, drawn in the browser.</p>
-          <span class="go" aria-hidden="true">↗</span>
-        </a>
-
-        <a class="card card-wide reveal" href="https://github.com/adarshdotexe/dotfiles" target="_blank" rel="noopener">
-          <p class="kicker">Open source</p>
-          <h3>dotfiles</h3>
-          <p class="card-copy">A portable dev environment. Clone, run, feel at home.</p>
-          <span class="go" aria-hidden="true">↗</span>
-        </a>
+    <!-- ───────── Résumé ───────── -->
+    <section class="section" id="resume" data-via>
+      <div class="sec-head">
+        <h2>Résumé</h2>
+        <a class="link-arrow small" href="AdarshVarshneyResume.pdf" target="_blank" rel="noopener">The PDF</a>
       </div>
+      <div class="cv">
+        <div class="cv-col">
+          <h3 class="cv-h">Experience</h3>
+          <ol class="timeline">
+            <li class="current">
+              <details open>
+                <summary><span class="yr">2024 – now</span><span class="role">ASIC Engineer</span><span class="org">NVIDIA, Power Architecture Analysis</span></summary>
+                <ul>
+                  <li>Rebuilt the team’s power-analysis platform in Rust and React: 1 min 45 s → 600 ms per run (175×), 60× less modelling effort, 40 daily users.</li>
+                  <li>Built PACE, a retrieval chat engine over code and Confluence. 12 interns ramped up with it (9.5/10), and it surfaced stale documentation.</li>
+                  <li>Won NTech 2025, NVIDIA’s internal paper presentation competition, with PACE.</li>
+                  <li>Named a top contributor on the team in the FY2025 performance cycle.</li>
+                </ul>
+              </details>
+            </li>
+            <li class="current">
+              <details>
+                <summary><span class="yr">2024 – now</span><span class="role">Edge AI Developer</span><span class="org">Freelance</span></summary>
+                <ul><li>Trained an age and gender classifier on public datasets and deployed it on Intel NUCs with ONNX and OpenVINO, for retail visitor analytics and targeted advertising.</li></ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary><span class="yr">2022</span><span class="role">Android Developer</span><span class="org">MRM Procom</span></summary>
+                <ul><li>Designed and built Procom Smart Devices, an Android app to connect, monitor and configure the company’s devices, with data logging and export.</li><li>100% Espresso test coverage against the spec, because chaos needs tests. Awarded a Certificate of Recommendation.</li></ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary><span class="yr">2022</span><span class="role">Software Developer Intern</span><span class="org">Testright Nanosystems</span></summary>
+                <ul><li>A custom Camera2 camera module that cut 3–4 weeks of R&amp;D.</li><li>A parameterised pixel-by-pixel comparison in OpenCV that raised diamond-classification accuracy by 23%.</li></ul>
+              </details>
+            </li>
+          </ol>
+        </div>
+        <div class="cv-col">
+          <h3 class="cv-h">Education</h3>
+          <ol class="timeline">
+            <li>
+              <details open>
+                <summary><span class="yr">2020 – 24</span><span class="role">B.Tech, Computer Science</span><span class="org">NIT Andhra Pradesh</span></summary>
+                <ul><li>Minor in AI for signal processing. In-major CGPA 8.66 / 10.</li><li>Final-year project on reinforcement learning for StarCraft II, published by Springer.</li></ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary><span class="yr">2021 – 24</span><span class="role">Teaching Assistant</span><span class="org">NIT Andhra Pradesh</span></summary>
+                <ul><li>Ran data-structures and competitive-programming labs for 120 students; lectures rated 4.8 / 5.</li><li>Started CS007, an after-class programming course for juniors, three evenings a week.</li></ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary><span class="yr">2018 – 20</span><span class="role">Junior college</span><span class="org">FIITJEE, Hyderabad</span></summary>
+                <ul><li>Two years without much in the way of a social life, and a 98.88 percentile in JEE to show for it.</li></ul>
+              </details>
+            </li>
+          </ol>
 
-      <p class="earlier reveal">Earlier: <a href="https://github.com/adarshdotexe/Mest-Friend" target="_blank" rel="noopener">Mest-Friend</a>, an Android mess manager, and <a href="https://github.com/adarshdotexe/Java-8-Games" target="_blank" rel="noopener">games in Java 8</a>. More on <a href="https://github.com/adarshdotexe" target="_blank" rel="noopener">GitHub</a>.</p>
+          <h3 class="cv-h tools-h">Tools, with receipts</h3>
+          <table class="ledger">
+            <tbody>
+              <tr><th scope="row">Rust</th><td>the platform’s engine</td></tr>
+              <tr><th scope="row">TypeScript, React</th><td>the platform’s interface; a Continue PR</td></tr>
+              <tr><th scope="row">Python, FastAPI</th><td>PACE; research code; small bots</td></tr>
+              <tr><th scope="row">LiteLLM, ChromaDB</th><td>PACE’s retrieval and model routing</td></tr>
+              <tr><th scope="row">ONNX, OpenVINO</th><td>vision models on Intel NUCs</td></tr>
+              <tr><th scope="row">Java, Android</th><td>Procom Smart Devices; Mest-Friend</td></tr>
+              <tr><th scope="row">OpenCV</th><td>diamond classification at Testright</td></tr>
+              <tr><th scope="row">C, C++</th><td>xv6; teaching DSA</td></tr>
+              <tr><th scope="row">Claude Code, Codex, Cursor</th><td>every day</td></tr>
+              <tr class="joke"><th scope="row">Praying that my code works</th><td>100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
-    <!-- Recognition -->
-    <section class="section" id="recognition" aria-labelledby="rec-h">
-      <header class="section-head">
-        <p class="label reveal">Recognition</p>
-        <h2 id="rec-h" class="h2 reveal">A few nice moments.</h2>
-      </header>
-      <ul class="awards">
-        <li class="award reveal"><span class="year">2026</span><span class="what">Springer chapter published</span><span class="detail">ICT for Intelligent Systems</span></li>
-        <li class="award reveal"><span class="year">2025</span><span class="what">Winner, NTech</span><span class="detail">NVIDIA's internal paper competition, for PACE</span></li>
-        <li class="award reveal"><span class="year">2023</span><span class="what">Economic Times Campus Star</span><span class="detail">87 picked from 35,000 across 2,000+ colleges</span></li>
-        <li class="award reveal"><span class="year">2022</span><span class="what">IEEEXtreme 16.0, country rank 31</span><span class="detail">24 hours of code, 14,683 participants</span></li>
-      </ul>
+    <!-- ───────── Recognition ───────── -->
+    <section class="section" id="recognition" data-via>
+      <div class="sec-head">
+        <h2>Recognition</h2>
+      </div>
+      <ol class="plaques">
+        <li><span class="py">2026</span><div><p class="pt">Springer chapter</p><p class="pd">First author, on knowledge-infused policy gradients for StarCraft II, in the ICTIS 2025 proceedings.</p></div></li>
+        <li><span class="py">2025</span><div><p class="pt">Winner, NTech 2025</p><p class="pd">NVIDIA’s internal paper presentation competition, for PACE.</p></div></li>
+        <li><span class="py">2025</span><div><p class="pt">Top contributor</p><p class="pd">On the team, in NVIDIA’s FY2025 performance cycle.</p></div></li>
+        <li><span class="py">2023</span><div><p class="pt">ET Campus Star</p><p class="pd">One of 87 chosen from 35,000+ applicants at 2,000+ engineering colleges, Class of 2022–23.</p></div></li>
+        <li><span class="py">2022</span><div><p class="pt">IEEEXtreme 16.0</p><p class="pd">31st in India, in a 24-hour programming contest with 14,683 participants.</p></div></li>
+      </ol>
     </section>
 
-    <!-- Writing -->
-    <section class="section" id="writing" aria-labelledby="writing-h">
-      <header class="section-head">
-        <p class="label reveal">Writing</p>
-        <h2 id="writing-h" class="h2 reveal">Occasionally. Very occasionally.</h2>
-      </header>
-      <ul class="posts">
-        <li class="reveal"><a class="post" href="writing/fundamentals.html"><time datetime="2022-09-16">Sep 2022</time><span>Fundamentals, programming fundamentals</span><span class="go" aria-hidden="true">→</span></a></li>
-        <li class="reveal"><a class="post" href="writing/hello-world.html"><time datetime="2022-04-11">Apr 2022</time><span>Wishing myself a very happy birthday</span><span class="go" aria-hidden="true">→</span></a></li>
-      </ul>
+    <!-- ───────── Testimonials ───────── -->
+    <section class="section" id="said" data-via>
+      <div class="sec-head">
+        <h2>What people said</h2>
+      </div>
+      <div class="quotes">
+        <figure>
+          <blockquote>It’s always been a good experience working with Adarsh. He has been good with deadlines, and the quality of his work is amazing.</blockquote>
+          <figcaption>Lamim Zakir Pronay <span>classmate, NIT Andhra Pradesh</span></figcaption>
+        </figure>
+        <figure>
+          <blockquote>Adarsh has the ability to efficiently tackle any problems thrown at him. He is a great team player and is always willing to help others.</blockquote>
+          <figcaption>Eswar Sai <span>class representative, NIT Andhra Pradesh</span></figcaption>
+        </figure>
+        <figure>
+          <blockquote>The only person I would trust with tech advice.</blockquote>
+          <figcaption>Nelli James <span>best friend, so possibly biased</span></figcaption>
+        </figure>
+      </div>
     </section>
 
-    <!-- Contact -->
-    <section class="contact" id="contact" aria-labelledby="contact-h">
-      <p class="label reveal">Contact</p>
-      <h2 id="contact-h" class="display contact-h reveal">Say hello.</h2>
-      <p class="reveal"><a class="mail" href="mailto:adarshvarshney1104@gmail.com">adarshvarshney1104@gmail.com</a></p>
-      <ul class="social reveal">
-        <li><a class="arrow" href="https://www.linkedin.com/in/adarshvarshney/" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a class="arrow" href="https://github.com/adarshdotexe" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a class="arrow" href="https://www.instagram.com/adarshdotexe/" target="_blank" rel="noopener">Instagram</a></li>
-        <li><a class="arrow" href="AdarshVarshneyResume.pdf" target="_blank" rel="noopener">Résumé</a></li>
-      </ul>
+    <!-- ───────── Writing ───────── -->
+    <section class="section" id="writing" data-via>
+      <div class="sec-head">
+        <h2>Writing</h2>
+        <p class="sec-note">Occasionally. Very occasionally.</p>
+      </div>
+      <ol class="posts">
+        <li><a href="writing/fundamentals.html"><time datetime="2022-09-16">16 Sep 2022</time><span class="t">Fundamentals, programming fundamentals</span><span class="d">An invitation to CS007, the course I ran for juniors.</span></a></li>
+        <li><a href="writing/hello-world.html"><time datetime="2022-04-11">11 Apr 2022</time><span class="t">Wishing myself a very happy birthday</span><span class="d">Why this website exists. Short version: to flex on classmates.</span></a></li>
+      </ol>
+    </section>
+
+    <!-- ───────── Contact ───────── -->
+    <section class="section contact" id="contact" data-via>
+      <div class="sec-head">
+        <h2>Contact</h2>
+      </div>
+      <div class="contact-grid">
+        <div>
+          <p class="contact-h">Write to me.</p>
+          <p class="email-row">
+            <a class="email" href="mailto:adarshvarshney1104@gmail.com">adarshvarshney1104@gmail.com</a>
+            <button class="copy" type="button" data-copy="adarshvarshney1104@gmail.com"><span>Copy</span></button>
+          </p>
+          <p class="contact-note">Hyderabad, India. It’s <span class="clock" data-tz="Asia/Kolkata"></span> here. I read everything, and I take on the occasional edge-AI project.</p>
+          <p class="elsewhere"><a href="https://www.linkedin.com/in/adarshvarshney/">LinkedIn</a><a href="https://github.com/adarshdotexe">GitHub</a><a href="https://www.instagram.com/adarshdotexe/">Instagram</a></p>
+        </div>
+        <form class="form" action="https://formspree.io/f/xvolbzrz" method="post">
+          <label><span>Name</span><input name="name" autocomplete="name" required /></label>
+          <label><span>Email</span><input type="email" name="_replyto" autocomplete="email" required /></label>
+          <label><span>Message</span><textarea name="message" rows="4" required></textarea></label>
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <p>© <span id="y">2026</span> Adarsh Varshney</p>
-    <p>Made in Hyderabad with studied nonchalance and a lot. A <em>lot</em>. of coffee.</p>
+  <footer class="foot">
+    <p>© <span id="y">2026</span> Adarsh Varshney. Built by hand, no framework.</p>
+    <p class="coffee">
+      <svg class="cup" viewBox="0 0 24 24" role="img" aria-label="A cup of coffee"><title>Like a lot. A LOT. of coffee.</title>
+        <path class="steam s1" d="M9 7.5 C8 6 10 5 9 3.5" /><path class="steam s2" d="M12.5 7.5 C11.5 6 13.5 5 12.5 3.5" />
+        <path d="M5 10 H17 V15 C17 18 14.8 20 12 20 H10 C7.2 20 5 18 5 15 Z" /><path d="M17 11.5 H18.5 C19.9 11.5 20.5 12.4 20.5 13.5 C20.5 14.6 19.9 15.5 18.5 15.5 H17" />
+      </svg>
+      Fuelled by a lot. A <i>lot</i>. of coffee.
+    </p>
   </footer>
 
   <script src="main.js" defer></script>
