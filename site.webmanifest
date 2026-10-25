@@ -1,0 +1,12 @@
+{
+  "name": "Adarsh Varshney",
+  "short_name": "adarsh.exe",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0D1114",
+  "theme_color": "#0D1114",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
