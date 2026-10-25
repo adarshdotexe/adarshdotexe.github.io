@@ -20,7 +20,7 @@
   --ink-2: #45494D;
   --ink-3: #5D6166;
 
-  /* teal has four roles: the brand disc, the primary action and pressed state, the h1 accent word, links */
+  /* teal has four roles: the disc art, the primary action and open/pressed state, the title accent word, links */
   --signal: #0F7A6C;
   --signal-ink: #0B6B5F;
   --signal-deep: #0B5C52;
@@ -29,10 +29,11 @@
   --mist: #E7F2EF;
   --selection: #CFE6E1;
 
-  /* the only warm accent: the "Soon" tag */
+  /* warm accents, used sparingly: the "Soon" tag and the orbit's coffee (marigold), the orbit chip's LED (coral) */
   --marigold: #F2B33D;
+  --coral: #E4775B;
 
-  /* dot matrices (flat, never faded) */
+  /* dot matrices */
   --signal-dot: rgb(23 25 27 / .42);
   --dot: rgb(23 25 27 / .30);
 

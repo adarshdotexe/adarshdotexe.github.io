@@ -1,6 +1,19 @@
 // adarsh.exe: router + screen swaps, the motion layer (GSAP, loaded only when motion is welcome),
 // rotator, tile toggles, progressive Work list, testimonials scroller, blog filter, clock, copy,
 // form, the hidden easter egg, analytics.
+
+/* ---------- friends' LinkedIn profiles ----------
+   The links live in index.html (href on each friend's name, so they work without JavaScript).
+   This map is the alternative: paste a URL here and the name becomes a link on page load.
+   While a URL is empty the name stays plain text. */
+const LINKEDIN = {
+  "Nelli James": "",
+  "Krishna Chaitanya": "",
+  "Lamim Zakir Pronay": "",
+  "Eswar Sai": "",
+  "Mohan Koruprolu": "",
+};
+
 const doc = document.documentElement;
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -10,25 +23,33 @@ const announce = (msg) => { const a = $("#announce"); if (!a) return; a.textCont
 const shown = (el) => el.offsetParent !== null || el.getClientRects().length > 0;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-/* ---------- motion layer: GSAP 3 + SplitText from the CDN, never on the critical path ---------- */
-const GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.15.0";
+/* ---------- motion layer: GSAP 3 + SplitText, self-hosted in js/vendor/ and fetched by the head script
+   only when motion is allowed. The page is fully readable before it arrives (text is never hidden for it). ---------- */
 let gsap = null;
 let SplitText = null;
 const motion = () => gsap && !reduced.matches;
 const gsapReady = reduced.matches ? Promise.resolve(null) : (async () => {
-  try {
-    const slow = new Promise((_, no) => setTimeout(() => no(new Error("slow")), 2600));
-    const [core, split] = await Promise.race([Promise.all([import(`${GSAP}/+esm`), import(`${GSAP}/SplitText/+esm`)]), slow]);
-    gsap = core.gsap || core.default;
-    SplitText = split.SplitText || split.default;
-    gsap.registerPlugin(SplitText);
-    gsap.defaults({ ease: "power3.out", overwrite: "auto" });
-    doc.classList.add("gsap");
-    return gsap;
-  } catch {
-    return null;
-  }
+  const ok = await Promise.race([window.__gsap || Promise.resolve(false), wait(4000).then(() => false)]);
+  if (!ok || !window.gsap) return null;
+  gsap = window.gsap;
+  SplitText = window.SplitText || null;
+  if (SplitText) gsap.registerPlugin(SplitText);
+  gsap.defaults({ ease: "power3.out", overwrite: "auto" });
+  gsap.ticker.lagSmoothing(0); // a slow frame jumps ahead instead of stretching the motion
+  doc.classList.add("gsap");
+  return gsap;
 })();
+const painted = () => performance.getEntriesByType("paint").some((e) => e.name === "first-contentful-paint");
+
+/* ---------- testimonials: a name with a LinkedIn URL becomes an external link ---------- */
+for (const who of $$(".quote .who")) {
+  const url = who.getAttribute("href") || who.dataset.linkedin || LINKEDIN[who.textContent.trim()] || "";
+  if (!url) { who.removeAttribute("href"); continue; }
+  who.href = url;
+  who.dataset.linkedin = url;
+  who.rel = "noopener";
+  who.setAttribute("aria-label", `${who.textContent.trim()} on LinkedIn`);
+}
 
 /* ---------- theme-color follows the palette's --bg (tokens.css) ---------- */
 const themeMeta = $('meta[name="theme-color"]');
@@ -51,11 +72,11 @@ function setOpen(btn, open, animate = true) {
   gsap.killTweensOf(region);
   if (open) {
     region.removeAttribute("data-closed");
-    gsap.fromTo(region, { height: 0, opacity: 0 }, { height: "auto", opacity: 1, duration: 0.42, ease: "power3.out", clearProps: "height,opacity" });
+    gsap.fromTo(region, { height: 0, opacity: 0 }, { height: "auto", opacity: 1, duration: 0.4, ease: "expo.out", clearProps: "height,opacity" });
     const inner = $$("p, figure", region);
-    if (inner.length) gsap.from(inner, { y: -6, duration: 0.42, stagger: 0.05, ease: "power2.out", clearProps: "transform" });
+    if (inner.length) gsap.from(inner, { y: 14, opacity: 0, duration: 0.36, stagger: 0.06, ease: "back.out(1.7)", clearProps: "opacity,transform" });
   } else {
-    gsap.to(region, { height: 0, opacity: 0, duration: 0.28, ease: "power2.inOut", onComplete: () => { region.setAttribute("data-closed", ""); gsap.set(region, { clearProps: "height,opacity" }); } });
+    gsap.to(region, { height: 0, opacity: 0, duration: 0.26, ease: "power3.inOut", onComplete: () => { region.setAttribute("data-closed", ""); gsap.set(region, { clearProps: "height,opacity" }); } });
   }
 }
 for (const region of $$("[data-collapsible]")) if (!region.hasAttribute("data-open")) region.setAttribute("data-closed", "");
@@ -87,41 +108,48 @@ function titleWords(screen) {
   return splits.get(title).words;
 }
 function inView(el) { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }
-/* every swap: the new screen fades and slides in (0.3 s) while the old one leaves (see show()).
-   The first visit to a screen adds a short title rise and item stagger; later visits don't replay it.
-   Everything settles within ~0.4 s. */
-function enter(screen, dir = 1, fromHome = false) {
+/* every swap, sequenced so two screens never share a frame: the old screen slides out first (0.12 s,
+   see show()), then the new one slides in from the side it lives on (expo.out),
+   its title words rise through masks and the first tiles in view stagger up. Settles in about 0.42 s. */
+function enter(screen, dir = 1, fromHome = false, at = 0) {
   if (!motion() || !screen) return null;
   // CSS hover transitions on tiles would chase the tweened transforms; switch them off while entering
   screen.classList.add("is-entering");
   const tl = gsap.timeline({ onComplete: () => screen.classList.remove("is-entering") });
-  const first = !screen.dataset.seen;
-  screen.dataset.seen = "1";
-  const off = mobile.matches ? { y: 12 } : { x: 20 * dir };
-  tl.fromTo(screen, { opacity: 0, ...off }, { opacity: 1, x: 0, y: 0, duration: 0.26, ease: "power2.out", clearProps: "opacity,transform" }, 0.04);
-  if (first && screen.id !== "home") {
-    const words = titleWords(screen);
-    if (words.length) tl.from(words, { yPercent: 100, duration: 0.26, stagger: 0.03, ease: "power3.out", clearProps: "transform" }, 0.04);
-    const items = $$(".lede, .clock-row, .block-head, .tiles > .tile, .quote, .skill-chips, .pray, .contact > *", screen).filter((el) => shown(el) && inView(el)).slice(0, 4);
-    if (items.length) tl.from(items, { y: 12, opacity: 0, duration: 0.22, stagger: 0.025, ease: "power2.out", clearProps: "opacity,transform" }, 0.06);
-    const fills = $$(".meter-fill", screen).filter(inView);
-    if (fills.length) tl.from(fills, { scaleX: 0, duration: 0.28, ease: "power2.inOut", clearProps: "transform" }, 0.1);
-  }
+  const off = mobile.matches ? 28 : 56;
+  tl.fromTo(screen, { opacity: 0, x: off * dir }, { opacity: 1, x: 0, duration: 0.28, ease: "expo.out", clearProps: "opacity,transform" }, at);
+  if (screen.id === "home") { homeIn(tl, at, true); return tl; }
+  const words = titleWords(screen);
+  if (words.length) tl.fromTo(words, { yPercent: 105, rotation: 4 }, { yPercent: 0, rotation: 0, duration: 0.24, stagger: 0.03, ease: "power3.out", clearProps: "transform" }, at + 0.02);
+  const items = $$(".lede, .clock-row, .block-head, .tiles > .tile, .quote, .contact > *", screen).filter((el) => shown(el) && inView(el)).slice(0, 6);
+  if (items.length) tl.fromTo(items, { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.2, stagger: 0.02, ease: "power3.out", clearProps: "opacity,transform" }, at + 0.02);
+  const fills = $$(".meter-fill", screen).filter(inView);
+  if (fills.length) tl.fromTo(fills, { scaleX: 0 }, { scaleX: 1, duration: 0.26, ease: "power3.inOut", clearProps: "transform" }, at + 0.04);
   const col = $(".id");
-  if (fromHome && col && shown(col)) tl.from(col, { opacity: 0, x: -20, duration: 0.28, ease: "power2.out", clearProps: "opacity,transform" }, 0.05);
-  if (screen.id === "home") homeIn(tl, 0.05, true);
+  if (fromHome && col && shown(col)) tl.fromTo(col, { opacity: 0, x: -32 }, { opacity: 1, x: 0, duration: 0.28, ease: "expo.out", clearProps: "opacity,transform" }, at);
   return tl;
 }
 
-/* Home: disc, photo, name, script, meta and orbit objects, in that order */
+/* Home: the disc overshoots in, the portrait pops, the name rises letter by letter, the orbit objects pop
+   in one by one, then the buttons. About 1.3 s on a first visit. If the page has already painted (the motion
+   layer arrived late), the text is left where it is and only the disc, portrait, orbit and buttons move. */
 function homeIn(tl, at = 0, quick = false) {
   const home = $("#home");
-  // coming back to Home: the disc settles and the text block rises, nothing more (~0.4 s)
+  const orbitBits = $$(".ho-orbit > g", home);
+  // coming back to Home: the disc springs, the portrait settles, the text block and orbit pop back (~0.4 s)
   if (quick) {
-    return tl.from(".ho-discg", { scale: 0.94, svgOrigin: "320 330", duration: 0.32, ease: "power2.out" }, at)
-      .from($$(".hero-text > *", home), { y: 10, opacity: 0, duration: 0.24, stagger: 0.02, ease: "power2.out", clearProps: "opacity,transform" }, at);
+    return tl.fromTo(".ho-discg", { scale: 0.88 }, { scale: 1, svgOrigin: "320 330", duration: 0.3, ease: "back.out(1.7)" }, at)
+      .fromTo(".hero-photo", { scale: 0.92 }, { scale: 1, duration: 0.3, ease: "back.out(1.7)", clearProps: "transform" }, at)
+      .fromTo($(".hero-text > *", home), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.22, stagger: 0.02, ease: "power3.out", clearProps: "opacity,transform" }, at + 0.02)
+      .fromTo(orbitBits, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, transformOrigin: "50% 50%", duration: 0.24, stagger: 0.012, ease: "back.out(2)", clearProps: "opacity" }, at);
   }
-  // first paint only: the whole intro is over in about 1.2 s, every tween 0.28 or 0.42 s
+  const early = !painted();
+  tl.fromTo(".ho-discg", { scale: 0.6 }, { scale: 1, svgOrigin: "320 330", duration: 0.62, ease: "back.out(1.7)" }, at)
+    .fromTo(".hero-photo", { scale: early ? 0.7 : 0.9, rotation: early ? -8 : -3 }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(1.7)", clearProps: "transform" }, at + 0.06)
+    .fromTo(orbitBits, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, transformOrigin: "50% 50%", duration: 0.5, stagger: 0.07, ease: "back.out(2.2)", clearProps: "opacity" }, at + 0.3)
+    .fromTo(".ho-orbit > path", { opacity: 0 }, { opacity: 1, duration: 0.4 }, at + 0.8)
+    .fromTo(".actions .btn", { scale: 0.7, opacity: early ? 0 : 1 }, { scale: 1, opacity: 1, duration: 0.5, stagger: 0.08, ease: "back.out(1.7)", clearProps: "opacity,transform" }, at + 0.62);
+  if (!early) return tl;
   const name = $(".hero-name", home);
   let chars = [];
   if (SplitText) {
@@ -129,17 +157,11 @@ function homeIn(tl, at = 0, quick = false) {
     chars = split.chars;
     tl.eventCallback("onComplete", () => split.revert());
   }
-  tl.from(".ho-discg", { scale: 0.85, svgOrigin: "320 330", duration: 0.42, ease: "back.out(1.6)" }, at)
-    .from(".hero-photo", { scale: 0.9, duration: 0.42, ease: "back.out(1.6)", clearProps: "transform" }, at + 0.06)
-    .from(".greet", { opacity: 0, x: -14, duration: 0.28, clearProps: "opacity,transform" }, at + 0.1);
-  if (chars.length) tl.from(chars, { yPercent: 115, duration: 0.42, stagger: 0.02 }, at + 0.14);
-  else tl.from(name, { opacity: 0, y: 14, duration: 0.42, clearProps: "opacity,transform" }, at + 0.1);
-  tl.from(".rotor", { opacity: 0, duration: 0.28, clearProps: "opacity" }, at + 0.4)
-    .from(".intro-line", { opacity: 0, y: 12, duration: 0.42, clearProps: "opacity,transform" }, at + 0.46)
-    .from(".meta-item", { opacity: 0, y: 10, duration: 0.42, stagger: 0.05, clearProps: "opacity,transform" }, at + 0.52)
-    .from(".actions .btn", { opacity: 0, y: 12, duration: 0.42, stagger: 0.06, clearProps: "opacity,transform" }, at + 0.6)
-    .from(".ho-orbit > g", { opacity: 0, scale: 0, transformOrigin: "50% 50%", duration: 0.42, stagger: 0.06, ease: "back.out(1.6)" }, at + 0.24)
-    .from(".ho-orbit > path", { opacity: 0, duration: 0.42 }, at + 0.7);
+  tl.fromTo(".greet", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.36, ease: "expo.out", clearProps: "opacity,transform" }, at + 0.12);
+  if (chars.length) tl.fromTo(chars, { yPercent: 120, rotation: 10 }, { yPercent: 0, rotation: 0, duration: 0.55, stagger: 0.025, ease: "expo.out" }, at + 0.16);
+  // the intro line is the largest text on phones: it moves but is never hidden
+  tl.fromTo(".intro-line", { y: 18 }, { y: 0, duration: 0.5, ease: "expo.out", clearProps: "transform" }, at + 0.42)
+    .fromTo(".meta-item", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.42, stagger: 0.06, ease: "back.out(1.7)", clearProps: "opacity,transform" }, at + 0.5);
   return tl;
 }
 
@@ -206,8 +228,8 @@ function show(route, { focus = true, quick = false, hash = "" } = {}) {
     if (!reduced.matches) { screen.classList.remove("swap-in"); void screen.offsetWidth; screen.classList.add("swap-in"); }
     return;
   }
-  // crossfade: the old screen is pinned where it was (absolutely, over the stage) and fades out
-  // while the new one fades and slides in underneath, so there is never an empty frame.
+  // the old screen is pinned where it was (absolutely, over the stage) and slides out first; the new one
+  // starts the moment it has gone (no frame shows both), so the swap reads as one directional move
   const stage = screen.parentElement;
   let leaving = null;
   if (out && stage) {
@@ -221,8 +243,9 @@ function show(route, { focus = true, quick = false, hash = "" } = {}) {
   } else update();
   const tl = gsap.timeline({ onComplete: () => { if (swapTl === tl) swapTl = null; if (leaving) dropLeaving(leaving); } });
   swapTl = tl;
-  if (leaving) tl.to(leaving, { opacity: 0, ...(mobile.matches ? {} : { x: -14 * dir }), duration: 0.16, ease: "power2.in" }, 0);
-  const inTl = enter(screen, dir, fromHome && route !== "home");
+  const OUT = leaving ? 0.1 : 0;
+  if (leaving) tl.to(leaving, { opacity: 0, x: (mobile.matches ? -20 : -40) * dir, duration: OUT, ease: "power2.in" }, 0);
+  const inTl = enter(screen, dir, fromHome && route !== "home", OUT);
   if (inTl) tl.add(inTl, 0);
   if (quick) tl.timeScale(1.25);
 }
@@ -264,16 +287,18 @@ gsapReady.then(() => {
   clearTimeout(window.__introT);
   const intro = doc.classList.contains("intro");
   if (intro && motion() && current === "home") {
-    const tl = gsap.timeline({ delay: 0.05 });
+    const early = !painted();
+    const tl = gsap.timeline();
     const t = $(".roll-text");
-    if (t) t.textContent = "";
-    doc.classList.remove("intro");
+    if (t && early) t.textContent = "";
     homeIn(tl, 0);
-    tl.call(startRoll, null, 0.45);
+    doc.classList.remove("intro");
+    if (early) tl.call(startRoll, null, 0.5); else startRoll(true);
   } else {
     doc.classList.remove("intro");
     startRoll(true);
   }
+  clapHint();
 });
 
 /* ---------- identity bar (mobile): a rule appears after 24 px of scroll ---------- */
@@ -312,6 +337,7 @@ function startRoll(already = false) {
       await wait(2400);
       await idle();
       await erase();
+      snap(); // the clapperboard in the orbit marks every new take
       await wait(180);
       await type(words[i]);
     }
@@ -493,7 +519,7 @@ if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const bad = inputs.filter((i) => !check(i));
-    if (bad.length) { bad[0].focus(); if (motion()) gsap.fromTo(bad[0], { x: -6 }, { x: 0, duration: 0.42, ease: "elastic.out(1.2, 0.3)", clearProps: "transform" }); return; }
+    if (bad.length) { bad[0].focus(); if (motion()) gsap.fromTo(bad[0], { x: -8 }, { x: 0, duration: 0.32, ease: "back.out(1.7)", clearProps: "transform" }); return; }
     send.disabled = true;
     sendLabel.textContent = "Sending…";
     status.className = "form-status";
@@ -526,6 +552,26 @@ for (const tip of $$(".tip")) {
   tip.addEventListener("pointerleave", reset);
 }
 
+/* ---------- the orbit's clapperboard: snaps on a tap and on every new rotator title ---------- */
+function snap() {
+  const orbit = $(".orbit");
+  if (!orbit || reduced.matches) return;
+  orbit.classList.remove("is-snap");
+  void orbit.getBoundingClientRect();
+  orbit.classList.add("is-snap");
+}
+/* a one-time hint in his hand ("tap me ×3"), 6 s into a Home visit, until the signal has been found once */
+let hintT = 0;
+function clapHint() {
+  const hint = $(".clap-hint");
+  if (!hint) return;
+  let seen = false;
+  try { seen = !!localStorage.getItem("batSeen"); } catch {}
+  if (seen) return;
+  hintT = setTimeout(() => { if (current === "home" && !doc.hasAttribute("data-bat")) hint.classList.add("is-on"); }, 6000);
+}
+function hideHint() { clearTimeout(hintT); $(".clap-hint")?.classList.remove("is-on"); }
+
 /* ---------- hidden easter egg: type "batman", or tap the clapperboard three times; Esc or a click to leave ---------- */
 const bat = $(".bat");
 if (bat) {
@@ -542,8 +588,10 @@ if (bat) {
         bat.append(art);
       }
       doc.setAttribute("data-bat", "");
-      if (motion() && art) gsap.fromTo(art, { scale: 0.86, y: 24, rotation: -2 }, { scale: 1, y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.6)", clearProps: "transform" });
+      if (motion() && art) gsap.fromTo(art, { scale: 0.86, y: 24, rotation: -2 }, { scale: 1, y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.7)", clearProps: "transform" });
       announce("Bat-signal on. Press Escape to turn it off.");
+      try { localStorage.setItem("batSeen", "1"); } catch {}
+      hideHint();
     } else {
       doc.removeAttribute("data-bat");
       announce("Bat-signal off.");
@@ -560,12 +608,12 @@ if (bat) {
   document.addEventListener("pointerdown", () => { if (on()) { toggle(false); closedAt = Date.now(); } });
   // the orbit's clapperboard: each tap snaps it shut; the third tap in a row turns on the signal
   const clap = $(".clap-btn");
-  const orbit = $(".orbit");
   if (clap) {
     let taps = 0, last = 0;
     clap.addEventListener("click", () => {
       if (Date.now() - closedAt < 400) return;
-      if (orbit && !reduced.matches) { orbit.classList.remove("is-snap"); void orbit.getBoundingClientRect(); orbit.classList.add("is-snap"); }
+      snap();
+      hideHint();
       const now = Date.now();
       taps = now - last < 1600 ? taps + 1 : 1;
       last = now;
@@ -586,7 +634,7 @@ function analytics() {
   window.gtag("js", new Date());
   window.gtag("config", "G-LJQ15NG321");
 }
-/* once the page is idle, warm the other screens' illustrations so a swap never shows an empty frame */
+/* once the page is idle, warm the other screens' illustrations so a swap shows them at once */
 function warm() {
   for (const img of $$(".screen img[loading='lazy']")) if (!img.closest("[data-closed], [hidden]")) img.loading = "eager";
 }

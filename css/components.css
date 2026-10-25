@@ -52,13 +52,14 @@
   --f-display: "Clash Grotesk", "Display fallback", system-ui, sans-serif;
   --f-text: "General Sans", "Text fallback", system-ui, sans-serif;
   --f-hand: "Sedgwick Ave", "Hand fallback", cursive;
-  --t-hero: clamp(3rem, 1.6rem + 3.6vw, 5.25rem);
-  --t-hand: clamp(1.75rem, 1.2rem + 1.3vw, 2.75rem);
-  --t-h1: clamp(2.125rem, 1.4rem + 1.9vw, 2.875rem);
-  --t-h2: 1.375rem;
-  --t-h3: 1.125rem;
-  --t-lede: 1.125rem;
-  --t-body: 1rem;
+  /* one fluid scale: every step grows with the viewport between a 360 px phone and a 1920 px screen */
+  --t-hero: clamp(2.75rem, 1.55rem + 4.1vw, 6.25rem);
+  --t-hand: clamp(1.625rem, 1.15rem + 1.45vw, 2.75rem);
+  --t-h1: clamp(2rem, 1.45rem + 1.65vw, 3rem);
+  --t-h2: clamp(1.25rem, 1.1rem + .45vw, 1.5rem);
+  --t-h3: clamp(1.0625rem, 1rem + .25vw, 1.1875rem);
+  --t-lede: var(--t-h3);
+  --t-body: clamp(1rem, .95rem + .12vw, 1.0625rem);
   --t-small: .875rem;
   --t-micro: .75rem;
   --lh-tight: 1.02;
@@ -101,15 +102,15 @@
   --id-w: clamp(240px, 20vw, 300px);
   --rail-w: 76px;
   --edge: 24px;
-  --content: 800px;
-  --stage-pad: var(--s8);
+  --content: clamp(720px, 56vw, 960px);
+  --stage-pad: clamp(var(--s7), 7vh, var(--s8));
   --hit: 44px;
   --pm: 36px;
   --dot-pitch: 12px;
 
-  /* motion: three easings, four durations (GSAP in app.js uses 0.16-0.42 s to match) */
+  /* motion: three easings, four durations (GSAP in app.js: power3.out, back.out(1.7) and expo.out, 0.12-0.5 s) */
   --ease-out: cubic-bezier(.22, .8, .24, 1);
-  --ease-back: cubic-bezier(.34, 1.56, .64, 1);
+  --ease-back: cubic-bezier(.34, 1.7, .5, 1);
   --ease-io: cubic-bezier(.6, 0, .3, 1);
   --d-press: 120ms;
   --d-icon: 200ms;
@@ -233,15 +234,6 @@ a:is(:hover, :focus-visible) > .i--external { transform: translate(2px, -2px); }
     padding: var(--s7) var(--s6) var(--s9);
     text-align: start;
   }
-  /* dotted rule on the column edge */
-  .id::after {
-    content: "";
-    position: absolute;
-    inset-block: 18%;
-    inset-inline-end: 0;
-    width: 3px;
-    background: radial-gradient(circle, var(--dot) 1.2px, transparent 1.6px) 50% 0 / 3px var(--dot-pitch) repeat-y;
-  }
 }
 .id-name {
   margin-block-start: var(--s5);
@@ -250,16 +242,6 @@ a:is(:hover, :focus-visible) > .i--external { transform: translate(2px, -2px); }
   text-wrap: balance;
 }
 .id-role { margin-block-start: var(--s1); color: var(--ink-2); font-size: var(--t-small); }
-.id-place {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--s1);
-  margin-block-start: var(--s2);
-  color: var(--ink-2);
-  font-size: var(--t-small);
-}
-.id-place .icon { width: 20px; height: 20px; }
 .socials { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: var(--s3); margin-block-start: var(--s5); }
 .social {
   display: grid;
@@ -275,6 +257,7 @@ a:is(:hover, :focus-visible) > .i--external { transform: translate(2px, -2px); }
 .social .icon { width: 22px; height: 22px; }
 .social:is(:hover, :focus-visible) { background: var(--mist); }
 .social:active { transform: translate(2px, 2px); box-shadow: var(--e-0); }
+.id-cv { margin-block-start: var(--s4); }
 
 /* ---------- footer line ---------- */
 .site-foot { color: var(--ink-3); font: 600 var(--t-micro) / var(--lh-head) var(--f-text); letter-spacing: .01em; text-align: center; }
@@ -325,18 +308,20 @@ a:is(:hover, :focus-visible) > .i--external { transform: translate(2px, -2px); }
 .js[data-route="contact"] #contact,
 .js .screen-article { display: block; }
 .screen.is-entering * { transition: none !important; }
-/* during a swap the old screen stays pinned where it was (app.js sets top/left/width) and fades out */
-.js .screen.is-leaving { position: absolute; z-index: 1; display: block; margin: 0; pointer-events: none; }
+/* during a swap the old screen stays pinned where it was (app.js sets top/left/width) and leaves first;
+   the new one starts once it has gone, so two screens do not share a frame */
+.js .screen.is-leaving { position: absolute; z-index: 0; display: block; margin: 0; pointer-events: none; }
+.js .screen.is-entering { z-index: 1; transform-origin: 50% 0; }
 @media (min-width: 1024px) {
   .stage {
     min-height: 100svh;
     margin-inline: var(--id-w) calc(var(--rail-w) + 2 * var(--edge));
-    padding: var(--stage-pad) clamp(var(--s5), 3vw, var(--s7)) var(--s9);
+    padding: var(--stage-pad) clamp(var(--s5), 3vw, var(--s7)) var(--s7);
   }
   /* Home: hide the identity column */
   .js[data-route="home"] .id { display: none; }
-  .js[data-route="home"] .stage { margin-inline-start: 0; padding-block: var(--s6); }
-  .screen-home { max-width: 1120px; }
+  .js[data-route="home"] .stage { margin-inline-start: var(--edge); padding-block: var(--s6); }
+  .screen-home { max-width: clamp(960px, 72vw, 1280px); }
   /* no JS: the Home hero carries the identity, so the column isn't shown twice */
   html:not(.js) .id { display: none; }
   html:not(.js) .stage { margin-inline-start: 0; }
@@ -460,7 +445,7 @@ html:not(.js) .screen + .screen { margin-block-start: var(--s9); padding-block-s
 /* ---------- home: name, script, one line, meta, two buttons; the photo in the orbit ---------- */
 .home {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   align-items: center;
   gap: var(--s7);
 }
@@ -502,7 +487,7 @@ html:not(.js) .screen + .screen { margin-block-start: var(--s9); padding-block-s
 }
 .roll.is-typing .caret { opacity: 1; animation: caret 1s steps(1) infinite; }
 @keyframes caret { 50% { opacity: 0; } }
-.intro-line { margin-block-start: var(--s4); max-width: 36ch; color: var(--ink-2); font-size: var(--t-lede); text-wrap: pretty; }
+.intro-line { margin-block-start: var(--s4); max-width: 38ch; color: var(--ink-2); font-size: var(--t-lede); text-wrap: pretty; }
 
 /* meta: an inline line on desktop, three small chips on mobile */
 .meta {
@@ -555,7 +540,7 @@ html:not(.js) .screen + .screen { margin-block-start: var(--s9); padding-block-s
 .hero-visual {
   position: relative;
   justify-self: center;
-  width: min(100%, 540px, 100svh - 260px);
+  width: min(100%, 680px, 100svh - 240px);
   aspect-ratio: 1;
 }
 .orbit { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
@@ -588,22 +573,46 @@ html:not(.js) .screen + .screen { margin-block-start: var(--s9); padding-block-s
 .clap-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .orbit.is-snap .ho-clap { animation: clap-snap var(--d-swap) var(--ease-back); }
 @keyframes clap-snap { 0% { transform: rotate(0); } 45% { transform: rotate(18deg); } 100% { transform: rotate(0); } }
-/* intro start states (only while .intro is set by the head script; app.js animates them out) */
-.intro .greet, .intro .hero-name, .intro .rotor, .intro .intro-line, .intro .meta, .intro .actions, .intro .ho-orbit > g, .intro .ho-orbit > path { opacity: 0; }
-.intro .hero-photo { transform: scale(.9); }
+/* a one-time hint in his hand: shown after a while on Home until the signal has been found once (app.js) */
+.clap-hint {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: -1%;
+  inset-inline-start: 76%;
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  color: var(--ink);
+  font: 400 var(--t-small) / 1 var(--f-hand);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px) rotate(-6deg);
+  transition: opacity var(--d-hover) var(--ease-out), transform var(--d-hover) var(--ease-back), visibility 0s var(--d-hover);
+  pointer-events: none;
+}
+.clap-hint::before { content: ""; width: 18px; border-block-start: 1.5px dotted var(--ink); }
+.clap-hint.is-on { opacity: 1; visibility: visible; transform: rotate(-6deg); transition-delay: 0s; }
+/* intro start state: only the decorative orbit waits for the motion layer (the text is visible from the first paint) */
+.intro .ho-orbit > g, .intro .ho-orbit > path { opacity: 0; }
 .intro .ho-discg { transform: scale(.85); transform-origin: 320px 330px; }
+html:not(.gsap) .ho-orbit > g, html:not(.gsap) .ho-orbit > path { transition: opacity var(--d-swap) var(--ease-out); }
+html:not(.gsap) .ho-discg { transform-origin: 320px 330px; transition: transform var(--d-swap) var(--ease-back); }
 
 /* short laptop screens */
 @media (max-height: 800px) and (min-width: 1024px) {
   :root { --t-hero: clamp(2.75rem, 1rem + 3.4vw, 4.25rem); --stage-pad: var(--s7); }
+  .screen-head { margin-block-end: var(--s6); }
+  .stage { padding-block-end: var(--s6); }
   .actions { margin-block-start: var(--s5); }
   .rotor { margin-block-start: var(--s2); }
   .intro-line { margin-block-start: var(--s3); }
 }
 
-/* ---------- tile: the one card anatomy (thumb, tags, title, one line, links, expand) ----------
-   Every tile's text starts at the same x: thumbs are --text-x wide, and the Résumé rows' small node
-   thumbs make up the difference in their column gap. Two surfaces only: .tile (pad s3) and .panel (pad s4). */
+/* ---------- tile: the one card anatomy (thumb, meta, title, one line, links, expand) ----------
+   Thumbs are --text-x wide (128 px in narrow lists, 200 px once the list is 640 px wide), so the art
+   reads and a card is about as tall as its art. Two surfaces only: .tile (pad s3) and .tile.form /
+   .tile-quote / .skills (pad s4). */
 .tiles { display: grid; gap: var(--s4); }
 .tile {
   --text-x: 128px;
@@ -623,19 +632,24 @@ html:not(.js) .screen + .screen { margin-block-start: var(--s9); padding-block-s
   container-type: inline-size;
   transition: transform var(--d-hover) var(--ease-out), box-shadow var(--d-hover) var(--ease-out);
 }
-.tile:has(.tile-toggle, .post-link[href]):hover { transform: translate(-2px, -2px); box-shadow: var(--e-lift); }
+.tile:has(.tile-toggle, .post-link[href]):hover { transform: translate(-3px, -3px); box-shadow: var(--e-lift); transition-timing-function: var(--ease-back); }
 .tile-body { min-width: 0; padding-block: var(--s1); }
 /* only the first two lines keep clear of the corner disc; the rest of the body and the expand use the full width */
 .tile:has(.tile-toggle, > .go) .tile-body > :nth-child(-n+2) { padding-inline-end: calc(var(--pm) + var(--s3)); }
 .tile .more > div { padding-inline-end: var(--s2); }
 .tile-title { margin-block-start: var(--s1); font: 600 var(--t-h3) / var(--lh-head) var(--f-text); text-wrap: balance; }
 .tile-body > .tile-title:first-child { margin-block-start: 0; }
-.tile-line { position: relative; z-index: 2; margin-block-start: var(--s1); max-width: var(--measure); color: var(--ink-2); font-size: var(--t-body); text-wrap: pretty; }
+.tile-line { position: relative; z-index: 2; margin-block-start: var(--s1); max-width: 46ch; color: var(--ink-2); font-size: var(--t-body); text-wrap: pretty; }
 .tile-links { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 0 var(--s4); margin-block: 0 calc(-1 * var(--s3)); font-size: var(--t-small); }
 .tile-links .link { min-height: var(--hit); }
 .links { display: contents; }
-/* the same slot for projects without a public link */
-.tile-note { display: inline-flex; align-items: center; min-height: var(--hit); color: var(--ink-3); font-weight: 500; }
+.tile-links:not(:has(a)) { margin: 0; }
+/* one quiet meta line above the title (Work): two words, a small dot between them */
+.tile-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--s2); color: var(--ink-3); font: 600 var(--t-micro) / var(--lh-body) var(--f-text); letter-spacing: .04em; text-transform: uppercase; }
+.tile-meta > span + span::before { content: ""; display: inline-block; width: 4px; height: 4px; margin-inline-end: var(--s2); border-radius: 50%; background: var(--ink-3); vertical-align: middle; translate: 0 -1px; }
+@container screen (min-width: 640px) {
+  .tiles > .tile:not(.row) { --text-x: 200px; }
+}
 
 /* thumb: one illustration family (teal disc, ink outlines, hard shadows) for every list */
 .thumb {
@@ -651,9 +665,8 @@ html:not(.js) .screen + .screen { margin-block-start: var(--s9); padding-block-s
   background: var(--mist);
   overflow: hidden;
 }
-.thumb > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); }
-.thumb-node { border: 0; border-radius: 50%; background: none; overflow: visible; }
-.thumb-node > img { transform: none; }
+.thumb > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform var(--d-swap) var(--ease-back); }
+.tile:has(.tile-toggle, .post-link[href]):hover .thumb > img { transform: scale(1.12) rotate(-1.5deg); }
 
 /* the toggle is the title itself (a real button in the heading); its ::after stretches over the tile,
    while the one line and the open details sit above it as selectable text */
@@ -716,25 +729,37 @@ html:not(.js) .tile-toggle { cursor: text; }
 .shot { max-width: 260px; margin-block-start: var(--s3); }
 .shot img { width: 100%; height: auto; border: var(--stroke) solid var(--ink); border-radius: var(--r-media); }
 
-/* About: What I Do, one column of rows like every other list (an open tile never leaves a hole) */
-.tile-do { --thumb-r: 6 / 5; }
+/* About: What I Do, one column of rows like every other list */
+.tile-do { --thumb-r: 3 / 2; }
 
 /* Work: one list, progressively revealed. Tiles 6+ are hidden from the first paint, so nothing shifts. */
 .js .works:not([data-all]) > .work:nth-child(n+6):not(.is-shown) { display: none; }
-.work.is-new { animation: rise var(--d-swap) var(--ease-out) both; animation-delay: calc(var(--i, 0) * 60ms); }
-@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+.work.is-new { animation: rise var(--d-swap) var(--ease-back) both; animation-delay: calc(var(--i, 0) * 60ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(28px) scale(.97); } }
 .sentinel { height: 1px; }
 
-/* Résumé: one line of labels per row; the illustrated node is the thumb */
-.row { --thumb-w: 56px; --thumb-r: 1; column-gap: calc(var(--text-x) - var(--thumb-w) + var(--tile-gap)); }
+/* Résumé: the years in a narrow first column, then one line of labels */
+.row { --thumb-w: 88px; grid-template-columns: var(--thumb-w) minmax(0, 1fr); }
+.row-year { align-self: start; padding-block-start: var(--s3); color: var(--ink-3); font: 600 var(--t-small) / var(--lh-head) var(--f-text); white-space: nowrap; }
 .rows { position: relative; }
-.row-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s1) var(--s3); }
-.row-line .tag { align-self: center; }
+/* Experience and Education side by side once the screen is wide enough */
+.cv-cols + .block { margin-block-start: var(--s8); }
+@container screen (min-width: 720px) {
+  .cv-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: var(--s5); }
+  .cv-cols > .block + .block { margin-block-start: 0; }
+  .cv-cols + .block { margin-block-start: var(--s7); }
+  /* in a half-width column the year sits above the name */
+  .cv-cols .row { grid-template-columns: minmax(0, 1fr); }
+  .cv-cols .row-year { padding-block-start: var(--s1); }
+  .cv-cols .row .more { grid-column: 1 / -1; }
+}
+.row-line { display: grid; justify-items: start; }
 .row-org { font: 600 var(--t-h3) / var(--lh-head) var(--f-text); }
 .row-role { color: var(--ink-2); }
+.tile.skills { display: block; padding: var(--s4); }
 .skill-chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
 .skill-chips .tag { padding: var(--s1) var(--s3); border-color: transparent; background: var(--mist); font-size: var(--t-small); }
-.pray { max-width: 30rem; margin-block-start: var(--s6); }
+.pray { max-width: 30rem; margin-block-start: var(--s5); }
 .pray-head { display: flex; justify-content: space-between; gap: var(--s4); font: 600 var(--t-small) / var(--lh-head) var(--f-text); }
 .meter-track {
   position: relative;
@@ -790,7 +815,7 @@ html:not(.js) .filters { display: none; }
 .post-link[href]::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: calc(var(--r-tile) - var(--stroke)); }
 .post-link:focus-visible { outline: none; }
 .post-link:focus-visible::after { outline: 2px solid var(--ink); outline-offset: 5px; border-radius: var(--r-tile); }
-.post:hover .post-link[href] { color: var(--signal-ink); }
+.post:hover .post-link[href] { text-decoration: underline 1.5px var(--signal); text-underline-offset: 4px; }
 .go .icon { width: 18px; height: 18px; }
 .post-empty { box-shadow: none; }
 .tag-soon { background: var(--marigold); }
@@ -814,12 +839,14 @@ html:not(.js) .filters { display: none; }
 @container screen (min-width: 520px) { .quotes { grid-auto-columns: calc((100% - var(--s4)) / 2); } }
 .quotes:focus-visible { outline-offset: 2px; }
 .quote { display: flex; scroll-snap-align: start; }
+/* the person on top (photo, then the name), the quote under it; spare height falls at the bottom */
 .tile.tile-quote {
   flex: 1;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas: "av" "q" "cap";
+  grid-template-columns: 64px minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "av cap" "q q";
   align-items: start;
+  column-gap: var(--s4);
   row-gap: var(--s4);
 }
 .avatar { grid-area: av; position: relative; isolation: isolate; width: 64px; height: 64px; }
@@ -833,16 +860,23 @@ html:not(.js) .filters { display: none; }
   border-radius: 50%;
   background: var(--signal);
 }
-.quote figcaption { grid-area: cap; min-width: 0; padding-block-start: var(--s3); border-block-start: 1.5px solid var(--line); }
-.quote .who { font: 600 var(--t-body) / var(--lh-head) var(--f-text); }
-.quote .rel { color: var(--ink-3); font-size: var(--t-small); line-height: var(--lh-head); margin-block-start: var(--s1); }
-.quote blockquote { grid-area: q; color: var(--ink); font-size: var(--t-body); text-wrap: pretty; }
+.quote figcaption { grid-area: cap; align-self: center; min-width: 0; }
+/* the name: plain text until its LinkedIn URL is filled in (index.html), then a link with a small LinkedIn icon */
+.quote .who { display: inline-flex; align-items: center; gap: var(--s2); min-height: var(--hit); font: 600 var(--t-h3) / var(--lh-head) var(--f-text); text-decoration: none; }
+.quote .who .icon { width: 18px; height: 18px; color: currentColor; --icon-stroke: 2.25; }
+.quote .who:not([href]) .icon { display: none; }
+.quote .who[href] { color: var(--signal-ink); text-decoration: underline 1.5px var(--tint); text-underline-offset: 4px; transition: text-decoration-color var(--d-hover) var(--ease-out); }
+.quote .who[href]:is(:hover, :focus-visible) { text-decoration-color: var(--signal-ink); }
+.quote .who[href]:is(:hover, :focus-visible) .icon { transform: translateY(-2px); }
+.quote blockquote { grid-area: q; color: var(--ink); font-size: var(--t-body); text-wrap: pretty; hanging-punctuation: first; }
 
 /* ---------- contact: the live clock under the lede, the form first, then the email and a small Charminar ---------- */
 .clock-row { display: flex; align-items: center; gap: var(--s3); margin-block-start: var(--s4); }
 .contact { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s6); }
-@container screen (min-width: 760px) {
-  .contact { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; gap: var(--s6); }
+@container screen (min-width: 700px) {
+  .contact { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: stretch; gap: var(--s6); }
+  .contact-side { align-content: space-between; }
+  .contact-side .city-art { justify-self: end; width: min(280px, 100%); }
 }
 .form { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4); }
 /* the second surface: larger panels (form, testimonial cards) */
@@ -885,19 +919,19 @@ textarea.input { min-height: 132px; resize: vertical; }
 .form-status.is-fail { color: var(--danger); font-weight: 600; }
 
 .contact-side { display: grid; gap: var(--s5); align-content: start; }
-.mail-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--s3); color: var(--ink-2); font-size: var(--t-small); }
+.mail-row { display: grid; gap: var(--s1); color: var(--ink-2); font-size: var(--t-small); }
 .mail-pair { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--s1) var(--s3); }
-.mail { display: inline-block; padding-block: var(--s3); overflow-wrap: anywhere; }
+.mail { display: inline-flex; align-items: center; min-height: var(--hit); font-size: var(--t-body); overflow-wrap: anywhere; }
+/* copy: an icon-only round button next to the address */
 .copy {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s2);
-  min-height: var(--hit);
-  padding: 0 var(--s4) 0 var(--s3);
-  border: 1.5px solid var(--ink);
-  border-radius: var(--r-pill);
+  display: inline-grid;
+  place-items: center;
+  width: var(--hit);
+  height: var(--hit);
+  padding: 0;
+  border: var(--stroke) solid var(--ink);
+  border-radius: 50%;
   background: var(--panel);
-  font: 600 var(--t-micro) / 1 var(--f-text);
   box-shadow: var(--e-1);
   transition: background-color var(--d-hover) var(--ease-out), transform var(--d-press) var(--ease-out), box-shadow var(--d-press) var(--ease-out);
 }
@@ -905,12 +939,11 @@ textarea.input { min-height: 132px; resize: vertical; }
 .copy:is(:hover, :focus-visible) { background: var(--mist); }
 .copy:active { transform: translate(2px, 2px); box-shadow: var(--e-0); }
 .copy-ic { display: grid; }
-.copy-ic .icon { grid-area: 1 / 1; width: 16px; height: 16px; --icon-stroke: 2.25; }
+.copy-ic .icon { grid-area: 1 / 1; width: 20px; height: 20px; --icon-stroke: 2.25; }
 .copy .i-k { opacity: 0; transform: scale(.8); color: var(--ok); }
 .copy.is-done .i-c { opacity: 0; transform: scale(.8); }
 .copy.is-done .i-k { opacity: 1; transform: scale(1); }
-/* the identity column already has these on desktop */
-/* one row, never an orphan: three equal buttons (labels only on the narrowest phones) */
+/* three equal buttons in one row; labels only below 420 px (the identity column has them on desktop) */
 .socials-row { display: grid; grid-template-columns: repeat(3, minmax(0, max-content)); gap: var(--s2); margin: 0; }
 .socials-row .btn-sm { padding-inline: var(--s3); }
 @media (max-width: 419px) {
@@ -922,17 +955,17 @@ textarea.input { min-height: 132px; resize: vertical; }
 .city-art { justify-self: start; width: min(200px, 70%); height: auto; aspect-ratio: 640 / 420; }
 
 /* the clock: the i-clock drawing with live hands that only move forward */
-.dial { flex: none; width: 48px; height: 48px; overflow: visible; }
+.dial { flex: none; width: clamp(48px, 3.4vw + 30px, 60px); height: auto; aspect-ratio: 1; overflow: visible; }
 .dial-shadow { fill: var(--ink); }
 .dial-face { fill: var(--tint); stroke: var(--ink); stroke-width: 2; }
 .dial-ticks { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
 .dial-dots { stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; }
 .hand { stroke-linecap: round; transform-box: view-box; transform-origin: 28px 28px; transition: transform var(--d-swap) var(--ease-back); }
 .hand-h { stroke: var(--ink); stroke-width: 3.2; }
-.hand-m { stroke: var(--signal-deep); stroke-width: 2.4; }
+.hand-m { stroke: var(--ink); stroke-width: 2.2; }
 .dial-pin { fill: var(--ink); }
-.clock-line { color: var(--ink); font-size: var(--t-lede); line-height: var(--lh-head); text-wrap: pretty; }
-.clock-line time { font-weight: 600; font-variant-numeric: tabular-nums; }
+.clock-line { color: var(--ink); font-size: var(--t-lede); font-weight: 500; line-height: var(--lh-head); text-wrap: pretty; }
+.clock-line time { font: 600 var(--t-h2) / 1 var(--f-display); font-variant-numeric: tabular-nums; letter-spacing: var(--track-display); }
 
 /* ---------- swap fallback (when the motion layer isn't loaded) ---------- */
 .screen.swap-in { animation: swap-in var(--d-swap) var(--ease-out) both; }
@@ -1009,7 +1042,8 @@ textarea.input { min-height: 132px; resize: vertical; }
   .idbar-text { min-width: 0; flex: 1; line-height: var(--lh-head); transition: opacity var(--d-hover) var(--ease-out); }
   .idbar-name { font: 600 var(--t-body) / var(--lh-head) var(--f-display); }
   .idbar-role { color: var(--ink-2); font-size: var(--t-small); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  /* on Home the hero is the identity: the bar only appears once you scroll (it keeps its height, nothing shifts) */
+  /* on Home the hero is the identity: the bar floats out of the flow and only appears once you scroll */
+  .js[data-route="home"] .idbar { position: fixed; inset-inline: 0; }
   .js[data-route="home"] .idbar:not(.is-tight) { visibility: hidden; }
   .js[data-route="home"] .site-foot { display: none; }
 
@@ -1018,8 +1052,13 @@ textarea.input { min-height: 132px; resize: vertical; }
   .screen-head { margin-block-end: var(--s6); }
   .site-foot { padding: 0 var(--s4) var(--s5); }
 
+  /* Home on phones: the portrait disc on top, as big as the screen height allows while both buttons
+     stay clear of the dock (the text block below it is about 470 px tall) */
   .home { grid-template-columns: minmax(0, 1fr); gap: var(--s4); }
-  .hero-visual { order: -1; width: min(60%, 260px); margin-block-end: 0; }
+  .hero-visual { order: -1; width: clamp(150px, min(82vw, 100svh - 480px), 360px); margin-block-end: 0; }
+  /* the buttons come before the chips, so they are on screen on arrival even on short phones */
+  .hero-text { display: flex; flex-direction: column; align-items: flex-start; }
+  .hero-text .meta { order: 1; margin-block-start: var(--s5); }
   /* the three info chips, mobile only */
   .meta { gap: var(--s2); }
   .meta { font-size: var(--t-small); }
@@ -1038,22 +1077,36 @@ textarea.input { min-height: 132px; resize: vertical; }
   .rail-group > li { flex: 1; min-width: 0; }
   .rail-link { width: 100%; height: 58px; }
 }
+/* phones: the Home poster is centred under the disc */
+@media (max-width: 639px) {
+  .hero-text { align-items: center; text-align: center; }
+  .greet::after { content: ""; width: 28px; height: var(--stroke); background: var(--ink); }
+  .meta, .actions { justify-content: center; }
+}
+/* tablets: the Home poster goes side by side again */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .home { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s5); min-height: calc(100svh - 64px - 2 * var(--s5) - 104px); }
+  .hero-visual { order: 0; width: min(100%, 420px); }
+}
 @media (max-width: 599px) {
-  .tile { --text-x: 96px; --tile-gap: var(--s4); }
-  .row { --thumb-w: 48px; }
-  .city-art { width: min(160px, 60%); }
-  /* quieter edges on small screens: lighter shadows, borderless chips, no dot patch */
-  .tile { box-shadow: var(--e-1); }
+  .tile { --text-x: 104px; --tile-gap: var(--s4); }
+  .row { --thumb-w: 72px; }
+  .city-art { width: min(180px, 60%); }
+  /* quieter edges on small screens: one outline per card (no offset shadow), borderless chips, no dot patch */
+  .tile, .tile:has(.tile-toggle, .post-link[href]):hover { box-shadow: none; transform: none; }
+  .thumb { border-width: 1.5px; }
+  .thumb > img { transform: none; }
   .tag { border-color: transparent; background: var(--mist); }
-  .pm, .go { box-shadow: none; }
+  .pm, .go, .meta-item, .meta-proof .tip { box-shadow: none; }
+  .link.ext .icon { display: none; }
   .title .accent::after { display: none; }
   .title .accent { padding-inline-end: 0; }
 }
 @media (max-width: 419px) {
   .stage { padding-inline: var(--s3); }
-  .tile { --text-x: 80px; --tile-gap: var(--s3); padding: var(--s2); }
+  .tile { --text-x: 88px; --tile-gap: var(--s3); padding: var(--s2); }
   .pm, .go { inset-block-start: var(--s2); inset-inline-end: var(--s2); }
-  .row { --thumb-w: 44px; }
+  .row { --thumb-w: 64px; }
   .rail-link .icon { width: 24px; height: 24px; }
 }
 
