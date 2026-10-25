@@ -144,15 +144,17 @@ function titleWords(screen) {
 }
 function inView(el) { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.left < innerWidth && r.right > 0; }
 /* every swap, sequenced so two screens never share a frame: the old screen slides out first (0.08 s,
-   see show()), then the new one slides in from the side it lives on (expo.out),
-   its title words rise through masks and the first five items in view stagger up. Settles in about 0.35 s. */
+   see show()), then the new one fades in (0.18 s) while it glides in from the side it lives on (0.26 s, power3.out),
+   its title words rise through masks and the first five items in view stagger up. Settles in about 0.4 s. */
 function enter(screen, dir = 1, fromHome = false, at = 0) {
   if (!motion() || !screen) return null;
   // CSS hover transitions on tiles would chase the tweened transforms; switch them off while entering
   screen.classList.add("is-entering");
   const tl = gsap.timeline({ onComplete: () => screen.classList.remove("is-entering") });
   const off = mobile.matches ? 28 : 56;
-  tl.fromTo(screen, { opacity: 0, x: off * dir }, { opacity: 1, x: 0, duration: 0.24, ease: "expo.out", clearProps: "opacity,transform" }, at);
+  // opacity and travel are separate: a soft fade over 0.18 s while the slide glides for 0.26 s
+  tl.fromTo(screen, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.out", clearProps: "opacity" }, at)
+    .fromTo(screen, { x: off * dir }, { x: 0, duration: 0.26, ease: "power3.out", clearProps: "transform" }, at);
   if (screen.id === "home") { homeIn(tl, at, true); return tl; }
   const words = titleWords(screen);
   if (words.length) tl.fromTo(words, { yPercent: 105, rotation: 4 }, { yPercent: 0, rotation: 0, duration: 0.22, stagger: 0.025, ease: "power3.out", clearProps: "transform" }, at + 0.01);
@@ -175,10 +177,10 @@ function homeIn(tl, at = 0, quick = false) {
   const orbitBits = $$(".ho-orbit > g", home);
   // coming back to Home: the disc springs, the portrait settles, the text block and orbit pop back (~0.4 s)
   if (quick) {
-    return tl.fromTo(".ho-discg", { scale: 0.88 }, { scale: 1, svgOrigin: "320 330", duration: 0.26, ease: "back.out(1.7)" }, at)
-      .fromTo(".hero-photo", { scale: 0.92 }, { scale: 1, duration: 0.26, ease: "back.out(1.7)", clearProps: "transform" }, at)
+    return tl.fromTo(".ho-discg", { scale: 0.88 }, { scale: 1, svgOrigin: "320 330", duration: 0.22, ease: "back.out(1.7)" }, at)
+      .fromTo(".hero-photo", { scale: 0.92 }, { scale: 1, duration: 0.22, ease: "back.out(1.7)", clearProps: "transform" }, at)
       .fromTo($$(".hero-text > *", home), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.18, stagger: 0.015, ease: "power3.out", clearProps: "opacity,transform" }, at + 0.01)
-      .fromTo(orbitBits, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, transformOrigin: "50% 50%", duration: 0.22, stagger: 0.01, ease: "back.out(2)", clearProps: "opacity" }, at);
+      .fromTo(orbitBits, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, transformOrigin: "50% 50%", duration: 0.2, stagger: 0.006, ease: "back.out(2)", clearProps: "opacity" }, at);
   }
   const early = !painted();
   tl.fromTo(".ho-discg", { scale: 0.6 }, { scale: 1, svgOrigin: "320 330", duration: 0.62, ease: "back.out(1.7)" }, at)
@@ -360,9 +362,14 @@ function startRoll(already = false) {
   const words = [first, ...roll.dataset.roll.split("|"), first];
   const rotor = roll.closest(".rotor");
   let paused = false;
-  rotor.addEventListener("pointerenter", () => (paused = true));
-  rotor.addEventListener("pointerleave", () => (paused = false));
-  // pauses while hovered, hidden or away from Home; back on Home it holds the current title for a moment first
+  rotor.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") paused = true; });
+  rotor.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") paused = false; });
+  // keyboard and touch: focus anywhere in the hero text pauses it too, and a tap on the title toggles it (WCAG 2.2.2)
+  const heroText = rotor.closest(".hero-text");
+  heroText?.addEventListener("focusin", () => (paused = true));
+  heroText?.addEventListener("focusout", () => (paused = false));
+  rotor.addEventListener("click", (e) => { if (e.pointerType !== "mouse") paused = !paused; });
+  // pauses while hovered, focused, tapped, hidden or away from Home; back on Home it holds the current title for a moment first
   const idle = async () => { while (paused || document.hidden || current !== "home" || Date.now() - homeSince < 2800) await wait(250); };
   const type = async (word) => { for (let i = 1; i <= word.length; i++) { text.textContent = word.slice(0, i); await wait(55 + Math.random() * 40); } };
   const erase = async () => { while (text.textContent.length) { text.textContent = text.textContent.slice(0, -1); await wait(26); } };
@@ -383,7 +390,7 @@ function startRoll(already = false) {
 }
 
 /* ---------- Work: progressive loading; without JS every tile renders ----------
-   CSS hides tiles 6+ from the first paint (no layout shift); each batch rises in as the end of the
+   CSS hides tiles 5+ from the first paint (no layout shift); each batch rises in as the end of the
    list comes within 600 px of the viewport, so it is usually there before you reach it. */
 const worksList = $(".works");
 const works = $$(".works > .work");
@@ -522,16 +529,14 @@ if (clockText) {
 
 /* ---------- copy email: the copy icon turns into a tick ---------- */
 for (const b of $$("[data-copy]")) {
-  const label = $(".copy-label", b);
   let t;
   b.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(b.dataset.copy); }
     catch { location.href = `mailto:${b.dataset.copy}`; return; }
     b.classList.add("is-done");
-    if (label) label.textContent = "Copied";
     announce("Copied");
     clearTimeout(t);
-    t = setTimeout(() => { b.classList.remove("is-done"); if (label) label.textContent = "Copy"; }, 2200);
+    t = setTimeout(() => b.classList.remove("is-done"), 2200);
   });
 }
 
@@ -595,16 +600,17 @@ function snap() {
   orbit.classList.remove("is-snap");
   void orbit.getBoundingClientRect();
   orbit.classList.add("is-snap");
+  breathe(2000); // every new take wakes the orbit for a moment
 }
 /* the orbit's ambient loops: they breathe for 5 s whenever Home appears, then rest (WCAG 2.2.2: moving content
    stops within 5 s); pointing at or tapping the orbit wakes them for another 5 s */
 const orbitEl = $(".orbit");
 let restT = 0;
-function breathe() {
+function breathe(ms = 5000) {
   if (!orbitEl || reduced.matches) return;
   orbitEl.classList.remove("is-rest");
   clearTimeout(restT);
-  restT = setTimeout(() => orbitEl.classList.add("is-rest"), 5000);
+  restT = setTimeout(() => orbitEl.classList.add("is-rest"), typeof ms === "number" ? ms : 5000);
 }
 const heroVisual = $(".hero-visual");
 heroVisual?.addEventListener("pointerenter", breathe);
