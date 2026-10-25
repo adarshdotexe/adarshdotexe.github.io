@@ -59,6 +59,7 @@ function setOpen(btn, open, animate = true) {
   }
 }
 for (const region of $$("[data-collapsible]")) if (!region.hasAttribute("data-open")) region.setAttribute("data-closed", "");
+doc.classList.add("ready");
 for (const btn of $$(".tile-toggle[aria-controls]")) {
   btn.addEventListener("click", () => {
     const open = btn.getAttribute("aria-expanded") !== "true";
@@ -66,6 +67,14 @@ for (const btn of $$(".tile-toggle[aria-controls]")) {
     const group = btn.closest("[data-accordion]");
     if (open && group) for (const other of $$(".tile-toggle[aria-expanded='true']", group)) if (other !== btn) setOpen(other, false);
     setOpen(btn, open);
+  });
+  // the button sits in the title; its ::after covers the tile, while the one line stays selectable text.
+  // A plain click on that text (not a drag-select, not a link, not the open details) still toggles.
+  const tile = btn.closest(".tile");
+  tile?.addEventListener("click", (e) => {
+    if (e.target.closest("button, a, .more")) return;
+    if (!getSelection().isCollapsed) return;
+    btn.click();
   });
 }
 
@@ -78,24 +87,28 @@ function titleWords(screen) {
   return splits.get(title).words;
 }
 function inView(el) { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }
+/* every swap: the new screen fades and slides in (0.3 s) while the old one leaves (see show()).
+   The first visit to a screen adds a short title rise and item stagger; later visits don't replay it.
+   Everything settles within ~0.4 s. */
 function enter(screen, dir = 1, fromHome = false) {
   if (!motion() || !screen) return null;
-  const tl = gsap.timeline();
-  tl.from(screen, { opacity: 0, x: 24 * dir, duration: 0.4, clearProps: "opacity,transform" }, 0);
-  const words = titleWords(screen);
-  if (words.length) tl.from(words, { yPercent: 110, duration: 0.55, stagger: 0.07, clearProps: "transform" }, 0.04);
-  const items = $$(".lede, .title-block, .filters, .tiles > .tile:not([hidden]), .quote, .skill-chips, .pray, .contact-side > *", screen).filter((el) => shown(el) && inView(el)).slice(0, 12);
-  if (items.length) tl.from(items, { y: 16, opacity: 0, duration: 0.45, stagger: 0.045, clearProps: "opacity,transform" }, 0.1);
-  const art = $$(".thumb, .clock-card .dial", screen).filter((el) => shown(el) && inView(el)).slice(0, 8);
-  if (art.length) tl.from(art, { scale: 0.82, rotation: -5, duration: 0.6, stagger: 0.06, ease: "back.out(1.7)", clearProps: "transform" }, 0.16);
-  const fills = $$(".meter-fill", screen).filter(inView);
-  if (fills.length) tl.from(fills, { scaleX: 0, duration: 0.8, ease: "power2.inOut", clearProps: "transform" }, 0.3);
-  const col = $(".id");
-  if (fromHome && col && shown(col)) {
-    tl.from(col, { opacity: 0, x: -24, duration: 0.42, clearProps: "opacity,transform" }, 0)
-      .from($(".photo", col), { scale: 0.8, rotation: -8, duration: 0.6, ease: "back.out(1.8)", clearProps: "transform" }, 0.08)
-      .from($$(".id-name, .id-role, .id-place, .social", col), { y: 10, opacity: 0, duration: 0.4, stagger: 0.04, clearProps: "opacity,transform" }, 0.14);
+  // CSS hover transitions on tiles would chase the tweened transforms; switch them off while entering
+  screen.classList.add("is-entering");
+  const tl = gsap.timeline({ onComplete: () => screen.classList.remove("is-entering") });
+  const first = !screen.dataset.seen;
+  screen.dataset.seen = "1";
+  const off = mobile.matches ? { y: 12 } : { x: 20 * dir };
+  tl.fromTo(screen, { opacity: 0, ...off }, { opacity: 1, x: 0, y: 0, duration: 0.26, ease: "power2.out", clearProps: "opacity,transform" }, 0.04);
+  if (first && screen.id !== "home") {
+    const words = titleWords(screen);
+    if (words.length) tl.from(words, { yPercent: 100, duration: 0.26, stagger: 0.03, ease: "power3.out", clearProps: "transform" }, 0.04);
+    const items = $$(".lede, .clock-row, .block-head, .tiles > .tile, .quote, .skill-chips, .pray, .contact > *", screen).filter((el) => shown(el) && inView(el)).slice(0, 4);
+    if (items.length) tl.from(items, { y: 12, opacity: 0, duration: 0.22, stagger: 0.025, ease: "power2.out", clearProps: "opacity,transform" }, 0.06);
+    const fills = $$(".meter-fill", screen).filter(inView);
+    if (fills.length) tl.from(fills, { scaleX: 0, duration: 0.28, ease: "power2.inOut", clearProps: "transform" }, 0.1);
   }
+  const col = $(".id");
+  if (fromHome && col && shown(col)) tl.from(col, { opacity: 0, x: -20, duration: 0.28, ease: "power2.out", clearProps: "opacity,transform" }, 0.05);
   if (screen.id === "home") homeIn(tl, 0.05, true);
   return tl;
 }
@@ -103,25 +116,30 @@ function enter(screen, dir = 1, fromHome = false) {
 /* Home: disc, photo, name, script, meta and orbit objects, in that order */
 function homeIn(tl, at = 0, quick = false) {
   const home = $("#home");
-  const k = quick ? 0.6 : 1;
+  // coming back to Home: the disc settles and the text block rises, nothing more (~0.4 s)
+  if (quick) {
+    return tl.from(".ho-discg", { scale: 0.94, svgOrigin: "320 330", duration: 0.32, ease: "power2.out" }, at)
+      .from($$(".hero-text > *", home), { y: 10, opacity: 0, duration: 0.24, stagger: 0.02, ease: "power2.out", clearProps: "opacity,transform" }, at);
+  }
+  // first paint only: the whole intro is over in about 1.2 s, every tween 0.28 or 0.42 s
   const name = $(".hero-name", home);
   let chars = [];
-  if (!quick && SplitText) {
+  if (SplitText) {
     const split = SplitText.create($$(".first, .last", name), { type: "chars", mask: "chars", charsClass: "c" });
     chars = split.chars;
     tl.eventCallback("onComplete", () => split.revert());
   }
-  tl.from(".ho-discg", { scale: 0.85, svgOrigin: "320 330", duration: 0.7 * k, ease: "back.out(1.6)" }, at)
-    .from(".hero-photo", { scale: 0.9, duration: 0.6 * k, ease: "back.out(1.8)", clearProps: "transform" }, at + 0.08 * k)
-    .from(".greet", { opacity: 0, x: -14, duration: 0.4, clearProps: "opacity,transform" }, at + 0.12 * k);
-  if (chars.length) tl.from(chars, { yPercent: 115, duration: 0.6, stagger: 0.028 }, at + 0.18);
-  else tl.from(name, { opacity: 0, y: 14, duration: 0.45, clearProps: "opacity,transform" }, at + 0.1);
-  tl.from(".rotor", { opacity: 0, duration: 0.25, clearProps: "opacity" }, at + 0.5 * k)
-    .from(".intro-line", { opacity: 0, y: 14, duration: 0.5, clearProps: "opacity,transform" }, at + 0.58 * k)
-    .from(".meta-item", { opacity: 0, y: 10, duration: 0.45, stagger: 0.07, clearProps: "opacity,transform" }, at + 0.66 * k)
-    .from(".actions .btn", { opacity: 0, y: 14, duration: 0.45, stagger: 0.08, clearProps: "opacity,transform" }, at + 0.76 * k)
-    .from(".ho-orbit > g", { opacity: 0, scale: 0, transformOrigin: "50% 50%", duration: 0.55, stagger: 0.09, ease: "back.out(1.8)" }, at + 0.3 * k)
-    .from(".ho-orbit > path", { opacity: 0, duration: 0.5 }, at + 0.9 * k);
+  tl.from(".ho-discg", { scale: 0.85, svgOrigin: "320 330", duration: 0.42, ease: "back.out(1.6)" }, at)
+    .from(".hero-photo", { scale: 0.9, duration: 0.42, ease: "back.out(1.6)", clearProps: "transform" }, at + 0.06)
+    .from(".greet", { opacity: 0, x: -14, duration: 0.28, clearProps: "opacity,transform" }, at + 0.1);
+  if (chars.length) tl.from(chars, { yPercent: 115, duration: 0.42, stagger: 0.02 }, at + 0.14);
+  else tl.from(name, { opacity: 0, y: 14, duration: 0.42, clearProps: "opacity,transform" }, at + 0.1);
+  tl.from(".rotor", { opacity: 0, duration: 0.28, clearProps: "opacity" }, at + 0.4)
+    .from(".intro-line", { opacity: 0, y: 12, duration: 0.42, clearProps: "opacity,transform" }, at + 0.46)
+    .from(".meta-item", { opacity: 0, y: 10, duration: 0.42, stagger: 0.05, clearProps: "opacity,transform" }, at + 0.52)
+    .from(".actions .btn", { opacity: 0, y: 12, duration: 0.42, stagger: 0.06, clearProps: "opacity,transform" }, at + 0.6)
+    .from(".ho-orbit > g", { opacity: 0, scale: 0, transformOrigin: "50% 50%", duration: 0.42, stagger: 0.06, ease: "back.out(1.6)" }, at + 0.24)
+    .from(".ho-orbit > path", { opacity: 0, duration: 0.42 }, at + 0.7);
   return tl;
 }
 
@@ -144,16 +162,29 @@ function afterRoute(hash) {
   if (!sub) return;
   const tile = document.getElementById(sub);
   if (!tile || !tile.classList.contains("tile")) return;
-  if (tile.hidden) revealUpTo(tile);
+  if (works.indexOf(tile) >= visibleCount) revealUpTo(tile);
   const btn = $(".tile-toggle", tile);
   if (btn) setOpen(btn, true, false);
   requestAnimationFrame(() => tile.scrollIntoView({ block: "center", behavior: "auto" }));
 }
 
+// finish any running swap at once (a second click or arrow press mid-swap): no throw, no desync
+function finishSwap() {
+  const t = swapTl;
+  swapTl = null;
+  if (t) { t.progress(1); t.kill(); }
+  for (const el of $$(".screen.is-leaving")) dropLeaving(el);
+  for (const el of $$(".screen.is-entering")) el.classList.remove("is-entering");
+}
+function dropLeaving(el) {
+  el.classList.remove("is-leaving");
+  el.inert = false;
+  el.removeAttribute("style");
+}
 function show(route, { focus = true, quick = false, hash = "" } = {}) {
   const screen = document.getElementById(route);
   if (!screen) return;
-  if (swapTl) { swapTl.progress(1); swapTl.kill(); swapTl = null; }
+  finishSwap();
   if (route === current) { afterRoute(hash); if (focus) focusHeading(screen); return; }
   const out = document.getElementById(current);
   const dir = order.indexOf(route) < order.indexOf(current) ? -1 : 1;
@@ -175,16 +206,25 @@ function show(route, { focus = true, quick = false, hash = "" } = {}) {
     if (!reduced.matches) { screen.classList.remove("swap-in"); void screen.offsetWidth; screen.classList.add("swap-in"); }
     return;
   }
-  // outgoing slides away, the layout switches while nothing is visible, then the new screen arrives
-  swapTl = gsap.timeline({ onComplete: () => { swapTl = null; } });
-  if (out) swapTl.to(out, { opacity: 0, x: -20 * dir, duration: 0.2, ease: "power2.in" });
-  swapTl.call(() => {
-    if (out) gsap.set(out, { clearProps: "opacity,transform" });
+  // crossfade: the old screen is pinned where it was (absolutely, over the stage) and fades out
+  // while the new one fades and slides in underneath, so there is never an empty frame.
+  const stage = screen.parentElement;
+  let leaving = null;
+  if (out && stage) {
+    const r = out.getBoundingClientRect();
+    leaving = out;
+    leaving.classList.add("is-leaving");
+    leaving.inert = true;
     update();
-    const tl = enter(screen, dir, fromHome && route !== "home");
-    if (tl) swapTl.add(tl, ">");
-  });
-  if (quick) swapTl.timeScale(1.5);
+    const s = stage.getBoundingClientRect();
+    Object.assign(leaving.style, { top: `${r.top - s.top}px`, left: `${r.left - s.left}px`, width: `${r.width}px` });
+  } else update();
+  const tl = gsap.timeline({ onComplete: () => { if (swapTl === tl) swapTl = null; if (leaving) dropLeaving(leaving); } });
+  swapTl = tl;
+  if (leaving) tl.to(leaving, { opacity: 0, ...(mobile.matches ? {} : { x: -14 * dir }), duration: 0.16, ease: "power2.in" }, 0);
+  const inTl = enter(screen, dir, fromHome && route !== "home");
+  if (inTl) tl.add(inTl, 0);
+  if (quick) tl.timeScale(1.25);
 }
 function focusHeading(screen) { $("[tabindex='-1']", screen)?.focus({ preventScroll: true }); }
 
@@ -229,7 +269,7 @@ gsapReady.then(() => {
     if (t) t.textContent = "";
     doc.classList.remove("intro");
     homeIn(tl, 0);
-    tl.call(startRoll, null, 0.55);
+    tl.call(startRoll, null, 0.45);
   } else {
     doc.classList.remove("intro");
     startRoll(true);
@@ -249,6 +289,7 @@ if (bar) {
 
 /* ---------- rotator: types and erases in the hand, one full loop, back to the first title ---------- */
 let rollStarted = false;
+let homeSince = 0;
 function startRoll(already = false) {
   const roll = $(".roll[data-roll]");
   if (!roll || rollStarted || reduced.matches) return;
@@ -260,7 +301,8 @@ function startRoll(already = false) {
   let paused = false;
   rotor.addEventListener("pointerenter", () => (paused = true));
   rotor.addEventListener("pointerleave", () => (paused = false));
-  const idle = async () => { while (paused || document.hidden || current !== "home") await wait(250); };
+  // pauses while hovered, hidden or away from Home; back on Home it holds the current title for a moment first
+  const idle = async () => { while (paused || document.hidden || current !== "home" || Date.now() - homeSince < 2800) await wait(250); };
   const type = async (word) => { for (let i = 1; i <= word.length; i++) { text.textContent = word.slice(0, i); await wait(55 + Math.random() * 40); } };
   const erase = async () => { while (text.textContent.length) { text.textContent = text.textContent.slice(0, -1); await wait(26); } };
   (async () => {
@@ -278,9 +320,11 @@ function startRoll(already = false) {
   })();
 }
 
-/* ---------- Work: progressive ("virtual") loading; without JS every tile renders ---------- */
+/* ---------- Work: progressive loading; without JS every tile renders ----------
+   CSS hides tiles 6+ from the first paint (no layout shift); each batch rises in as the end of the
+   list comes within 600 px of the viewport, so it is usually there before you reach it. */
+const worksList = $(".works");
 const works = $$(".works > .work");
-const loader = $(".loader");
 const sentinel = $(".sentinel");
 const workStatus = $("#work-status");
 const FIRST = 5, BATCH = 4;
@@ -296,24 +340,22 @@ const setStatus = () => {
 function reveal(n, animate = true) {
   const next = works.slice(visibleCount, visibleCount + n);
   next.forEach((w, i) => {
-    w.hidden = false;
-    if (animate && !reduced.matches) { w.style.setProperty("--i", i); w.classList.add("is-new"); w.addEventListener("animationend", () => w.classList.remove("is-new"), { once: true }); }
+    w.classList.add("is-shown");
+    // only tiles that land in view rise in; the ones below the fold are simply there when you scroll to them
+    if (animate && !reduced.matches && w.getBoundingClientRect().top < innerHeight) { w.style.setProperty("--i", i); w.classList.add("is-new"); w.addEventListener("animationend", () => { w.classList.remove("is-new"); w.style.removeProperty("--i"); }, { once: true }); }
   });
   visibleCount += next.length;
   setStatus();
-  if (visibleCount >= works.length) { if (loader) loader.hidden = true; io?.disconnect(); }
+  if (visibleCount >= works.length) { worksList?.setAttribute("data-all", ""); io?.disconnect(); }
 }
 function revealUpTo(tile) {
   const i = works.indexOf(tile);
   if (i >= visibleCount) reveal(i + 1 - visibleCount, false);
 }
-async function loadMore() {
+function loadMore() {
   if (loading || visibleCount >= works.length) return;
   loading = true;
-  loader?.classList.add("is-loading");
-  if (!reduced.matches) await wait(420);
   reveal(BATCH);
-  loader?.classList.remove("is-loading");
   loading = false;
   // keep going while the end of the list is still in view (tall screens)
   requestAnimationFrame(() => { if (sentinel && current === "portfolio" && inView(sentinel)) loadMore(); });
@@ -326,11 +368,9 @@ function scrollParent(el) {
   return null;
 }
 if (works.length > FIRST && sentinel) {
-  works.slice(FIRST).forEach((w) => (w.hidden = true));
   visibleCount = FIRST;
-  if (loader) loader.hidden = false;
   setStatus();
-  io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting) && current === "portfolio") loadMore(); }, { root: scrollParent(sentinel), rootMargin: "0px 0px 80px 0px" });
+  io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting) && current === "portfolio") loadMore(); }, { root: scrollParent(sentinel), rootMargin: "0px 0px 600px 0px" });
   io.observe(sentinel);
   // keyboard: when focus reaches the last visible tile, the next batch is appended
   $(".works")?.addEventListener("focusin", (e) => {
@@ -339,12 +379,13 @@ if (works.length > FIRST && sentinel) {
   });
 }
 function onScreen(route) {
+  if (route === "home") homeSince = Date.now();
   if (route === "portfolio" && sentinel && visibleCount < works.length) requestAnimationFrame(() => { if (inView(sentinel)) loadMore(); });
   if (route === "about-me") updateScrollBtns();
   if (route === "contact") tick();
 }
 
-/* ---------- testimonials: arrow buttons scroll one card; no autoplay ---------- */
+/* ---------- testimonials: whole cards only; the arrows page by what is visible; no autoplay ---------- */
 const quotes = $(".quotes");
 const qBtns = $(".scroll-btns");
 function updateScrollBtns() {
@@ -360,8 +401,9 @@ if (quotes && qBtns) {
   for (const b of $$("button", qBtns)) {
     b.addEventListener("click", () => {
       const card = $(".quote", quotes);
-      const step = card ? card.getBoundingClientRect().width + 16 : 300;
-      quotes.scrollBy({ left: Number(b.dataset.scroll) * step, behavior: reduced.matches ? "auto" : "smooth" });
+      const w = card ? card.getBoundingClientRect().width + 16 : 300;
+      const perPage = Math.max(1, Math.floor((quotes.clientWidth + 16) / w));
+      quotes.scrollBy({ left: Number(b.dataset.scroll) * perPage * w, behavior: reduced.matches ? "auto" : "smooth" });
     });
   }
   quotes.addEventListener("scroll", () => requestAnimationFrame(updateScrollBtns), { passive: true });
@@ -405,7 +447,7 @@ function tick() {
   const h12 = h % 12 || 12, ap = h < 12 ? "am" : "pm";
   const time = `${h12}:${String(m).padStart(2, "0")} ${ap}`;
   clockText.innerHTML = h < 6
-    ? `It’s <time>${time}</time> in Hyderabad, so I’m probably asleep (or halfway through a horror movie).`
+    ? `It’s <time>${time}</time> in Hyderabad, so I’m probably asleep.`
     : `It’s <time>${time}</time> in Hyderabad right now.`;
   if (handH) handH.style.transform = `rotate(${turnsH}deg)`;
   if (handM) handM.style.transform = `rotate(${turnsM}deg)`;
@@ -451,7 +493,7 @@ if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const bad = inputs.filter((i) => !check(i));
-    if (bad.length) { bad[0].focus(); if (motion()) gsap.fromTo(bad[0], { x: -6 }, { x: 0, duration: 0.5, ease: "elastic.out(1.2, 0.3)", clearProps: "transform" }); return; }
+    if (bad.length) { bad[0].focus(); if (motion()) gsap.fromTo(bad[0], { x: -6 }, { x: 0, duration: 0.42, ease: "elastic.out(1.2, 0.3)", clearProps: "transform" }); return; }
     send.disabled = true;
     sendLabel.textContent = "Sending…";
     status.className = "form-status";
@@ -461,7 +503,7 @@ if (form) {
       const r = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
       if (!r.ok) throw new Error(String(r.status));
       form.reset();
-      const art = $(".clock-art");
+      const art = $(".city-art");
       if (art && motion()) gsap.fromTo(art, { rotation: 0 }, { rotation: -3, y: -6, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.out", clearProps: "transform" });
       status.classList.add("is-ok");
       status.textContent = "Thanks! It’s in my inbox and I’ll get back to you soon.";
@@ -475,17 +517,32 @@ if (form) {
   });
 }
 
-/* ---------- hidden easter egg: type "batman"; Esc or a click to leave ---------- */
+/* ---------- proof tooltip: Escape hides it until the pointer or focus leaves (WCAG 1.4.13) ---------- */
+for (const tip of $$(".tip")) {
+  const reset = () => tip.classList.remove("tip-off");
+  tip.addEventListener("keydown", (e) => { if (e.key === "Escape") { tip.classList.add("tip-off"); e.stopPropagation(); } });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && tip.matches(":hover")) tip.classList.add("tip-off"); });
+  tip.addEventListener("blur", reset);
+  tip.addEventListener("pointerleave", reset);
+}
+
+/* ---------- hidden easter egg: type "batman", or tap the clapperboard three times; Esc or a click to leave ---------- */
 const bat = $(".bat");
 if (bat) {
   let buffer = "";
-  const art = $(".bat-art", bat);
+  let art = null;
   const on = () => doc.hasAttribute("data-bat");
   const toggle = (state) => {
     if (state) {
-      if (art && art.dataset.src) { art.src = art.dataset.src; delete art.dataset.src; }
+      if (!art && bat.dataset.src) {
+        art = new Image(640, 420);
+        art.className = "bat-art";
+        art.alt = "";
+        art.src = bat.dataset.src;
+        bat.append(art);
+      }
       doc.setAttribute("data-bat", "");
-      if (motion() && art) gsap.fromTo(art, { scale: 0.86, y: 24, rotation: -2 }, { scale: 1, y: 0, rotation: 0, duration: 0.7, ease: "back.out(1.6)", clearProps: "transform" });
+      if (motion() && art) gsap.fromTo(art, { scale: 0.86, y: 24, rotation: -2 }, { scale: 1, y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.6)", clearProps: "transform" });
       announce("Bat-signal on. Press Escape to turn it off.");
     } else {
       doc.removeAttribute("data-bat");
@@ -499,7 +556,22 @@ if (bat) {
     buffer = (buffer + e.key.toLowerCase()).slice(-6);
     if (buffer === "batman") { buffer = ""; toggle(!on()); }
   });
-  document.addEventListener("pointerdown", () => { if (on()) toggle(false); });
+  let closedAt = 0;
+  document.addEventListener("pointerdown", () => { if (on()) { toggle(false); closedAt = Date.now(); } });
+  // the orbit's clapperboard: each tap snaps it shut; the third tap in a row turns on the signal
+  const clap = $(".clap-btn");
+  const orbit = $(".orbit");
+  if (clap) {
+    let taps = 0, last = 0;
+    clap.addEventListener("click", () => {
+      if (Date.now() - closedAt < 400) return;
+      if (orbit && !reduced.matches) { orbit.classList.remove("is-snap"); void orbit.getBoundingClientRect(); orbit.classList.add("is-snap"); }
+      const now = Date.now();
+      taps = now - last < 1600 ? taps + 1 : 1;
+      last = now;
+      if (taps >= 3) { taps = 0; toggle(true); }
+    });
+  }
 }
 
 /* ---------- analytics, after the page is interactive ---------- */

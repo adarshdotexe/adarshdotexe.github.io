@@ -1,8 +1,6 @@
-/* adarsh.exe palette: "Teal Disc" (Luique, calmed). One theme, no toggle, no glow.
-   Every colour on the site comes from this block. To change the palette, replace this file and
-   update the two literal copies of --bg (meta theme-color in the HTML heads and
-   theme_color/background_color in site.webmanifest). The illustrations in img/art/ use the same
-   hex values (see the research ILLUSTRATION.md). */
+/* palette: Teal Disc. Every colour on the site comes from this block. To change the palette, replace
+   this file and update the two literal copies of --bg (meta theme-color in the HTML heads and
+   theme_color/background_color in site.webmanifest). The illustrations in img/art/ use the same hex values. */
 
 :root {
   color-scheme: light;
@@ -22,7 +20,7 @@
   --ink-2: #45494D;
   --ink-3: #5D6166;
 
-  /* teal: the one brand field (discs, primary button, active nav) and accent text */
+  /* teal has four roles: the brand disc, the primary action and pressed state, the h1 accent word, links */
   --signal: #0F7A6C;
   --signal-ink: #0B6B5F;
   --signal-deep: #0B5C52;
@@ -31,7 +29,7 @@
   --mist: #E7F2EF;
   --selection: #CFE6E1;
 
-  /* the only warm accent, small areas only */
+  /* the only warm accent: the "Soon" tag */
   --marigold: #F2B33D;
 
   /* dot matrices (flat, never faded) */
