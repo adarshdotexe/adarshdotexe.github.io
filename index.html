@@ -33,7 +33,6 @@
   <link rel="preload" href="fonts/clash-grotesk-600.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/general-sans-var.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="js/vendor/gsap.min.js" as="script" media="(prefers-reduced-motion: no-preference)" />
-  <link rel="preload" href="js/vendor/SplitText.min.js" as="script" media="(prefers-reduced-motion: no-preference)" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/components.css" />
   <script>
@@ -45,24 +44,22 @@
       d.dataset.route = window.routeOf(location.hash) || "home";
       // route hashes start each screen at the top
       if (window.routeOf(location.hash)) { try { history.scrollRestoration = "manual"; } catch (e) {} addEventListener("load", function () { if (String(location.hash).indexOf("/") < 0) scrollTo(0, 0); }); }
-      // motion layer: self-hosted GSAP + SplitText, fetched now (in order, not blocking the parser), only when motion is welcome
+      // motion layer: self-hosted GSAP core, fetched now (not blocking the parser), only when motion is welcome
       window.__gsap = matchMedia("(prefers-reduced-motion: reduce)").matches ? Promise.resolve(false) : new Promise(function (ok) {
-        var n = 0, done = function (good) { if (!good) n = -9; if (++n === 2 || n < 0) ok(n === 2); };
-        ["js/vendor/gsap.min.js", "js/vendor/SplitText.min.js"].forEach(function (src) {
-          var s = document.createElement("script");
-          s.src = src; s.async = false;
-          s.onload = function () { done(true); }; s.onerror = function () { done(false); };
-          document.head.appendChild(s);
-        });
+        var s = document.createElement("script");
+        s.src = "js/vendor/gsap.min.js";
+        s.onload = function () { ok(true); }; s.onerror = function () { ok(false); };
+        document.head.appendChild(s);
       });
-      // Home intro: only the decorative orbit starts hidden (text is visible from the first paint); app.js or this timer clears it
+      // Home intro: the decorative orbit starts hidden (app.js or this timer clears it); if the motion layer is in
+      // before the first paint, app.js also runs the name's letter rise (under a second)
       if (d.dataset.route === "home" && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
         d.classList.add("intro");
         window.__introT = setTimeout(function () { d.classList.remove("intro"); }, 2000);
       }
     })();
   </script>
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/app.min.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -103,17 +100,6 @@
     <a class="btn btn-secondary btn-sm id-cv" href="AdarshVarshney-CV.pdf" download><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-resume"/></svg>CV (PDF)</a>
   </aside>
 
-  <nav class="rail" aria-label="Main navigation" aria-keyshortcuts="ArrowLeft ArrowRight">
-    <ul class="rail-group">
-      <li><a class="rail-link" href="#home" data-route="home"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-home"/></svg><span class="rail-label">Home</span></a></li>
-      <li><a class="rail-link" href="#about-me" data-route="about-me"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-about"/></svg><span class="rail-label">About</span></a></li>
-      <li><a class="rail-link" href="#portfolio" data-route="portfolio"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-work"/></svg><span class="rail-label">Work</span></a></li>
-      <li><a class="rail-link" href="#resume" data-route="resume"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-resume"/></svg><span class="rail-label">Résumé</span></a></li>
-      <li><a class="rail-link" href="#blog" data-route="blog"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-pen"/></svg><span class="rail-label">Blog</span></a></li>
-      <li><a class="rail-link" href="#contact" data-route="contact"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-mail"/></svg><span class="rail-label">Contact</span></a></li>
-    </ul>
-  </nav>
-
   <main id="main" class="stage" tabindex="-1">
 
     <!-- Home -->
@@ -123,25 +109,25 @@
           <p class="greet">Hi, I’m</p>
           <h1 class="hero-name" id="home-title" tabindex="-1"><span class="first">Adarsh</span> <span class="last">Varshney</span></h1>
           <p class="rotor">
-            <span class="roll" aria-hidden="true" data-roll="Horror Movie Fan|Webcomic Binger|Batman|Coffee Drinker|Gamer"><span class="roll-text">AI Tooling Builder</span><span class="caret"></span></span>
-            <span class="sr">AI tooling builder, horror movie fan, webcomic binger, Batman, coffee drinker, gamer.</span>
+            <span class="roll" aria-hidden="true" data-roll="Horror Movie Fan|Webcomic Binger|A24 Fanboy|Batman|Bookworm|Music Lover|Gamer"><span class="roll-text">AI Tooling Builder</span></span>
+            <span class="sr">AI tooling builder, horror movie fan, webcomic binger, A24 fanboy, Batman, bookworm, music lover, gamer.</span>
           </p>
           <p class="intro-line">I build tools at NVIDIA that predict GPU power, plus way too many side projects.</p>
           <ul class="meta">
             <li class="meta-item"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-work"/></svg><span>ASIC Engineer @ NVIDIA</span></li>
             <li class="meta-item"><svg class="icon i--pin" aria-hidden="true"><use href="img/art/icons.svg#i-pin"/></svg><span>Hyderabad</span></li>
-            <li class="meta-item meta-proof">
-              <span class="tip" tabindex="0" aria-describedby="proof-tip">
-                <svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-chip"/></svg>
-                <span class="sr">My GPU power model: one run went from 1 minute 55 seconds to 60 microseconds.</span>
-                <span class="tip-text" aria-hidden="true"><span class="nb">1&nbsp;min 55&nbsp;s</span><svg class="icon arrow"><use href="img/art/icons.svg#i-arrow"/></svg><span class="nb">60&nbsp;µs per run</span></span>
-                <span class="tip-pop" role="tooltip" id="proof-tip">One run of my GPU power model: almost two minutes before my rewrite, 60 millionths of a second after.</span>
-              </span>
-            </li>
           </ul>
+          <p class="proof">
+            <span class="tip" tabindex="0" aria-describedby="proof-tip">
+              <svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-chip"/></svg>
+              <span class="sr">My GPU power model: one run went from 1 minute 55 seconds to 60 microseconds.</span>
+              <span class="tip-text" aria-hidden="true"><span class="nb">1&nbsp;min 55&nbsp;s</span><svg class="icon arrow"><use href="img/art/icons.svg#i-arrow"/></svg><span class="nb">60&nbsp;µs per run</span></span>
+              <span class="tip-pop" role="tooltip" id="proof-tip">One run of my GPU power model: almost two minutes before my rewrite, 60 millionths of a second after.</span>
+            </span>
+          </p>
           <div class="actions">
             <a class="btn btn-primary" href="#portfolio">See my work<svg class="icon i--arrow" aria-hidden="true"><use href="img/art/icons.svg#i-arrow"/></svg></a>
-            <a class="btn btn-secondary" href="#contact">Say hi</a>
+            <a class="btn btn-secondary" href="#contact">Drop a message</a>
           </div>
         </div>
         <div class="hero-visual">
@@ -150,7 +136,7 @@
           <!-- portrait: img/portrait-face-*.webp, a head-and-shoulders crop of img/portrait.jpg, in all three places
                (hero, identity column, mobile bar; each marked data-portrait). To swap the photo, see README ("Swapping the portrait"). -->
           <img class="hero-photo" data-portrait src="img/portrait-face-480.webp" srcset="img/portrait-face-336.webp 336w, img/portrait-face-480.webp 480w" sizes="(max-width: 1023px) min(52vw, 225px), 340px" width="340" height="340" alt="Adarsh smiling under a flowering tree, in a denim shirt" fetchpriority="high" />
-          <!--orbit--><svg class="orbit" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" ><style>.ho-o{stroke:#17191B;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}.ho-d{stroke:#17191B;stroke-width:1.25;stroke-linejoin:round;stroke-linecap:round}.ho-z135 .ho-o{stroke-width:1.5px}.ho-z135 .ho-d{stroke-width:0.93px}.ho-z100 .ho-o{stroke-width:2px}.ho-z100 .ho-d{stroke-width:1.25px}.ho-z125 .ho-o{stroke-width:1.6px}.ho-z125 .ho-d{stroke-width:1.00px}.ho-z155 .ho-o{stroke-width:1.3px}.ho-z155 .ho-d{stroke-width:0.81px}.ho-z115 .ho-o{stroke-width:1.7px}.ho-z115 .ho-d{stroke-width:1.09px}.ho-orbit{transform-box:view-box;transform-origin:320px 330px;animation:ho-rot 26s ease-in-out infinite alternate}@keyframes ho-rot{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}.ho-bob{animation:ho-bob 5s ease-in-out infinite alternate}.ho-b1{animation-duration:4.2s}.ho-b2{animation-duration:3.4s;animation-delay:-1.2s}.ho-b3{animation-duration:5.6s;animation-delay:-2s}.ho-b4{animation-duration:6.4s;animation-delay:-.6s}.ho-b5{animation-duration:7s;animation-delay:-3s}@keyframes ho-bob{from{transform:translateY(-3px)}to{transform:translateY(3px)}}.ho-steam{animation:ho-steam 3.6s ease-in-out infinite}.ho-s2{animation-delay:-1.2s}.ho-s3{animation-delay:-2.4s}@keyframes ho-steam{0%{transform:translateY(4px);opacity:0}35%{opacity:1}100%{transform:translateY(-6px);opacity:0}}.ho-led{animation:ho-led 2.4s steps(1) infinite}@keyframes ho-led{0%,70%{opacity:1}72%,100%{opacity:.25}}.ho-hand{transform-box:fill-box;transform-origin:center;animation:ho-spin 8s linear infinite}@keyframes ho-spin{to{transform:rotate(360deg)}}.ho-unit{animation:ho-glide 5.2s ease-in-out infinite alternate}@keyframes ho-glide{from{transform:translateX(-3px)}to{transform:translateX(3px)}}.ho-ring{animation:ho-dash 3s linear infinite}@keyframes ho-dash{to{stroke-dashoffset:-13.6}}.ho-plane{animation:ho-drift 6s ease-in-out infinite alternate}@keyframes ho-drift{from{transform:translate(-2px,3px) rotate(-2deg)}to{transform:translate(3px,-4px) rotate(2deg)}}.ho-clap{transform-box:fill-box;transform-origin:0 100%;animation:ho-clap 7s ease-in-out infinite}@keyframes ho-clap{0%,76%{transform:rotate(0)}82%{transform:rotate(18deg)}86%{transform:rotate(13deg)}89%{transform:rotate(18deg)}100%{transform:rotate(0)}}@media (prefers-reduced-motion:reduce){*{animation:none!important}}</style><path fill="#17191B" d="M486.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0"/><g class="ho-discg"><path fill="#0F7A6C" fill-rule="evenodd" d="M80,340a250,250 0 1 0 500,0a250,250 0 1 0 -500,0ZM120,330a200,200 0 1 0 400,0a200,200 0 1 0 -400,0Z"/><path fill="#0B5C52" d="M502.2,158.8A250,250 0 1 1 148.8,512.2A250,250 0 0 0 502.2,158.8Z"/></g><circle class="ho-o" cx="598" cy="350" r="5.5" fill="none"/><path class="ho-o" d="M262,52v12M256,58h12"/><circle cx="596" cy="430" r="4.5" fill="#17191B"/><g class="ho-orbit"><path class="ho-d" fill="none" stroke-dasharray="3 5" d="M60,268C40,296 72,312 56,336C44,354 58,370 76,376"/><g transform="translate(118.5,128.5) rotate(-10) scale(1.35)" class="ho-z135"><g class="ho-bob ho-b1"><rect x="-25" y="-25" width="60" height="60" rx="5" fill="#17191B"/><path class="ho-d" fill="#C9C8C1" d="M-26,-37h4v8h-4Z M-26,29h4v8h-4Z M-37,-26v4h8v-4Z M29,-26v4h8v-4Z M-18,-37h4v8h-4Z M-18,29h4v8h-4Z M-37,-18v4h8v-4Z M29,-18v4h8v-4Z M-10,-37h4v8h-4Z M-10,29h4v8h-4Z M-37,-10v4h8v-4Z M29,-10v4h8v-4Z M-2,-37h4v8h-4Z M-2,29h4v8h-4Z M-37,-2v4h8v-4Z M29,-2v4h8v-4Z M6,-37h4v8h-4Z M6,29h4v8h-4Z M-37,6v4h8v-4Z M29,6v4h8v-4Z M14,-37h4v8h-4Z M14,29h4v8h-4Z M-37,14v4h8v-4Z M29,14v4h8v-4Z M22,-37h4v8h-4Z M22,29h4v8h-4Z M-37,22v4h8v-4Z M29,22v4h8v-4Z"/><rect class="ho-o" x="-30" y="-30" width="60" height="60" rx="5" fill="#CFE6E1"/><rect class="ho-d" x="-25.5" y="-25.5" width="51" height="51" rx="2.5" fill="none" stroke-dasharray="2 3.2" style="stroke:#0B5C52"/><path class="ho-d" fill="#8F918C" d="M-9.6,-23h3.2v5h-3.2Z M-9.6,18h3.2v5h-3.2Z M-23,-9.6v3.2h5v-3.2Z M18,-9.6v3.2h5v-3.2Z M-1.6,-23h3.2v5h-3.2Z M-1.6,18h3.2v5h-3.2Z M-23,-1.6v3.2h5v-3.2Z M18,-1.6v3.2h5v-3.2Z M6.4,-23h3.2v5h-3.2Z M6.4,18h3.2v5h-3.2Z M-23,6.4v3.2h5v-3.2Z M18,6.4v3.2h5v-3.2Z"/><rect class="ho-o" x="-15" y="-15" width="30" height="30" rx="2" fill="#17191B"/><path class="ho-d" fill="none" style="stroke:#0B5C52" d="M-11.5,-11.5h10v10h-10ZM1.5,-11.5h10v10h-10ZM-11.5,1.5h10v10h-10ZM1.5,1.5h10v10h-10Z"/><path fill="#FFFFFF" d="M-12.5,-5L-5,-12.5L-2,-12.5L-12.5,-2Z"/><path class="ho-d" fill="#FFFFFF" d="M-27.4,-25a2.2,2.2 0 1 0 4.4,0a2.2,2.2 0 1 0 -4.4,0ZM-27.4,25a2.2,2.2 0 1 0 4.4,0a2.2,2.2 0 1 0 -4.4,0ZM22.6,25a2.2,2.2 0 1 0 4.4,0a2.2,2.2 0 1 0 -4.4,0Z"/><circle class="ho-d ho-led" cx="24.8" cy="-24.8" r="2.7" fill="#E4775B"/></g></g><g transform="translate(410,88) rotate(-8) scale(1.25)" class="ho-z125"><g class="ho-bob ho-b2"><rect x="-23" y="-2" width="54" height="34" rx="3" fill="#17191B"/><rect class="ho-o" x="-27" y="-6" width="54" height="34" rx="3" fill="#CFE6E1"/><path class="ho-d" fill="none" d="M-20,4h20M-20,11h28M-20,18h14"/><circle class="ho-d" cx="17" cy="18" r="5" fill="#0F7A6C"/><rect x="-27" y="-15" width="54" height="9" rx="1.5" fill="#FFFFFF"/><path fill="#17191B" d="M-19,-15h7l-5,9h-7ZM-5,-15h7l-5,9h-7ZM9,-15h7l-5,9h-7Z"/><rect class="ho-o" x="-27" y="-15" width="54" height="9" rx="1.5" fill="none"/><g transform="rotate(-18 -27 -15)"><g class="ho-clap"><rect x="-27" y="-24" width="54" height="9" rx="1.5" fill="#FFFFFF"/><path fill="#17191B" d="M-15,-24h7l5,9h-7ZM-1,-24h7l5,9h-7ZM13,-24h7l5,9h-7Z"/><rect class="ho-o" x="-27" y="-24" width="54" height="9" rx="1.5" fill="none"/></g></g><circle class="ho-d" cx="-24" cy="-15" r="2.2" fill="#C9C8C1"/></g></g><g transform="translate(565.4,250.3) scale(1.25)" class="ho-z125"><g class="ho-bob ho-b3"><path class="ho-o" fill="#0B5C52" d="M-31,0L-31,8L-15.5,29L15.5,29L31,8L31,0L15.5,21L-15.5,21Z"/><path class="ho-d" d="M-15.5,21v8M15.5,21v8" fill="none"/><path class="ho-o" fill="#CFE6E1" d="M-31,0L-15.5,-21L15.5,-21L31,0L15.5,21L-15.5,21Z"/><path class="ho-d" fill="none" style="stroke:#0F7A6C" d="M-25,0L-12.5,-16.8L12.5,-16.8L25,0L12.5,16.8L-12.5,16.8Z"/><g class="ho-unit"><ellipse class="ho-ring ho-d" cx="0" cy="7" rx="13" ry="5.2" fill="none" style="stroke:#0F7A6C;stroke-width:1.4px" stroke-dasharray="4 2.8"/><path class="ho-o" fill="#8F918C" d="M-5.5,1h3.6v7h-3.6ZM1.9,1h3.6v7h-3.6Z"/><path class="ho-o" fill="none" d="M3,-19.5L5.5,-25.5"/><circle cx="5.8" cy="-26.4" r="1.9" fill="#17191B"/><path class="ho-o" fill="#FFFFFF" d="M-8,3L-8,-9.5Q-8,-20 0,-20Q8,-20 8,-9.5L8,3Z"/><path class="ho-d" fill="none" d="M-8,-2.5h16"/><rect x="-5.8" y="-14" width="11.6" height="5.2" rx="2.6" fill="#17191B"/><path fill="#FFFFFF" d="M-3.6,-12.6h2.2v1.6h-2.2Z"/></g></g></g><g transform="translate(518,528) rotate(12) scale(1.55)" class="ho-z155"><g class="ho-bob ho-b4"><circle cx="5" cy="9" r="22" fill="#17191B"/><g transform="rotate(-40 0 4)"><rect class="ho-o" x="-3.5" y="-24" width="7" height="7" rx="1.5" fill="#8F918C"/></g><g transform="rotate(40 0 4)"><rect class="ho-o" x="-3.5" y="-24" width="7" height="7" rx="1.5" fill="#8F918C"/></g><circle class="ho-o" cx="0" cy="-31.5" r="3.6" fill="none"/><rect class="ho-o" x="-3" y="-22" width="6" height="5" fill="#8F918C"/><rect class="ho-o" x="-6.5" y="-28" width="13" height="6.5" rx="2" fill="#C9C8C1"/><path class="ho-d" d="M-3,-26.5v3.5M0,-26.5v3.5M3,-26.5v3.5"/><circle class="ho-o" cx="0" cy="4" r="22" fill="#C9C8C1"/><circle class="ho-d" cx="0" cy="4" r="18.5" fill="#FFFFFF"/><path class="ho-d" d="M0,-13.5L0,-9.2M8.7,-11.2L7.7,-9.4M15.2,-4.8L13.4,-3.8M17.5,4L13.2,4M15.2,12.7L13.4,11.7M8.7,19.2L7.7,17.4M0,21.5L0,17.2M-8.8,19.2L-7.8,17.4M-15.2,12.8L-13.4,11.8M-17.5,4L-13.2,4M-15.2,-4.8L-13.4,-3.8M-8.8,-11.2L-7.8,-9.4"/><path fill="#CFE6E1" d="M0,4L0,-10.5A14.5,14.5 0 0 1 12.6,-3.2Z"/><g class="ho-hand"><circle cx="0" cy="4" r="14.5" fill="none"/><path class="ho-o" d="M0,8L0,-9.5"/></g><circle class="ho-o" cx="0" cy="4" r="2.6" fill="#17191B"/></g></g><g transform="translate(123.4,526.6) scale(1.35)" class="ho-z135"><g class="ho-bob ho-b5"><g fill="#17191B" transform="translate(5,5)"><ellipse cx="-2" cy="31" rx="33" ry="6.5"/><path d="M-24,-14L-24,20Q-24,30 -14,30L8,30Q18,30 18,20L18,-14Z M18,-7C36,-7 36,19 18,19Z"/></g><ellipse class="ho-o" cx="-2" cy="31" rx="33" ry="6.5" fill="#FFFFFF"/><ellipse class="ho-d" cx="-2" cy="30.5" rx="21" ry="3.6" fill="#F4F3EF"/><path class="ho-o" fill="#FFFFFF" d="M18,-7C36,-7 36,19 18,19L18,13C29,13 29,-1 18,-1Z"/><path class="ho-o" fill="#FFFFFF" d="M-24,-14L-24,20Q-24,30 -14,30L8,30Q18,30 18,20L18,-14Z"/><path fill="#F4F3EF" d="M10,-13L17,-13L17,20Q17,29 8,29L5.5,29Q10,26 10,20Z"/><path class="ho-d" fill="#0F7A6C" d="M-24,2L18,2L18,9L-24,9Z"/><path fill="#FFFFFF" d="M-15.5,5.5a1.3,1.3 0 1 0 2.6,0a1.3,1.3 0 1 0 -2.6,0ZM-8.3,5.5a1.3,1.3 0 1 0 2.6,0a1.3,1.3 0 1 0 -2.6,0ZM-1.1,5.5a1.3,1.3 0 1 0 2.6,0a1.3,1.3 0 1 0 -2.6,0Z"/><ellipse class="ho-o" cx="-3" cy="-14" rx="21" ry="5" fill="#FFFFFF"/><ellipse cx="-3" cy="-13.4" rx="17.5" ry="3.4" fill="#17191B"/><ellipse cx="-3.5" cy="-13.2" rx="11.5" ry="2" fill="#F2B33D"/><path class="ho-o ho-steam" fill="none" d="M-12,-22c-5,-5 5,-9 0,-14c-4,-4 3.5,-7.5 0,-10.5"/><path class="ho-o ho-steam ho-s2" fill="none" d="M-2,-24c-5.5,-5.5 5.5,-9.9 0,-15.4c-4.4,-4.4 3.9,-8.2 0,-11.5"/><path class="ho-o ho-steam ho-s3" fill="none" d="M7,-22c-4.5,-4.5 4.5,-8.1 0,-12.6"/></g></g><g transform="translate(77.6,241.8) scale(1.15)" class="ho-z115"><g class="ho-plane"><g transform="rotate(-48)"><path class="ho-o" fill="#CFE6E1" d="M32,0L-8,6L-20,19Z"/><path class="ho-o" fill="#C9C8C1" d="M32,0L-8,6L-11,13Z"/><path class="ho-o" fill="#FFFFFF" d="M32,0L-30,-13L-8,6Z"/><path class="ho-d" fill="none" d="M-18,-6.5L6,1.2"/></g></g></g></g></svg><!--/orbit-->
+          <!--orbit--><svg class="orbit" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" ><style>.ho-o{stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}.ho-d{stroke:currentColor;stroke-width:1.25;stroke-linejoin:round;stroke-linecap:round}.ho-z135 .ho-o{stroke-width:1.5px}.ho-z135 .ho-d{stroke-width:0.93px}.ho-z100 .ho-o{stroke-width:2px}.ho-z100 .ho-d{stroke-width:1.25px}.ho-z125 .ho-o{stroke-width:1.6px}.ho-z125 .ho-d{stroke-width:1.00px}.ho-z155 .ho-o{stroke-width:1.3px}.ho-z155 .ho-d{stroke-width:0.81px}.ho-z115 .ho-o{stroke-width:1.7px}.ho-z115 .ho-d{stroke-width:1.09px}.ho-orbit{transform-box:view-box;transform-origin:320px 330px;animation:ho-rot 26s ease-in-out infinite alternate}@keyframes ho-rot{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}.ho-bob{animation:ho-bob 5s ease-in-out infinite alternate}.ho-b1{animation-duration:4.2s}.ho-b2{animation-duration:3.4s;animation-delay:-1.2s}.ho-b3{animation-duration:5.6s;animation-delay:-2s}.ho-b4{animation-duration:6.4s;animation-delay:-.6s}.ho-b5{animation-duration:7s;animation-delay:-3s}@keyframes ho-bob{from{transform:translateY(-3px)}to{transform:translateY(3px)}}.ho-steam{animation:ho-steam 3.6s ease-in-out infinite}.ho-s2{animation-delay:-1.2s}.ho-s3{animation-delay:-2.4s}@keyframes ho-steam{0%{transform:translateY(4px);opacity:0}35%{opacity:1}100%{transform:translateY(-6px);opacity:0}}.ho-led{animation:ho-led 2.4s steps(1) infinite}@keyframes ho-led{0%,70%{opacity:1}72%,100%{opacity:.25}}.ho-hand{transform-box:fill-box;transform-origin:center;animation:ho-spin 8s linear infinite}@keyframes ho-spin{to{transform:rotate(360deg)}}.ho-unit{animation:ho-glide 5.2s ease-in-out infinite alternate}@keyframes ho-glide{from{transform:translateX(-3px)}to{transform:translateX(3px)}}.ho-ring{animation:ho-dash 3s linear infinite}@keyframes ho-dash{to{stroke-dashoffset:-13.6}}.ho-plane{animation:ho-drift 6s ease-in-out infinite alternate}@keyframes ho-drift{from{transform:translate(-2px,3px) rotate(-2deg)}to{transform:translate(3px,-4px) rotate(2deg)}}.ho-clap{transform-box:fill-box;transform-origin:0 100%;animation:ho-clap 7s ease-in-out infinite}@keyframes ho-clap{0%,76%{transform:rotate(0)}82%{transform:rotate(18deg)}86%{transform:rotate(13deg)}89%{transform:rotate(18deg)}100%{transform:rotate(0)}}@media (prefers-reduced-motion:reduce){*{animation:none!important}}</style><path fill="#17191B" d="M486.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,74a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,86a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,98a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,110a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,122a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M486.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M498.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M510.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M522.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M534.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0M546.5,134a1.5,1.5 0 1 0 3,0a1.5,1.5 0 1 0 -3,0"/><g class="ho-discg"><path fill="#0F7A6C" fill-rule="evenodd" d="M80,340a250,250 0 1 0 500,0a250,250 0 1 0 -500,0ZM120,330a200,200 0 1 0 400,0a200,200 0 1 0 -400,0Z"/><path fill="#0B5C52" d="M502.2,158.8A250,250 0 1 1 148.8,512.2A250,250 0 0 0 502.2,158.8Z"/></g><circle class="ho-o" cx="598" cy="350" r="5.5" fill="none"/><path class="ho-o" d="M262,52v12M256,58h12"/><circle cx="596" cy="430" r="4.5" fill="#17191B"/><g class="ho-orbit"><path class="ho-d" fill="none" stroke-dasharray="3 5" d="M60,268C40,296 72,312 56,336C44,354 58,370 76,376"/><g transform="translate(118.5,128.5) rotate(-10) scale(1.35)" class="ho-z135"><g class="ho-bob ho-b1"><rect x="-25" y="-25" width="60" height="60" rx="5" fill="#17191B"/><path class="ho-d" fill="#C9C8C1" d="M-26,-37h4v8h-4Z M-26,29h4v8h-4Z M-37,-26v4h8v-4Z M29,-26v4h8v-4Z M-18,-37h4v8h-4Z M-18,29h4v8h-4Z M-37,-18v4h8v-4Z M29,-18v4h8v-4Z M-10,-37h4v8h-4Z M-10,29h4v8h-4Z M-37,-10v4h8v-4Z M29,-10v4h8v-4Z M-2,-37h4v8h-4Z M-2,29h4v8h-4Z M-37,-2v4h8v-4Z M29,-2v4h8v-4Z M6,-37h4v8h-4Z M6,29h4v8h-4Z M-37,6v4h8v-4Z M29,6v4h8v-4Z M14,-37h4v8h-4Z M14,29h4v8h-4Z M-37,14v4h8v-4Z M29,14v4h8v-4Z M22,-37h4v8h-4Z M22,29h4v8h-4Z M-37,22v4h8v-4Z M29,22v4h8v-4Z"/><rect class="ho-o" x="-30" y="-30" width="60" height="60" rx="5" fill="#CFE6E1"/><rect class="ho-d" x="-25.5" y="-25.5" width="51" height="51" rx="2.5" fill="none" stroke-dasharray="2 3.2" style="stroke:#0B5C52"/><path class="ho-d" fill="#8F918C" d="M-9.6,-23h3.2v5h-3.2Z M-9.6,18h3.2v5h-3.2Z M-23,-9.6v3.2h5v-3.2Z M18,-9.6v3.2h5v-3.2Z M-1.6,-23h3.2v5h-3.2Z M-1.6,18h3.2v5h-3.2Z M-23,-1.6v3.2h5v-3.2Z M18,-1.6v3.2h5v-3.2Z M6.4,-23h3.2v5h-3.2Z M6.4,18h3.2v5h-3.2Z M-23,6.4v3.2h5v-3.2Z M18,6.4v3.2h5v-3.2Z"/><rect class="ho-o" x="-15" y="-15" width="30" height="30" rx="2" fill="#17191B"/><path class="ho-d" fill="none" style="stroke:#0B5C52" d="M-11.5,-11.5h10v10h-10ZM1.5,-11.5h10v10h-10ZM-11.5,1.5h10v10h-10ZM1.5,1.5h10v10h-10Z"/><path fill="#FFFFFF" d="M-12.5,-5L-5,-12.5L-2,-12.5L-12.5,-2Z"/><path class="ho-d" fill="#FFFFFF" d="M-27.4,-25a2.2,2.2 0 1 0 4.4,0a2.2,2.2 0 1 0 -4.4,0ZM-27.4,25a2.2,2.2 0 1 0 4.4,0a2.2,2.2 0 1 0 -4.4,0ZM22.6,25a2.2,2.2 0 1 0 4.4,0a2.2,2.2 0 1 0 -4.4,0Z"/><circle class="ho-d ho-led" cx="24.8" cy="-24.8" r="2.7" fill="#E4775B"/></g></g><g transform="translate(410,88) rotate(-8) scale(1.25)" class="ho-z125"><g class="ho-bob ho-b2"><rect x="-23" y="-2" width="54" height="34" rx="3" fill="#17191B"/><rect class="ho-o" x="-27" y="-6" width="54" height="34" rx="3" fill="#CFE6E1"/><path class="ho-d" fill="none" d="M-20,4h20M-20,11h28M-20,18h14"/><circle class="ho-d" cx="17" cy="18" r="5" fill="#0F7A6C"/><rect x="-27" y="-15" width="54" height="9" rx="1.5" fill="#FFFFFF"/><path fill="#17191B" d="M-19,-15h7l-5,9h-7ZM-5,-15h7l-5,9h-7ZM9,-15h7l-5,9h-7Z"/><rect class="ho-o" x="-27" y="-15" width="54" height="9" rx="1.5" fill="none"/><g transform="rotate(-18 -27 -15)"><g class="ho-clap"><rect x="-27" y="-24" width="54" height="9" rx="1.5" fill="#FFFFFF"/><path fill="#17191B" d="M-15,-24h7l5,9h-7ZM-1,-24h7l5,9h-7ZM13,-24h7l5,9h-7Z"/><rect class="ho-o" x="-27" y="-24" width="54" height="9" rx="1.5" fill="none"/></g></g><circle class="ho-d" cx="-24" cy="-15" r="2.2" fill="#C9C8C1"/></g></g><g transform="translate(565.4,250.3) scale(1.25)" class="ho-z125"><g class="ho-bob ho-b3"><path class="ho-o" fill="#0B5C52" d="M-31,0L-31,8L-15.5,29L15.5,29L31,8L31,0L15.5,21L-15.5,21Z"/><path class="ho-d" d="M-15.5,21v8M15.5,21v8" fill="none"/><path class="ho-o" fill="#CFE6E1" d="M-31,0L-15.5,-21L15.5,-21L31,0L15.5,21L-15.5,21Z"/><path class="ho-d" fill="none" style="stroke:#0F7A6C" d="M-25,0L-12.5,-16.8L12.5,-16.8L25,0L12.5,16.8L-12.5,16.8Z"/><g class="ho-unit"><ellipse class="ho-ring ho-d" cx="0" cy="7" rx="13" ry="5.2" fill="none" style="stroke:#0F7A6C;stroke-width:1.4px" stroke-dasharray="4 2.8"/><path class="ho-o" fill="#8F918C" d="M-5.5,1h3.6v7h-3.6ZM1.9,1h3.6v7h-3.6Z"/><path class="ho-o" fill="none" d="M3,-19.5L5.5,-25.5"/><circle cx="5.8" cy="-26.4" r="1.9" fill="#17191B"/><path class="ho-o" fill="#FFFFFF" d="M-8,3L-8,-9.5Q-8,-20 0,-20Q8,-20 8,-9.5L8,3Z"/><path class="ho-d" fill="none" d="M-8,-2.5h16"/><rect x="-5.8" y="-14" width="11.6" height="5.2" rx="2.6" fill="#17191B"/><path fill="#FFFFFF" d="M-3.6,-12.6h2.2v1.6h-2.2Z"/></g></g></g><g transform="translate(518,528) rotate(12) scale(1.55)" class="ho-z155"><g class="ho-bob ho-b4"><circle cx="5" cy="9" r="22" fill="#17191B"/><g transform="rotate(-40 0 4)"><rect class="ho-o" x="-3.5" y="-24" width="7" height="7" rx="1.5" fill="#8F918C"/></g><g transform="rotate(40 0 4)"><rect class="ho-o" x="-3.5" y="-24" width="7" height="7" rx="1.5" fill="#8F918C"/></g><circle class="ho-o" cx="0" cy="-31.5" r="3.6" fill="none"/><rect class="ho-o" x="-3" y="-22" width="6" height="5" fill="#8F918C"/><rect class="ho-o" x="-6.5" y="-28" width="13" height="6.5" rx="2" fill="#C9C8C1"/><path class="ho-d" d="M-3,-26.5v3.5M0,-26.5v3.5M3,-26.5v3.5"/><circle class="ho-o" cx="0" cy="4" r="22" fill="#C9C8C1"/><circle class="ho-d" cx="0" cy="4" r="18.5" fill="#FFFFFF"/><path class="ho-d" d="M0,-13.5L0,-9.2M8.7,-11.2L7.7,-9.4M15.2,-4.8L13.4,-3.8M17.5,4L13.2,4M15.2,12.7L13.4,11.7M8.7,19.2L7.7,17.4M0,21.5L0,17.2M-8.8,19.2L-7.8,17.4M-15.2,12.8L-13.4,11.8M-17.5,4L-13.2,4M-15.2,-4.8L-13.4,-3.8M-8.8,-11.2L-7.8,-9.4"/><path fill="#CFE6E1" d="M0,4L0,-10.5A14.5,14.5 0 0 1 12.6,-3.2Z"/><g class="ho-hand"><circle cx="0" cy="4" r="14.5" fill="none"/><path class="ho-o" d="M0,8L0,-9.5"/></g><circle class="ho-o" cx="0" cy="4" r="2.6" fill="#17191B"/></g></g><g transform="translate(123.4,526.6) scale(1.35)" class="ho-z135"><g class="ho-bob ho-b5"><g fill="#17191B" transform="translate(5,5)"><ellipse cx="-2" cy="31" rx="33" ry="6.5"/><path d="M-24,-14L-24,20Q-24,30 -14,30L8,30Q18,30 18,20L18,-14Z M18,-7C36,-7 36,19 18,19Z"/></g><ellipse class="ho-o" cx="-2" cy="31" rx="33" ry="6.5" fill="#FFFFFF"/><ellipse class="ho-d" cx="-2" cy="30.5" rx="21" ry="3.6" fill="#F4F3EF"/><path class="ho-o" fill="#FFFFFF" d="M18,-7C36,-7 36,19 18,19L18,13C29,13 29,-1 18,-1Z"/><path class="ho-o" fill="#FFFFFF" d="M-24,-14L-24,20Q-24,30 -14,30L8,30Q18,30 18,20L18,-14Z"/><path fill="#F4F3EF" d="M10,-13L17,-13L17,20Q17,29 8,29L5.5,29Q10,26 10,20Z"/><path class="ho-d" fill="#0F7A6C" d="M-24,2L18,2L18,9L-24,9Z"/><path fill="#FFFFFF" d="M-15.5,5.5a1.3,1.3 0 1 0 2.6,0a1.3,1.3 0 1 0 -2.6,0ZM-8.3,5.5a1.3,1.3 0 1 0 2.6,0a1.3,1.3 0 1 0 -2.6,0ZM-1.1,5.5a1.3,1.3 0 1 0 2.6,0a1.3,1.3 0 1 0 -2.6,0Z"/><ellipse class="ho-o" cx="-3" cy="-14" rx="21" ry="5" fill="#FFFFFF"/><ellipse cx="-3" cy="-13.4" rx="17.5" ry="3.4" fill="#17191B"/><ellipse cx="-3.5" cy="-13.2" rx="11.5" ry="2" fill="#F2B33D"/><path class="ho-o ho-steam" fill="none" d="M-12,-22c-5,-5 5,-9 0,-14c-4,-4 3.5,-7.5 0,-10.5"/><path class="ho-o ho-steam ho-s2" fill="none" d="M-2,-24c-5.5,-5.5 5.5,-9.9 0,-15.4c-4.4,-4.4 3.9,-8.2 0,-11.5"/><path class="ho-o ho-steam ho-s3" fill="none" d="M7,-22c-4.5,-4.5 4.5,-8.1 0,-12.6"/></g></g><g transform="translate(77.6,241.8) scale(1.15)" class="ho-z115"><g class="ho-plane"><g transform="rotate(-48)"><path class="ho-o" fill="#CFE6E1" d="M32,0L-8,6L-20,19Z"/><path class="ho-o" fill="#C9C8C1" d="M32,0L-8,6L-11,13Z"/><path class="ho-o" fill="#FFFFFF" d="M32,0L-30,-13L-8,6Z"/><path class="ho-d" fill="none" d="M-18,-6.5L6,1.2"/></g></g></g></g></svg><!--/orbit-->
         </div>
       </div>
     </section>
@@ -169,7 +155,7 @@
             <div class="thumb thumb-art"><img class="art" src="img/art/do-lead.svg" width="240" height="200" alt="" loading="lazy" /></div>
             <div class="tile-body">
               <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="do1-more" aria-label="Show more: Software Development" data-open-label="Show less: Software Development" data-closed-label="Show more: Software Development">Software Development<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
-              <p class="tile-line">TypeScript and Python, with an AI agent or three.</p>
+              <p class="tile-line">TypeScript and Python, usually with an AI coding agent.</p>
             </div>
             <div class="more" id="do1-more" data-collapsible><div><p>The childhood obsession with all things tech never wore off. At NVIDIA I work on our GPU power model and PACE, the team’s chatbot. After work it’s side projects: Lokasu, and products for Vilje Tech. Both are on the Work screen.</p></div></div>
           </li>
@@ -177,9 +163,9 @@
             <div class="thumb thumb-art"><img class="art" src="img/art/do-films.svg" width="240" height="200" alt="" loading="lazy" /></div>
             <div class="tile-body">
               <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="do2-more" aria-label="Show more: Movies, Webcomics &amp; Books" data-open-label="Show less: Movies, Webcomics &amp; Books" data-closed-label="Show more: Movies, Webcomics &amp; Books">Movies, Webcomics &amp; Books<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
-              <p class="tile-line">Anything from A24, plus webcomics and books.</p>
+              <p class="tile-line">Horror and A24 first. Webcomics and books in between.</p>
             </div>
-            <div class="more" id="do2-more" data-collapsible><div><p>I’ll watch almost anything, but horror and A24 are my favourites, and I’ll never say no to Endgame or a Batman movie. I’m always halfway through some webcomic or book too. Reviews of all of it are coming to the Blog.</p></div></div>
+            <div class="more" id="do2-more" data-collapsible><div><p>I’ll watch almost anything. Horror and A24 are my favourites, and I’ll never say no to Endgame or a Batman movie. I’m always halfway through some webcomic or book too. Reviews of all of it are coming to the Blog.</p></div></div>
           </li>
           <li class="tile tile-do" id="do-travel">
             <div class="thumb thumb-art"><img class="art" src="img/art/do-travel.svg" width="240" height="200" alt="" loading="lazy" /></div>
@@ -253,6 +239,7 @@
     <section class="screen" id="portfolio" aria-labelledby="work-title" data-title="Work (Adarsh Varshney)">
       <header class="screen-head">
         <h1 class="title" id="work-title" tabindex="-1"><span class="accent">Work</span></h1>
+        <p class="lede">Day job first, then the things I build for fun.</p>
       </header>
       <h2 class="sr title-block">Projects</h2>
       <p class="sr" id="work-status" aria-live="polite"></p>
@@ -263,9 +250,8 @@
             <p class="tile-meta"><span>NVIDIA</span><span>TypeScript</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w1-more" aria-label="Show details: GPU Power Model" data-open-label="Hide details: GPU Power Model" data-closed-label="Show details: GPU Power Model">GPU Power Model<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">Predicts a GPU’s power long before the chip exists.</p>
-            <p class="tile-links"><span class="links"></span></p>
           </div>
-          <div class="more" id="w1-more" data-collapsible><div><p>You draw the chip as blocks wired to power rails and clocks, change a clock or a voltage, and the watts update as you edit. I rewrote it from scratch in TypeScript, and my team’s Python notebooks run the same engine.</p></div></div>
+          <div class="more" id="w1-more" data-collapsible><div><p>You draw the chip as blocks wired to power rails and clocks. Change a clock or a voltage and the watts update as you edit. I rewrote it from scratch in TypeScript, and my team’s Python notebooks run the same engine.</p></div></div>
         </li>
         <li class="tile work" id="pace">
           <div class="thumb"><img class="art" src="img/art/work-pace.svg" width="480" height="320" alt="" loading="lazy" /></div>
@@ -273,7 +259,6 @@
             <p class="tile-meta"><span>NVIDIA</span><span>Won NTech 2025</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w2-more" aria-label="Show details: PACE" data-open-label="Hide details: PACE" data-closed-label="Show details: PACE">PACE<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">A chatbot that answers questions from my team’s docs.</p>
-            <p class="tile-links"><span class="links"></span></p>
           </div>
           <div class="more" id="w2-more" data-collapsible><div><p>PACE stands for Power Architecture Chat Engine. New interns ask it things instead of digging through Confluence, and when it got an answer wrong, it was usually an outdated page, so we fixed those too. It won NTech 2025, NVIDIA’s internal paper contest.</p></div></div>
         </li>
@@ -283,23 +268,21 @@
             <p class="tile-meta"><span>Side project</span><span>Three.js</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w3-more" aria-label="Show details: Lokasu" data-open-label="Hide details: Lokasu" data-closed-label="Show details: Lokasu">Lokasu<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">My weekend studio, with a 3D home page and Launch Check, a free link checker.</p>
-            <p class="tile-links"><span class="links"><a class="link ext" href="https://lokasu.com">lokasu.com<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a><a class="link ext" href="https://lokasu.com/launch-check/" aria-label="Launch Check on lokasu.com">Launch Check<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></span></p>
           </div>
           <div class="more" id="w3-more" data-collapsible><div>
-            <p>I designed and coded lokasu.com, where 3D models morph into each other and your cursor pushes them around. Launch Check is free. Paste a link and see what will break when you share it. Two more products are on the way.</p>
+            <p>I designed and coded lokasu.com, where 3D models morph into each other and your cursor pushes them around. Launch Check is free. Paste a link and see what will break when you share it. Two more products are on the way.</p><p class="tile-links"><a class="link ext" href="https://lokasu.com">lokasu.com<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a><a class="link ext" href="https://lokasu.com/launch-check/" aria-label="Launch Check on lokasu.com">Launch Check<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></p>
             <figure class="shot"><img src="img/work-lokasu.webp" width="240" height="150" alt="The lokasu.com home page: “Give us the mess.” next to a cloud of 3D blocks" loading="lazy" decoding="async" /></figure>
           </div></div>
         </li>
         <li class="tile work" id="vilje">
           <div class="thumb"><img class="art" src="img/art/work-vilje.svg" width="480" height="320" alt="" loading="lazy" /></div>
           <div class="tile-body">
-            <p class="tile-meta"><span>Client work</span><span>Sweden</span></p>
+            <p class="tile-meta"><span>Since 2026</span><span>Sweden</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w4-more" aria-label="Show details: Vilje Tech" data-open-label="Hide details: Vilje Tech" data-closed-label="Show details: Vilje Tech">Vilje Tech<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">I make ViljePDF and ViljeCAD for Nordic companies.</p>
-            <p class="tile-links"><span class="links"></span></p>
           </div>
           <div class="more" id="w4-more" data-collapsible><div>
-            <p>Vilje Tech is an AI and automation company in Helsingborg, Sweden. ViljePDF reads engineering drawings that are just images and lets a person check every value, ViljeCAD turns drawing PDFs into 3D models, and Inwoice moves supplier invoices from inbox to books.</p>
+            <p>Vilje Tech is an AI and automation company in Helsingborg, Sweden. I build ViljePDF, which reads engineering drawings that are only images and lets a person check every value. ViljeCAD turns drawing PDFs into 3D models, and Inwoice moves supplier invoices from inbox to books.</p>
             <figure class="shot"><img src="img/work-viljepdf.webp" width="240" height="150" alt="ViljePDF comparing two revisions of a public NIST test drawing" loading="lazy" decoding="async" /></figure>
           </div></div>
         </li>
@@ -309,9 +292,8 @@
             <p class="tile-meta"><span>Springer</span><span>College</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w5-more" aria-label="Show details: StarCraft II Paper" data-open-label="Hide details: StarCraft II Paper" data-closed-label="Show details: StarCraft II Paper">StarCraft II Paper<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">My final-year project, published as a Springer chapter.</p>
-            <p class="tile-links"><span class="links"><a class="link ext" href="https://doi.org/10.1007/978-981-95-1357-4_9" aria-label="StarCraft II paper on Springer">Springer<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></span></p>
           </div>
-          <div class="more" id="w5-more" data-collapsible><div><p>Our agent chose between big tactics, like gathering resources or training units, where the usual RL agents learn one click at a time. It beat DeepMind’s baseline agent at those and lost badly in actual fights.</p></div></div>
+          <div class="more" id="w5-more" data-collapsible><div><p>Our agent chose between big tactics like gathering resources or training units, where the usual RL agents learn one click at a time. It beat DeepMind’s baseline agent at those and lost badly in actual fights.</p><p class="tile-links"><a class="link ext" href="https://doi.org/10.1007/978-981-95-1357-4_9" aria-label="StarCraft II paper on Springer">Springer<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></p></div></div>
         </li>
         <li class="tile work" id="continue">
           <div class="thumb"><img class="art" src="img/art/work-continue.svg" width="480" height="320" alt="" loading="lazy" /></div>
@@ -319,9 +301,8 @@
             <p class="tile-meta"><span>Open source</span><span>Merged</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w6-more" aria-label="Show details: Continue PR" data-open-label="Hide details: Continue PR" data-closed-label="Show details: Continue PR">Continue PR<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">My merged PR adding NVIDIA NIM embeddings to Continue.</p>
-            <p class="tile-links"><span class="links"><a class="link ext" href="https://github.com/continuedev/continue/pull/2233" aria-label="Continue PR on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></span></p>
           </div>
-          <div class="more" id="w6-more" data-collapsible><div><p>Continue is a popular open-source AI coding assistant. I added NVIDIA NIM as an embeddings provider, so it can index your code with NVIDIA’s models.</p></div></div>
+          <div class="more" id="w6-more" data-collapsible><div><p>Continue is a popular open-source AI coding assistant. I added NVIDIA NIM as an embeddings provider, so it can index your code with NVIDIA’s models.</p><p class="tile-links"><a class="link ext" href="https://github.com/continuedev/continue/pull/2233" aria-label="Continue PR on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></p></div></div>
         </li>
         <li class="tile work" id="d3-hwschematic">
           <div class="thumb"><img class="art" src="img/art/work-schematic.svg" width="480" height="320" alt="" loading="lazy" /></div>
@@ -329,9 +310,8 @@
             <p class="tile-meta"><span>JavaScript</span><span>D3</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w7-more" aria-label="Show details: d3-hwschematic" data-open-label="Hide details: d3-hwschematic" data-closed-label="Show details: d3-hwschematic">d3-hwschematic<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">Hardware schematics in the browser, built on Michal Orsák’s original.</p>
-            <p class="tile-links"><span class="links"><a class="link ext" href="https://github.com/adarshdotexe/d3-hwschematic" aria-label="d3-hwschematic fork on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a><a class="link ext" href="https://github.com/Nic30/d3-hwschematic" aria-label="Original d3-hwschematic on GitHub">Original<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></span></p>
           </div>
-          <div class="more" id="w7-more" data-collapsible><div><p>Michal Orsák’s d3-hwschematic draws interactive schematics of hardware designs with D3 and ELK. In 2024 I reworked how it draws nodes and wires. The original and all the hard parts are his.</p></div></div>
+          <div class="more" id="w7-more" data-collapsible><div><p>Michal Orsák wrote d3-hwschematic, which draws interactive schematics of hardware designs with D3 and ELK. In 2024 I reworked how it draws nodes and wires.</p><p class="tile-links"><a class="link ext" href="https://github.com/adarshdotexe/d3-hwschematic" aria-label="d3-hwschematic fork on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a><a class="link ext" href="https://github.com/Nic30/d3-hwschematic" aria-label="Original d3-hwschematic on GitHub">Original<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></p></div></div>
         </li>
         <li class="tile work" id="dotfiles">
           <div class="thumb"><img class="art" src="img/art/work-dotfiles.svg" width="480" height="320" alt="" loading="lazy" /></div>
@@ -339,9 +319,8 @@
             <p class="tile-meta"><span>Shell</span><span>Linux</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w8-more" aria-label="Show details: dotfiles" data-open-label="Hide details: dotfiles" data-closed-label="Show details: dotfiles">dotfiles<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">One command turns a bare machine into my setup.</p>
-            <p class="tile-links"><span class="links"><a class="link ext" href="https://github.com/adarshdotexe/dotfiles" aria-label="dotfiles on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></span></p>
           </div>
-          <div class="more" id="w8-more" data-collapsible><div><p>It sets up my zsh and terminal on Rocky Linux, Ubuntu, macOS or WSL. Without sudo, it installs everything into my home folder instead, and every config is a symlink back to the repo.</p></div></div>
+          <div class="more" id="w8-more" data-collapsible><div><p>It sets up my zsh and terminal on Rocky Linux, Ubuntu, macOS or WSL. Without sudo, it installs everything into my home folder instead, and every config is a symlink back to the repo.</p><p class="tile-links"><a class="link ext" href="https://github.com/adarshdotexe/dotfiles" aria-label="dotfiles on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></p></div></div>
         </li>
         <li class="tile work" id="mest-friend">
           <div class="thumb"><img class="art" src="img/art/work-mest.svg" width="480" height="320" alt="" loading="lazy" /></div>
@@ -349,9 +328,8 @@
             <p class="tile-meta"><span>Android</span><span>Firebase</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w9-more" aria-label="Show details: Mest-Friend" data-open-label="Hide details: Mest-Friend" data-closed-label="Show details: Mest-Friend">Mest-Friend<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">An Android app for our college mess.</p>
-            <p class="tile-links"><span class="links"><a class="link ext" href="https://github.com/adarshdotexe/Mest-Friend" aria-label="Mest-Friend on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></span></p>
           </div>
-          <div class="more" id="w9-more" data-collapsible><div><p>Students mark the days they’ll be away, so they don’t pay for meals they won’t eat and less food goes to waste. It also handled QR meal coupons and menu votes.</p></div></div>
+          <div class="more" id="w9-more" data-collapsible><div><p>Students mark the days they’ll be away, so they don’t pay for meals they won’t eat and less food goes to waste. It also handled QR meal coupons and menu votes.</p><p class="tile-links"><a class="link ext" href="https://github.com/adarshdotexe/Mest-Friend" aria-label="Mest-Friend on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></p></div></div>
         </li>
         <li class="tile work" id="java-games">
           <div class="thumb"><img class="art" src="img/art/work-games.svg" width="480" height="320" alt="" loading="lazy" /></div>
@@ -359,9 +337,8 @@
             <p class="tile-meta"><span>Java</span><span>Games</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w10-more" aria-label="Show details: Java 8 Games" data-open-label="Hide details: Java 8 Games" data-closed-label="Show details: Java 8 Games">Java 8 Games<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">Snake, 2048 and Tetris, written from scratch in Java.</p>
-            <p class="tile-links"><span class="links"><a class="link ext" href="https://github.com/adarshdotexe/Java-8-Games" aria-label="Java 8 Games on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></span></p>
           </div>
-          <div class="more" id="w10-more" data-collapsible><div><p>Built in 2022, with screenshots of all three in the repo. It’s still my most-starred repo, which says a lot about my other repos.</p></div></div>
+          <div class="more" id="w10-more" data-collapsible><div><p>Built in 2022, with screenshots of all three in the repo. It’s still my most-starred repo.</p><p class="tile-links"><a class="link ext" href="https://github.com/adarshdotexe/Java-8-Games" aria-label="Java 8 Games on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></p></div></div>
         </li>
         <li class="tile work" id="automeet">
           <div class="thumb"><img class="art" src="img/art/work-automeet.svg" width="480" height="320" alt="" loading="lazy" /></div>
@@ -369,9 +346,8 @@
             <p class="tile-meta"><span>Python</span><span>Selenium</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w11-more" aria-label="Show details: automeet" data-open-label="Hide details: automeet" data-closed-label="Show details: automeet">automeet<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">A bot that joined my online classes for me.</p>
-            <p class="tile-links"><span class="links"><a class="link ext" href="https://github.com/adarshdotexe/python-scripts" aria-label="automeet in python-scripts on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></span></p>
           </div>
-          <div class="more" id="w11-more" data-collapsible><div><p>During online classes at NIT, this Python script opened Google Meet and joined each class on schedule. It’s in my python-scripts repo, next to a Discord bot that turns Markdown into LaTeX PDFs.</p></div></div>
+          <div class="more" id="w11-more" data-collapsible><div><p>During online classes at NIT, this Python script opened Google Meet and joined each class on schedule. It’s in my python-scripts repo, next to a Discord bot that turns Markdown into LaTeX PDFs.</p><p class="tile-links"><a class="link ext" href="https://github.com/adarshdotexe/python-scripts" aria-label="automeet in python-scripts on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></p></div></div>
         </li>
         <li class="tile work" id="xv6">
           <div class="thumb"><img class="art" src="img/art/work-xv6.svg" width="480" height="320" alt="" loading="lazy" /></div>
@@ -379,9 +355,8 @@
             <p class="tile-meta"><span>C</span><span>OS</span></p>
             <h3 class="tile-title"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="w12-more" aria-label="Show details: xv6 with ps" data-open-label="Hide details: xv6 with ps" data-closed-label="Show details: xv6 with ps">xv6 with ps<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></h3>
             <p class="tile-line">A ps system call for MIT’s teaching OS.</p>
-            <p class="tile-links"><span class="links"><a class="link ext" href="https://github.com/adarshdotexe/XV6-Modified" aria-label="xv6 with ps on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></span></p>
           </div>
-          <div class="more" id="w12-more" data-collapsible><div><p>Our OS course used xv6, a small Unix-like teaching OS from MIT that runs on RISC-V, and I added a ps system call to it that lists the running processes, just like ps does on Linux.</p></div></div>
+          <div class="more" id="w12-more" data-collapsible><div><p>Our OS course used xv6, a small Unix-like teaching OS from MIT that runs on RISC-V, and I added a ps system call to it that lists the running processes, just like ps does on Linux.</p><p class="tile-links"><a class="link ext" href="https://github.com/adarshdotexe/XV6-Modified" aria-label="xv6 with ps on GitHub">GitHub<svg class="icon i--external" aria-hidden="true"><use href="img/art/icons.svg#i-external"/></svg></a></p></div></div>
         </li>
       </ol>
       <div class="sentinel" aria-hidden="true"></div>
@@ -391,65 +366,57 @@
     <section class="screen" id="resume" aria-labelledby="cv-title" data-title="Résumé (Adarsh Varshney)">
       <header class="screen-head">
         <h1 class="title" id="cv-title" tabindex="-1"><span class="accent">Résumé</span></h1>
-        <p class="lede">Also on one page: <a class="link" href="AdarshVarshney-CV.pdf" download>my CV as a PDF</a>.</p>
+        <p class="lede">Want it on one page? Here’s <a class="link" href="AdarshVarshney-CV.pdf" download>my CV as a PDF</a>.</p>
       </header>
 
       <div class="cv-cols">
       <section class="block" aria-labelledby="exp-title">
         <div class="block-head"><h2 class="title-block" id="exp-title">Experience</h2></div>
         <ol class="tiles rows">
-          <li class="tile row">
-            <p class="row-year num">2024–now</p>
+          <li class="row">
             <div class="tile-body">
-              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv1-more" aria-label="Show details: NVIDIA" data-open-label="Hide details: NVIDIA" data-closed-label="Show details: NVIDIA">NVIDIA<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role">ASIC Engineer, power team</span></p>
+              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv1-more" aria-label="Show details: NVIDIA" data-open-label="Hide details: NVIDIA" data-closed-label="Show details: NVIDIA">NVIDIA<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role"><span class="row-year num">2024–now</span>ASIC Engineer, power team</span></p>
             </div>
             <div class="more" id="cv1-more" data-collapsible><div><p>I make the tools our power engineers run all day. I rewrote our GPU power model from scratch, built PACE (our chatbot, which won NTech 2025) and mentor interns.</p></div></div>
           </li>
-          <li class="tile row">
-            <p class="row-year num">2024–now</p>
+          <li class="row">
             <div class="tile-body">
-              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv2-more" aria-label="Show details: Outside NVIDIA" data-open-label="Hide details: Outside NVIDIA" data-closed-label="Show details: Outside NVIDIA">Outside NVIDIA<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role">Lokasu, Vilje Tech, freelance</span></p>
+              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv2-more" aria-label="Show details: Outside NVIDIA" data-open-label="Hide details: Outside NVIDIA" data-closed-label="Show details: Outside NVIDIA">Outside NVIDIA<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role"><span class="row-year num">2024–now</span>Side projects and freelance</span></p>
             </div>
             <div class="more" id="cv2-more" data-collapsible><div><p>Since 2024 I’ve freelanced on edge AI, running vision models on small Intel PCs for shops. Lokasu is my side project, and since 2026 I’ve made ViljePDF, ViljeCAD and Inwoice for Vilje Tech, an AI company in Sweden.</p></div></div>
           </li>
-          <li class="tile row">
-            <p class="row-year num">2022</p>
+          <li class="row">
             <div class="tile-body">
-              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv3-more" aria-label="Show details: MRM Procom &amp; Testright" data-open-label="Hide details: MRM Procom &amp; Testright" data-closed-label="Show details: MRM Procom &amp; Testright">MRM Procom &amp; Testright<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role">The Intern Era</span></p>
+              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv3-more" aria-label="Show details: MRM Procom &amp; Testright" data-open-label="Hide details: MRM Procom &amp; Testright" data-closed-label="Show details: MRM Procom &amp; Testright">MRM Procom &amp; Testright<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role"><span class="row-year num">2022</span>The Intern Era</span></p>
             </div>
             <div class="more" id="cv3-more" data-collapsible><div><p>At MRM Procom I built an Android app to control their smart devices, with 100% Espresso test coverage because chaos needs tests. At Testright I wrote a camera module for checking diamonds that cut weeks off their R&amp;D.</p></div></div>
           </li>
         </ol>
       </section>
 
+      <div class="cv-col">
       <section class="block" aria-labelledby="edu-title">
         <div class="block-head"><h2 class="title-block" id="edu-title">Education</h2></div>
         <ol class="tiles rows">
-          <li class="tile row">
-            <p class="row-year num">2020–24</p>
+          <li class="row">
             <div class="tile-body">
-              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv4-more" aria-label="Show details: NIT Andhra Pradesh" data-open-label="Hide details: NIT Andhra Pradesh" data-closed-label="Show details: NIT Andhra Pradesh">NIT Andhra Pradesh<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role">B.Tech, Computer Science</span></p>
+              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv4-more" aria-label="Show details: NIT Andhra Pradesh" data-open-label="Hide details: NIT Andhra Pradesh" data-closed-label="Show details: NIT Andhra Pradesh">NIT Andhra Pradesh<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role"><span class="row-year num">2020–24</span>B.Tech, Computer Science</span></p>
             </div>
-            <div class="more" id="cv4-more" data-collapsible><div><p>Core CS, a minor in AI and an unhealthy number of clubs. I was a DSA lab TA, started a coding course for juniors, became an Economic Times Campus Star, and the StarCraft II project turned into a Springer chapter.</p></div></div>
+            <div class="more" id="cv4-more" data-collapsible><div><p>Core CS, a minor in AI and an unhealthy number of clubs. I was a DSA lab TA and started a coding course for juniors, and later the StarCraft II project became a Springer chapter. Somewhere in between I became an Economic Times Campus Star.</p></div></div>
           </li>
-          <li class="tile row">
-            <p class="row-year num">2018–20</p>
+          <li class="row">
             <div class="tile-body">
-              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv5-more" aria-label="Show details: FIITJEE, Hyderabad" data-open-label="Hide details: FIITJEE, Hyderabad" data-closed-label="Show details: FIITJEE, Hyderabad">FIITJEE, Hyderabad<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role">JEE prep</span></p>
+              <p class="row-line"><span class="row-org"><button class="tile-toggle" type="button" aria-expanded="false" aria-controls="cv5-more" aria-label="Show details: FIITJEE, Hyderabad" data-open-label="Hide details: FIITJEE, Hyderabad" data-closed-label="Show details: FIITJEE, Hyderabad">FIITJEE, Hyderabad<span class="pm" aria-hidden="true"><svg class="icon i-p"><use href="img/art/icons.svg#i-plus"/></svg><svg class="icon i-m"><use href="img/art/icons.svg#i-minus"/></svg></span></button></span><span class="row-role"><span class="row-year num">2018–20</span>JEE prep</span></p>
             </div>
             <div class="more" id="cv5-more" data-collapsible><div><p>The primary cause for a break from social interactions and everything cheerful for a span of two years, but also one of the main reasons for doing well in JEE.</p></div></div>
           </li>
         </ol>
       </section>
 
-      </div>
-
       <section class="block" aria-labelledby="skills-title">
         <div class="block-head"><h2 class="title-block" id="skills-title">Programming Skills</h2></div>
-        <div class="tile skills">
-          <ul class="skill-chips">
-            <li class="tag">TypeScript</li><li class="tag">Python</li><li class="tag">Svelte</li><li class="tag">SQL</li><li class="tag">C/C++</li><li class="tag">Java</li><li class="tag">RAG &amp; agents</li><li class="tag">ONNX &amp; OpenVINO</li><li class="tag">Linux</li><li class="tag">Docker</li><li class="tag">Git</li>
-          </ul>
+        <div class="skills">
+          <p class="skill-line">TypeScript, Python, Svelte, SQL, C/C++, Java, RAG &amp; agents, ONNX &amp; OpenVINO, Linux, Docker, Git</p>
           <div class="pray">
             <p class="sr">Praying that my code works: 100 percent.</p>
             <div class="pray-head" aria-hidden="true"><span>Praying that my code works</span><span class="num">100%</span></div>
@@ -457,13 +424,15 @@
           </div>
         </div>
       </section>
+      </div>
+      </div>
     </section>
 
     <!-- Blog -->
     <section class="screen" id="blog" aria-labelledby="blog-title" data-title="Blog (Adarsh Varshney)">
       <header class="screen-head">
         <h1 class="title" id="blog-title" tabindex="-1"><span class="accent">Blog</span></h1>
-        <p class="lede">Some old posts. Film, webcomic and book reviews are next.</p>
+        <p class="lede">Only old posts so far. Reviews of what I watch and read are next.</p>
       </header>
       <!-- The filter chips stay hidden until two categories have two posts each; then delete the hidden attribute. -->
       <div class="filters" role="group" aria-label="Filter posts by category" hidden>
@@ -474,19 +443,19 @@
       <!-- To add a post: copy one .post card below, set data-cat, the tag, date, title and a one-line teaser, then add one writing/*.html page (see README). -->
       <h2 class="sr title-block">Posts</h2>
       <ul class="tiles posts">
-        <li class="tile post post-empty" data-cat="reviews">
+        <li class="tile post-soon" data-cat="reviews">
           <div class="thumb"><img class="art" src="img/art/blog-reviews.svg" width="320" height="200" alt="" loading="lazy" /></div>
           <div class="tile-body">
-            <p class="tags"><span class="tag tag-soon">Reviews</span><span class="date">Soon</span></p>
+            <p class="tile-meta"><span>Reviews</span><span class="soon">Soon</span></p>
             <h3 class="tile-title"><span class="post-link">My first review</span></h3>
             <p class="tile-line">Still watching and reading for it, I promise.</p>
           </div>
-          <span class="go" aria-hidden="true"><svg class="icon"><use href="img/art/icons.svg#i-clock"/></svg></span>
+          <span class="go" aria-hidden="true"><svg class="icon"><use href="img/art/icons.svg#i-pen"/></svg></span>
         </li>
         <li class="tile post" data-cat="teaching">
           <div class="thumb"><img class="art" src="img/art/blog-fundamentals.svg" width="320" height="200" alt="" loading="lazy" /></div>
           <div class="tile-body">
-            <p class="tags"><span class="tag">Teaching</span><span class="date"><time class="num" datetime="2022-09-16">16 Sep 2022</time></span></p>
+            <p class="tile-meta"><span>Teaching</span><time class="num" datetime="2022-09-16">16 Sep 2022</time></p>
             <h3 class="tile-title"><a class="post-link" href="writing/fundamentals.html" aria-label="Read: Fundamentals, Programming Fundamentals">Fundamentals, Programming Fundamentals</a></h3>
             <p class="tile-line">My invite to CS007, a coding course I ran for juniors.</p>
           </div>
@@ -495,7 +464,7 @@
         <li class="tile post" data-cat="personal">
           <div class="thumb"><img class="art" src="img/art/blog-birthday.svg" width="320" height="200" alt="" loading="lazy" /></div>
           <div class="tile-body">
-            <p class="tags"><span class="tag">Personal</span><span class="date"><time class="num" datetime="2022-04-11">11 Apr 2022</time></span></p>
+            <p class="tile-meta"><span>Personal</span><time class="num" datetime="2022-04-11">11 Apr 2022</time></p>
             <h3 class="tile-title"><a class="post-link" href="writing/hello-world.html" aria-label="Read: Happy Birthday Me!">Happy Birthday Me!</a></h3>
             <p class="tile-line">Why does this website exist? Well… to flex a little on my classmates.</p>
           </div>
@@ -509,18 +478,6 @@
       <header class="screen-head">
         <h1 class="title" id="contact-title" tabindex="-1"><span class="accent">Contact</span></h1>
         <p class="lede">Drop me a message about anything, even a movie I should watch.</p>
-        <p class="clock-row">
-          <svg class="dial" viewBox="0 0 56 56" aria-hidden="true" focusable="false">
-            <circle class="dial-shadow" cx="30" cy="30" r="25"/>
-            <circle class="dial-face" cx="28" cy="28" r="25"/>
-            <path class="dial-ticks" d="M28 7v4M28 45v4M7 28h4M45 28h4"/>
-            <path class="dial-dots" d="M38.5 9.8v.01M46.2 17.5v.01M46.2 38.5v.01M38.5 46.2v.01M17.5 46.2v.01M9.8 38.5v.01M9.8 17.5v.01M17.5 9.8v.01"/>
-            <path class="hand hand-h" d="M28 28V17"/>
-            <path class="hand hand-m" d="M28 28V11"/>
-            <circle class="dial-pin" cx="28" cy="28" r="2.6"/>
-          </svg>
-          <span class="clock-line"><span class="sr">Local time in Hyderabad: </span><span class="clock-text">Hyderabad, India</span></span>
-        </p>
       </header>
       <div class="contact">
         <form class="tile form" action="https://formspree.io/f/xvolbzrz" method="POST">
@@ -549,6 +506,18 @@
         </form>
 
         <div class="contact-side">
+          <p class="clock-row">
+            <svg class="dial" viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+              <circle class="dial-shadow" cx="30" cy="30" r="25"/>
+              <circle class="dial-face" cx="28" cy="28" r="25"/>
+              <path class="dial-ticks" d="M28 7v4M28 45v4M7 28h4M45 28h4"/>
+              <path class="dial-dots" d="M38.5 9.8v.01M46.2 17.5v.01M46.2 38.5v.01M38.5 46.2v.01M17.5 46.2v.01M9.8 38.5v.01M9.8 17.5v.01M17.5 9.8v.01"/>
+              <path class="hand hand-h" d="M28 28V17"/>
+              <path class="hand hand-m" d="M28 28V11"/>
+              <circle class="dial-pin" cx="28" cy="28" r="2.6"/>
+            </svg>
+            <span class="clock-line"><span class="sr">Local time in Hyderabad: </span><span class="clock-text">Hyderabad, India</span></span>
+          </p>
           <p class="mail-row">
             <span class="mail-lead">Or write to me at</span>
             <span class="mail-pair"><a class="link mail" href="mailto:adarshvarshney1104@gmail.com">adarshvarshney1104@gmail.com</a>
@@ -564,6 +533,18 @@
       </div>
     </section>
   </main>
+
+  <!-- after main in the DOM so Tab reaches the content first; it is fixed, so nothing moves on screen -->
+  <nav class="rail" aria-label="Main navigation" aria-keyshortcuts="ArrowLeft ArrowRight">
+    <ul class="rail-group">
+      <li><a class="rail-link" href="#home" data-route="home"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-home"/></svg><span class="rail-label">Home</span></a></li>
+      <li><a class="rail-link" href="#about-me" data-route="about-me"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-about"/></svg><span class="rail-label">About</span></a></li>
+      <li><a class="rail-link" href="#portfolio" data-route="portfolio"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-work"/></svg><span class="rail-label">Work</span></a></li>
+      <li><a class="rail-link" href="#resume" data-route="resume"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-resume"/></svg><span class="rail-label">Résumé</span></a></li>
+      <li><a class="rail-link" href="#blog" data-route="blog"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-pen"/></svg><span class="rail-label">Blog</span></a></li>
+      <li><a class="rail-link" href="#contact" data-route="contact"><svg class="icon" aria-hidden="true"><use href="img/art/icons.svg#i-mail"/></svg><span class="rail-label">Contact</span></a></li>
+    </ul>
+  </nav>
 
   <footer class="site-foot"><p>Made with ♥ by Adarsh Varshney</p></footer>
   <p class="sr" id="announce" aria-live="polite"></p>

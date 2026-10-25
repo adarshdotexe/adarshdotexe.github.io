@@ -23,17 +23,15 @@ const announce = (msg) => { const a = $("#announce"); if (!a) return; a.textCont
 const shown = (el) => el.offsetParent !== null || el.getClientRects().length > 0;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-/* ---------- motion layer: GSAP 3 + SplitText, self-hosted in js/vendor/ and fetched by the head script
-   only when motion is allowed. The page is fully readable before it arrives (text is never hidden for it). ---------- */
+/* ---------- motion layer: GSAP 3 core, self-hosted in js/vendor/ and fetched by the head script only when
+   motion is allowed. The page is readable before it arrives; only a first-paint Home intro hides the name's
+   letters and the greeting for under a second. ---------- */
 let gsap = null;
-let SplitText = null;
 const motion = () => gsap && !reduced.matches;
 const gsapReady = reduced.matches ? Promise.resolve(null) : (async () => {
   const ok = await Promise.race([window.__gsap || Promise.resolve(false), wait(4000).then(() => false)]);
   if (!ok || !window.gsap) return null;
   gsap = window.gsap;
-  SplitText = window.SplitText || null;
-  if (SplitText) gsap.registerPlugin(SplitText);
   gsap.defaults({ ease: "power3.out", overwrite: "auto" });
   gsap.ticker.lagSmoothing(0); // a slow frame jumps ahead instead of stretching the motion
   doc.classList.add("gsap");
@@ -64,7 +62,7 @@ function setOpen(btn, open, animate = true) {
   btn.setAttribute("aria-expanded", String(open));
   const label = open ? btn.dataset.openLabel : btn.dataset.closedLabel;
   if (label) btn.setAttribute("aria-label", label);
-  btn.closest(".tile")?.classList.toggle("is-open", open);
+  btn.closest(".tile, .row")?.classList.toggle("is-open", open);
   if (!(animate && motion())) {
     if (open) region.removeAttribute("data-closed"); else region.setAttribute("data-closed", "");
     return;
@@ -79,6 +77,17 @@ function setOpen(btn, open, animate = true) {
     gsap.to(region, { height: 0, opacity: 0, duration: 0.26, ease: "power3.inOut", onComplete: () => { region.setAttribute("data-closed", ""); gsap.set(region, { clearProps: "height,opacity" }); } });
   }
 }
+// an opened tile whose details would end below the fold (or behind the dock) scrolls up just enough, never past its top
+function keepInView(btn) {
+  const tile = btn.closest(".tile, .row");
+  const region = document.getElementById(btn.getAttribute("aria-controls"));
+  if (!tile || !region) return;
+  const r = tile.getBoundingClientRect();
+  const end = r.bottom + Math.max(0, region.scrollHeight - region.getBoundingClientRect().height);
+  const bottom = innerHeight - (mobile.matches ? 104 : 24);
+  const by = Math.min(end - bottom, r.top - (mobile.matches ? 80 : 24));
+  if (by > 0) window.scrollBy({ top: by, behavior: reduced.matches ? "auto" : "smooth" });
+}
 for (const region of $$("[data-collapsible]")) if (!region.hasAttribute("data-open")) region.setAttribute("data-closed", "");
 doc.classList.add("ready");
 for (const btn of $$(".tile-toggle[aria-controls]")) {
@@ -88,10 +97,11 @@ for (const btn of $$(".tile-toggle[aria-controls]")) {
     const group = btn.closest("[data-accordion]");
     if (open && group) for (const other of $$(".tile-toggle[aria-expanded='true']", group)) if (other !== btn) setOpen(other, false);
     setOpen(btn, open);
+    if (open) keepInView(btn);
   });
   // the button sits in the title; its ::after covers the tile, while the one line stays selectable text.
   // A plain click on that text (not a drag-select, not a link, not the open details) still toggles.
-  const tile = btn.closest(".tile");
+  const tile = btn.closest(".tile, .row");
   tile?.addEventListener("click", (e) => {
     if (e.target.closest("button, a, .more")) return;
     if (!getSelection().isCollapsed) return;
@@ -99,69 +109,95 @@ for (const btn of $$(".tile-toggle[aria-controls]")) {
   });
 }
 
-/* ---------- screen entrances ---------- */
+/* ---------- text splitting for the masked rises: each word (or letter) goes in an overflow-hidden mask ----------
+   Words keep their parent spans (the accent word stays an accent), and the spaces stay plain text. */
+function splitInto(el, unit, maskClass, innerClass) {
+  const out = [];
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  for (const node of nodes) {
+    const parts = unit === "chars" ? [...node.data] : node.data.split(/(\s+)/);
+    const frag = document.createDocumentFragment();
+    for (const part of parts) {
+      if (!part) continue;
+      if (/^\s+$/.test(part)) { frag.append(part); continue; }
+      const mask = document.createElement("span");
+      const inner = document.createElement("span");
+      mask.className = maskClass;
+      inner.className = innerClass;
+      inner.textContent = part;
+      mask.append(inner);
+      frag.append(mask);
+      out.push(inner);
+    }
+    node.replaceWith(frag);
+  }
+  return out;
+}
 const splits = new Map();
 function titleWords(screen) {
   const title = $(".title", screen);
-  if (!title || !SplitText) return [];
-  if (!splits.has(title)) splits.set(title, SplitText.create(title, { type: "words", mask: "words", wordsClass: "w" }));
-  return splits.get(title).words;
+  if (!title) return [];
+  if (!splits.has(title)) splits.set(title, splitInto(title, "words", "w-mask", "w"));
+  return splits.get(title);
 }
-function inView(el) { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }
-/* every swap, sequenced so two screens never share a frame: the old screen slides out first (0.12 s,
+function inView(el) { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.left < innerWidth && r.right > 0; }
+/* every swap, sequenced so two screens never share a frame: the old screen slides out first (0.08 s,
    see show()), then the new one slides in from the side it lives on (expo.out),
-   its title words rise through masks and the first tiles in view stagger up. Settles in about 0.42 s. */
+   its title words rise through masks and the first five items in view stagger up. Settles in about 0.35 s. */
 function enter(screen, dir = 1, fromHome = false, at = 0) {
   if (!motion() || !screen) return null;
   // CSS hover transitions on tiles would chase the tweened transforms; switch them off while entering
   screen.classList.add("is-entering");
   const tl = gsap.timeline({ onComplete: () => screen.classList.remove("is-entering") });
   const off = mobile.matches ? 28 : 56;
-  tl.fromTo(screen, { opacity: 0, x: off * dir }, { opacity: 1, x: 0, duration: 0.28, ease: "expo.out", clearProps: "opacity,transform" }, at);
+  tl.fromTo(screen, { opacity: 0, x: off * dir }, { opacity: 1, x: 0, duration: 0.24, ease: "expo.out", clearProps: "opacity,transform" }, at);
   if (screen.id === "home") { homeIn(tl, at, true); return tl; }
   const words = titleWords(screen);
-  if (words.length) tl.fromTo(words, { yPercent: 105, rotation: 4 }, { yPercent: 0, rotation: 0, duration: 0.24, stagger: 0.03, ease: "power3.out", clearProps: "transform" }, at + 0.02);
-  const items = $$(".lede, .clock-row, .block-head, .tiles > .tile, .quote, .contact > *", screen).filter((el) => shown(el) && inView(el)).slice(0, 6);
-  if (items.length) tl.fromTo(items, { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.2, stagger: 0.02, ease: "power3.out", clearProps: "opacity,transform" }, at + 0.02);
+  if (words.length) tl.fromTo(words, { yPercent: 105, rotation: 4 }, { yPercent: 0, rotation: 0, duration: 0.22, stagger: 0.025, ease: "power3.out", clearProps: "transform" }, at + 0.01);
+  const items = $$(".lede, .block-head, .tiles > .tile, .quote, .contact > *", screen).filter((el) => shown(el) && inView(el)).slice(0, 5);
+  if (items.length) tl.fromTo(items, { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.18, stagger: 0.015, ease: "power3.out", clearProps: "opacity,transform" }, at + 0.01);
   const fills = $$(".meter-fill", screen).filter(inView);
-  if (fills.length) tl.fromTo(fills, { scaleX: 0 }, { scaleX: 1, duration: 0.26, ease: "power3.inOut", clearProps: "transform" }, at + 0.04);
+  if (fills.length) tl.fromTo(fills, { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power3.inOut", clearProps: "transform" }, at + 0.04);
   const col = $(".id");
-  if (fromHome && col && shown(col)) tl.fromTo(col, { opacity: 0, x: -32 }, { opacity: 1, x: 0, duration: 0.28, ease: "expo.out", clearProps: "opacity,transform" }, at);
+  if (fromHome && col && shown(col)) tl.fromTo(col, { opacity: 0, x: -32 }, { opacity: 1, x: 0, duration: 0.24, ease: "expo.out", clearProps: "opacity,transform" }, at);
   return tl;
 }
 
 /* Home: the disc overshoots in, the portrait pops, the name rises letter by letter, the orbit objects pop
-   in one by one, then the buttons. About 1.3 s on a first visit. If the page has already painted (the motion
-   layer arrived late), the text is left where it is and only the disc, portrait, orbit and buttons move. */
+   in one by one, then the buttons spring. About 1.3 s on a first visit. Only the greeting and the name's
+   letters start hidden (for under a second, and only when the motion layer is in before the first paint);
+   the intro line, meta, proof and buttons are visible throughout and only move. If the page has already
+   painted, the text is left where it is and only the disc, portrait, orbit and buttons move. */
 function homeIn(tl, at = 0, quick = false) {
   const home = $("#home");
   const orbitBits = $$(".ho-orbit > g", home);
   // coming back to Home: the disc springs, the portrait settles, the text block and orbit pop back (~0.4 s)
   if (quick) {
-    return tl.fromTo(".ho-discg", { scale: 0.88 }, { scale: 1, svgOrigin: "320 330", duration: 0.3, ease: "back.out(1.7)" }, at)
-      .fromTo(".hero-photo", { scale: 0.92 }, { scale: 1, duration: 0.3, ease: "back.out(1.7)", clearProps: "transform" }, at)
-      .fromTo($(".hero-text > *", home), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.22, stagger: 0.02, ease: "power3.out", clearProps: "opacity,transform" }, at + 0.02)
-      .fromTo(orbitBits, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, transformOrigin: "50% 50%", duration: 0.24, stagger: 0.012, ease: "back.out(2)", clearProps: "opacity" }, at);
+    return tl.fromTo(".ho-discg", { scale: 0.88 }, { scale: 1, svgOrigin: "320 330", duration: 0.26, ease: "back.out(1.7)" }, at)
+      .fromTo(".hero-photo", { scale: 0.92 }, { scale: 1, duration: 0.26, ease: "back.out(1.7)", clearProps: "transform" }, at)
+      .fromTo($$(".hero-text > *", home), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.18, stagger: 0.015, ease: "power3.out", clearProps: "opacity,transform" }, at + 0.01)
+      .fromTo(orbitBits, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, transformOrigin: "50% 50%", duration: 0.22, stagger: 0.01, ease: "back.out(2)", clearProps: "opacity" }, at);
   }
   const early = !painted();
   tl.fromTo(".ho-discg", { scale: 0.6 }, { scale: 1, svgOrigin: "320 330", duration: 0.62, ease: "back.out(1.7)" }, at)
     .fromTo(".hero-photo", { scale: early ? 0.7 : 0.9, rotation: early ? -8 : -3 }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(1.7)", clearProps: "transform" }, at + 0.06)
     .fromTo(orbitBits, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, transformOrigin: "50% 50%", duration: 0.5, stagger: 0.07, ease: "back.out(2.2)", clearProps: "opacity" }, at + 0.3)
     .fromTo(".ho-orbit > path", { opacity: 0 }, { opacity: 1, duration: 0.4 }, at + 0.8)
-    .fromTo(".actions .btn", { scale: 0.7, opacity: early ? 0 : 1 }, { scale: 1, opacity: 1, duration: 0.5, stagger: 0.08, ease: "back.out(1.7)", clearProps: "opacity,transform" }, at + 0.62);
+    .fromTo(".actions .btn", { scale: 0.7 }, { scale: 1, duration: 0.5, stagger: 0.08, ease: "back.out(1.7)", clearProps: "transform" }, at + 0.62);
   if (!early) return tl;
   const name = $(".hero-name", home);
-  let chars = [];
-  if (SplitText) {
-    const split = SplitText.create($$(".first, .last", name), { type: "chars", mask: "chars", charsClass: "c" });
-    chars = split.chars;
-    tl.eventCallback("onComplete", () => split.revert());
-  }
+  const parts = $$(".first, .last", name);
+  const plain = parts.map((p) => p.textContent);
+  name.setAttribute("aria-label", name.textContent.replace(/\s+/g, " ").trim());
+  const chars = parts.flatMap((p) => splitInto(p, "chars", "c-mask", "c"));
+  tl.eventCallback("onComplete", () => { parts.forEach((p, i) => (p.textContent = plain[i])); name.removeAttribute("aria-label"); });
   tl.fromTo(".greet", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.36, ease: "expo.out", clearProps: "opacity,transform" }, at + 0.12);
   if (chars.length) tl.fromTo(chars, { yPercent: 120, rotation: 10 }, { yPercent: 0, rotation: 0, duration: 0.55, stagger: 0.025, ease: "expo.out" }, at + 0.16);
   // the intro line is the largest text on phones: it moves but is never hidden
   tl.fromTo(".intro-line", { y: 18 }, { y: 0, duration: 0.5, ease: "expo.out", clearProps: "transform" }, at + 0.42)
-    .fromTo(".meta-item", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.42, stagger: 0.06, ease: "back.out(1.7)", clearProps: "opacity,transform" }, at + 0.5);
+    .fromTo(".meta-item, .proof", { y: 16 }, { y: 0, duration: 0.42, stagger: 0.06, ease: "back.out(1.7)", clearProps: "transform" }, at + 0.5);
   return tl;
 }
 
@@ -243,7 +279,7 @@ function show(route, { focus = true, quick = false, hash = "" } = {}) {
   } else update();
   const tl = gsap.timeline({ onComplete: () => { if (swapTl === tl) swapTl = null; if (leaving) dropLeaving(leaving); } });
   swapTl = tl;
-  const OUT = leaving ? 0.1 : 0;
+  const OUT = leaving ? 0.08 : 0;
   if (leaving) tl.to(leaving, { opacity: 0, x: (mobile.matches ? -20 : -40) * dir, duration: OUT, ease: "power2.in" }, 0);
   const inTl = enter(screen, dir, fromHome && route !== "home", OUT);
   if (inTl) tl.add(inTl, 0);
@@ -353,7 +389,7 @@ const worksList = $(".works");
 const works = $$(".works > .work");
 const sentinel = $(".sentinel");
 const workStatus = $("#work-status");
-const FIRST = 5, BATCH = 4;
+const FIRST = 4, BATCH = 4;
 let visibleCount = works.length;
 let loading = false;
 let io = null;
@@ -367,7 +403,7 @@ function reveal(n, animate = true) {
   const next = works.slice(visibleCount, visibleCount + n);
   next.forEach((w, i) => {
     w.classList.add("is-shown");
-    // only tiles that land in view rise in; the ones below the fold are simply there when you scroll to them
+    // only tiles that land in view rise in; the ones below the fold are already there when you scroll to them
     if (animate && !reduced.matches && w.getBoundingClientRect().top < innerHeight) { w.style.setProperty("--i", i); w.classList.add("is-new"); w.addEventListener("animationend", () => { w.classList.remove("is-new"); w.style.removeProperty("--i"); }, { once: true }); }
   });
   visibleCount += next.length;
@@ -405,7 +441,7 @@ if (works.length > FIRST && sentinel) {
   });
 }
 function onScreen(route) {
-  if (route === "home") homeSince = Date.now();
+  if (route === "home") { homeSince = Date.now(); breathe(); clapHint(); }
   if (route === "portfolio" && sentinel && visibleCount < works.length) requestAnimationFrame(() => { if (inView(sentinel)) loadMore(); });
   if (route === "about-me") updateScrollBtns();
   if (route === "contact") tick();
@@ -439,7 +475,7 @@ if (quotes && qBtns) {
 
 /* ---------- blog: category chips filter the cards (none pressed shows everything) ---------- */
 const filters = $$(".filter");
-const posts = $$(".posts > .post");
+const posts = $$(".posts > .tile");
 for (const f of filters) {
   f.addEventListener("click", () => {
     const on = f.getAttribute("aria-pressed") !== "true";
@@ -560,14 +596,35 @@ function snap() {
   void orbit.getBoundingClientRect();
   orbit.classList.add("is-snap");
 }
-/* a one-time hint in his hand ("tap me ×3"), 6 s into a Home visit, until the signal has been found once */
+/* the orbit's ambient loops: they breathe for 5 s whenever Home appears, then rest (WCAG 2.2.2: moving content
+   stops within 5 s); pointing at or tapping the orbit wakes them for another 5 s */
+const orbitEl = $(".orbit");
+let restT = 0;
+function breathe() {
+  if (!orbitEl || reduced.matches) return;
+  orbitEl.classList.remove("is-rest");
+  clearTimeout(restT);
+  restT = setTimeout(() => orbitEl.classList.add("is-rest"), 5000);
+}
+const heroVisual = $(".hero-visual");
+heroVisual?.addEventListener("pointerenter", breathe);
+heroVisual?.addEventListener("pointerdown", breathe);
+if (current === "home") breathe(); else orbitEl?.classList.add("is-rest");
+
+/* a hint in his hand ("tap me ×3"), 6 s into the second Home visit of a session (a returning look, not the
+   first impression), until the signal has been found once */
 let hintT = 0;
 function clapHint() {
   const hint = $(".clap-hint");
   if (!hint) return;
-  let seen = false;
-  try { seen = !!localStorage.getItem("batSeen"); } catch {}
-  if (seen) return;
+  let seen = false, visits = 1;
+  try {
+    seen = !!localStorage.getItem("batSeen");
+    visits = Number(sessionStorage.getItem("homeVisits") || 0) + 1;
+    sessionStorage.setItem("homeVisits", String(visits));
+  } catch {}
+  if (seen || visits < 2) return;
+  clearTimeout(hintT);
   hintT = setTimeout(() => { if (current === "home" && !doc.hasAttribute("data-bat")) hint.classList.add("is-on"); }, 6000);
 }
 function hideHint() { clearTimeout(hintT); $(".clap-hint")?.classList.remove("is-on"); }
@@ -612,6 +669,7 @@ if (bat) {
     let taps = 0, last = 0;
     clap.addEventListener("click", () => {
       if (Date.now() - closedAt < 400) return;
+      breathe();
       snap();
       hideHint();
       const now = Date.now();
@@ -639,6 +697,11 @@ function warm() {
   for (const img of $$(".screen img[loading='lazy']")) if (!img.closest("[data-closed], [hidden]")) img.loading = "eager";
 }
 const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1200));
-const afterLoad = () => { idle(analytics, { timeout: 4000 }); setTimeout(() => idle(warm, { timeout: 3000 }), 1500); };
+const afterLoad = () => {
+  idle(analytics, { timeout: 4000 });
+  setTimeout(() => idle(warm, { timeout: 3000 }), 1500);
+  // split the screen titles ahead of time, so the first swap to each screen does no DOM work
+  gsapReady.then((g) => { if (g) idle(() => screens.forEach(titleWords), { timeout: 3000 }); });
+};
 if (document.readyState === "complete") afterLoad();
 else window.addEventListener("load", afterLoad, { once: true });

@@ -7,7 +7,7 @@
 
   /* surfaces */
   --bg: #F4F3EF;
-  --frame: #FBFAF7;   /* quiet fills: empty-state card, field hover */
+  --frame: #FBFAF7;   /* muted fill: field hover */
   --panel: #FFFFFF;
   --raised: #F4F3EF;
 
@@ -22,7 +22,7 @@
 
   /* teal has four roles: the disc art, the primary action and open/pressed state, the title accent word, links */
   --signal: #0F7A6C;
-  --signal-ink: #0B6B5F;
+  --signal-ink: #0A6358;
   --signal-deep: #0B5C52;
   --on-signal: #FFFFFF;
   --tint: #CFE6E1;
