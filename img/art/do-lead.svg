@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-labelledby="dl-title"><title id="dl-title">Adarsh at a whiteboard of sticky notes and a flow sketch, pointing with a marker while two seated people follow along</title>
+<style>
+.dl-draw{stroke-dasharray:64;animation:dl-draw 7s ease-in-out infinite}
+.dl-note{transform-box:fill-box;transform-origin:50% 0;animation:dl-note 5s ease-in-out infinite}
+.dl-arm{transform-box:fill-box;transform-origin:100% 0;animation:dl-arm 7s ease-in-out infinite}
+@keyframes dl-draw{0%,30%{stroke-dashoffset:0;opacity:1}40%{stroke-dashoffset:0;opacity:0}45%{stroke-dashoffset:64;opacity:0}50%{stroke-dashoffset:64;opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+@keyframes dl-note{0%,100%{transform:rotate(0)}20%{transform:rotate(6deg)}35%{transform:rotate(-3deg)}50%{transform:rotate(2deg)}65%{transform:rotate(0)}}
+@keyframes dl-arm{0%,45%{transform:translate(0,0)}55%{transform:translate(-2px,1px)}75%{transform:translate(-1px,-1px)}100%{transform:translate(0,0)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<path d="M170 18h0M182 18h0M194 18h0M206 18h0M218 18h0M170 30h0M182 30h0M194 30h0M206 30h0M218 30h0M170 42h0M182 42h0M194 42h0M206 42h0M218 42h0M170 54h0M182 54h0M194 54h0M206 54h0M218 54h0" stroke="#17191B" stroke-width="3" stroke-linecap="round"/>
+<circle cx="122" cy="104" r="80" fill="#0F7A6C"/>
+<g stroke="#17191B" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M18 186h204" fill="none"/>
+<!-- easel legs -->
+<path d="M36 126l-6 60h4l7-60zM136 126l7 60h4l-6-60z" fill="#8F918C"/>
+<!-- whiteboard -->
+<rect x="23" y="27" width="136" height="100" rx="4" fill="#17191B"/>
+<rect x="18" y="22" width="136" height="100" rx="4" fill="#C9C8C1"/>
+<rect x="23" y="27" width="126" height="90" rx="2" fill="#FFFFFF"/>
+<rect x="40" y="121" width="92" height="5" rx="1.5" fill="#8F918C"/>
+<path d="M50 118.5h14v3H50z" fill="#0F7A6C" stroke-width="1.25"/>
+<path d="M64 118.5h4v3h-4z" fill="#17191B" stroke-width="1.25"/>
+<path d="M108 116h16v5h-16z" fill="#17191B"/>
+<path d="M108 119h16v2h-16z" fill="#C9C8C1" stroke-width="1.25"/>
+<!-- flow sketch -->
+<g stroke-width="1.25" fill="none">
+<rect x="30" y="35" width="22" height="14" rx="2"/>
+<path d="M35 42h12"/>
+<path d="M52 42h11M60 39.5l3 2.5-3 2.5"/>
+<path d="M74 32l10 10-10 10-10-10z" fill="#E7F2EF"/>
+<path d="M74 52v11M71.5 60l2.5 3 2.5-3"/>
+<rect x="62" y="63" width="24" height="14" rx="2"/>
+<path d="M67 70h14"/>
+<path d="M84 42h9v-4" stroke-dasharray="2 3"/>
+<path d="M30 92h30M30 99h22M30 106h34" stroke="#8F918C"/>
+<path d="M62 106l3 3 6-7" stroke="#0F7A6C" stroke-width="1.75"/>
+</g>
+<path class="dl-draw" d="M86 70c14 0 14 26 28 26h20" stroke="#0F7A6C" stroke-width="2" fill="none"/>
+<!-- sticky notes -->
+<g stroke-width="1.25">
+<path d="M103 31l18-1 1 18-18 1z" fill="#CFE6E1"/>
+<path d="M107 36h10M107 40h7" fill="none"/>
+<path d="M104 54l18 1-1 18-18-1z" fill="#F2B33D"/>
+<path d="M108 60h9M108 64h6" fill="none"/>
+<path d="M126 53l18-1 1 18-18 1z" fill="#FFFFFF"/>
+<path d="M130 58h10M130 62h8M130 66h5" fill="none"/>
+<g class="dl-note"><path d="M126 31h18v18h-18z" fill="#E4775B"/><path d="M126 31h18v3h-18z" fill="#17191B" fill-opacity=".18" stroke="none"/><path d="M130 39h10M130 43h6" fill="none"/></g>
+</g>
+<!-- seated people, seen from behind -->
+<path d="M47 186v-26q0-12 16-12t16 12v26z" fill="#CFE6E1"/>
+<path d="M59 144h8v6h-8z" fill="#F4F3EF"/>
+<circle cx="63" cy="137" r="10" fill="#17191B"/>
+<circle cx="53" cy="139" r="1.8" fill="#F4F3EF" stroke-width="1.25"/>
+<circle cx="73" cy="139" r="1.8" fill="#F4F3EF" stroke-width="1.25"/>
+<path d="M63 158v14" stroke-width="1.25" fill="none"/>
+<rect x="46" y="168" width="34" height="11" rx="3" fill="#8F918C"/>
+<path d="M50 179h4v7h-4zM72 179h4v7h-4z" fill="#8F918C"/>
+<path d="M96 186v-26q0-12 16-12t16 12v26z" fill="#FFFFFF"/>
+<path d="M108 144h8v6h-8z" fill="#F4F3EF"/>
+<circle cx="112" cy="125" r="5" fill="#17191B"/>
+<circle cx="112" cy="137" r="10" fill="#17191B"/>
+<path d="M107 128.5q5-2 10 0" stroke="#0F7A6C" stroke-width="1.5" fill="none"/>
+<path d="M100 166l-6 10M124 166l6 10" stroke-width="1.25" fill="none"/>
+<rect x="95" y="168" width="34" height="11" rx="3" fill="#8F918C"/>
+<path d="M99 179h4v7h-4zM121 179h4v7h-4z" fill="#8F918C"/>
+<!-- Adarsh -->
+<path d="M164 124h34l-2 58h-10l-4-42-4 42h-10z" fill="#17191B"/>
+<path d="M181 142v12" stroke="#8F918C" stroke-width="1.25" fill="none"/>
+<path d="M156 186q0-6 7-6h8v6zM185 180h8q7 0 7 6h-15z" fill="#FFFFFF"/>
+<path d="M194 84l7 18-3 20" stroke="#17191B" stroke-width="11" fill="none"/>
+<path d="M194 84l7 18-3 20" stroke="#0B5C52" stroke-width="7" fill="none"/>
+<path d="M176 72h8v8h-8z" fill="#F4F3EF"/>
+<path d="M166 80q14-6 28 0l4 46h-36z" fill="#0B5C52"/>
+<path d="M175 77.5h10l1 48.5h-12z" fill="#FFFFFF"/>
+<path d="M175 77.5l-3.5 9 5 3.5zM185 77.5l3.5 9-5 3.5z" fill="#0B5C52" stroke-width="1.25"/>
+<path d="M187 92h6v6h-6z" fill="none" stroke-width="1.25"/>
+<path d="M172 104v20" stroke-width="1.25" fill="none"/>
+<g class="dl-arm">
+<path d="M168 83l-13 15-9-5" stroke="#17191B" stroke-width="11" fill="none"/>
+<path d="M168 83l-13 15-9-5" stroke="#0B5C52" stroke-width="7" fill="none"/>
+<path d="M141 93.5l-6 3.5 1 1.5 6.5-2.5z" fill="#0F7A6C" stroke-width="1.25"/>
+<circle cx="144" cy="93" r="4" fill="#F4F3EF"/>
+</g>
+<circle cx="170" cy="63" r="2.6" fill="#F4F3EF" stroke-width="1.25"/>
+<circle cx="190" cy="63" r="2.6" fill="#F4F3EF" stroke-width="1.25"/>
+<ellipse cx="180" cy="62" rx="10" ry="11.5" fill="#F4F3EF"/>
+<path d="M169 63c-4-13 3-21 12-21 6 0 9 2 11 5 3 3 2 9 0 13-1-4-2-6-4-7-4 2-9 2-14 2-2 2-4 5-5 8z" fill="#17191B"/>
+<path d="M176 46q5-2 10 1" stroke="#8F918C" stroke-width="1.25" fill="none"/>
+<g stroke-width="1.25"><rect x="172" y="60" width="7" height="5" rx="2" fill="#FFFFFF"/><rect x="181" y="60" width="7" height="5" rx="2" fill="#FFFFFF"/><path d="M179 61.5h2" fill="none"/><path d="M177 69.5q3 2 6 0" fill="none"/></g>
+</g>
+</svg>

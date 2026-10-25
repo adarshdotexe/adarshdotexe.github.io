@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="cvn-title"><title id="cvn-title">A GPU chip with a lightning bolt on its die</title>
+<style>
+.cvn-bolt{transform-box:fill-box;transform-origin:center;animation:cvn-pulse 4s ease-in-out infinite}
+.cvn-led{animation:cvn-blink 3s steps(1) infinite}
+.cvn-run{animation:cvn-run 5s linear infinite}
+@keyframes cvn-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@keyframes cvn-blink{0%,60%{opacity:1}70%{opacity:.35}80%,100%{opacity:1}}
+@keyframes cvn-run{0%{transform:translate(0,0);opacity:0}10%{opacity:1}80%{opacity:1}100%{transform:translate(0,-14px);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<circle cx="80" cy="82" r="58" fill="#0F7A6C"/>
+<g stroke="#17191B" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<rect x="43" y="43" width="84" height="84" rx="6" fill="#17191B"/>
+<path d="M44 30h4v8h-4zM44 122h4v8h-4zM30 44v4h8v-4zM122 44v4h8v-4zM55.3 30h4v8h-4zM55.3 122h4v8h-4zM30 55.3v4h8v-4zM122 55.3v4h8v-4zM66.7 30h4v8h-4zM66.7 122h4v8h-4zM30 66.7v4h8v-4zM122 66.7v4h8v-4zM78 30h4v8h-4zM78 122h4v8h-4zM30 78v4h8v-4zM122 78v4h8v-4zM89.3 30h4v8h-4zM89.3 122h4v8h-4zM30 89.3v4h8v-4zM122 89.3v4h8v-4zM100.7 30h4v8h-4zM100.7 122h4v8h-4zM30 100.7v4h8v-4zM122 100.7v4h8v-4zM112 30h4v8h-4zM112 122h4v8h-4zM30 112v4h8v-4zM122 112v4h8v-4z" fill="#C9C8C1" stroke-width="1.75"/>
+<rect x="38" y="38" width="84" height="84" rx="6" fill="#0B5C52"/>
+<path d="M45 52v-7h7M115 52v-7h-7M45 108v7h7" stroke="#FFFFFF" stroke-width="1.75" fill="none"/>
+<path d="M108 115h7v-7z" fill="#FFFFFF" stroke="none"/>
+<g fill="#C9C8C1" stroke-width="1.75"><rect x="58" y="44" width="6" height="4" rx="1"/><rect x="68" y="44" width="6" height="4" rx="1"/><rect x="86" y="44" width="6" height="4" rx="1"/><rect x="58" y="112" width="6" height="4" rx="1"/><rect x="76" y="112" width="6" height="4" rx="1"/><rect x="86" y="112" width="6" height="4" rx="1"/><rect x="44" y="64" width="4" height="6" rx="1"/><rect x="44" y="88" width="4" height="6" rx="1"/><rect x="112" y="76" width="4" height="6" rx="1"/><rect x="112" y="90" width="4" height="6" rx="1"/></g>
+<rect x="54" y="54" width="52" height="52" rx="4" fill="#C9C8C1"/>
+<rect x="61" y="61" width="38" height="38" rx="2" fill="#8F918C" stroke-width="1.75"/>
+<path d="M57 57l2 2M103 57l-2 2M57 103l2-2M103 103l-2-2" stroke-width="1.75" fill="none"/>
+<path class="cvn-bolt" d="M85 64L70 84h10l-4 13 15-21H81z" fill="#F2B33D" stroke-width="2.5"/>
+<circle class="cvn-led" cx="112" cy="48" r="3.2" fill="#E4775B" stroke-width="1.75"/>
+<path class="cvn-run" d="M80 140v-4" stroke="#FFFFFF" stroke-width="2.5" fill="none"/>
+</g>
+</svg>

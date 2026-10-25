@@ -1,50 +1,51 @@
-/* adarsh.exe palette. Every colour on the site comes from this one block.
-   To change the palette, replace this file. Also update the two literal copies of --bg
-   (meta theme-color in the HTML heads and theme_color/background_color in site.webmanifest);
-   app.js re-reads --bg into theme-color at runtime. */
+/* adarsh.exe palette: "Teal Disc" (Luique, calmed). One theme, no toggle, no glow.
+   Every colour on the site comes from this block. To change the palette, replace this file and
+   update the two literal copies of --bg (meta theme-color in the HTML heads and
+   theme_color/background_color in site.webmanifest). The illustrations in img/art/ use the same
+   hex values (see the research ILLUSTRATION.md). */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
   /* surfaces */
-  --bg: #0D1114;
-  --frame: #1A1F24;
-  --panel: #14181C;
-  --raised: #20262C;
+  --bg: #F4F3EF;
+  --frame: #FBFAF7;
+  --panel: #FFFFFF;
+  --raised: #F4F3EF;
 
   /* lines */
-  --line: #2A3138;
-  --line-2: #3A434B;
-  --ui-line: #6B7781;
+  --line: #E3E2DC;
+  --line-2: #C9C8C1;
+  --ui-line: #17191B;
 
   /* text */
-  --ink: #E8ECEF;
-  --ink-2: #A9B3BB;
-  --ink-3: #8C97A0;
+  --ink: #17191B;
+  --ink-2: #45494D;
+  --ink-3: #5D6166;
 
-  /* accent: interactive, current, data highlight, accent word */
-  --signal: #2BC3EA;
-  --signal-ink: #5BD3F0;
-  --on-signal: #04202A;
-  --selection: rgb(43 195 234 / .24);
+  /* teal: the one brand field (discs, primary button, active nav) and accent text */
+  --signal: #0F7A6C;
+  --signal-ink: #0B6B5F;
+  --signal-deep: #0B5C52;
+  --on-signal: #FFFFFF;
+  --tint: #CFE6E1;
+  --mist: #E7F2EF;
+  --selection: #CFE6E1;
 
-  /* dot-matrix patterns (flat, never faded) */
-  --signal-dot: rgb(43 195 234 / .45);
-  --dot: rgb(232 236 239 / .22);
-  --bg-dot: rgb(232 236 239 / .07);
-  --hatch: rgb(232 236 239 / .06);
+  /* the only warm accent, small areas only */
+  --marigold: #F2B33D;
+
+  /* dot matrices (flat, never faded) */
+  --signal-dot: rgb(23 25 27 / .42);
+  --dot: rgb(23 25 27 / .30);
+  --bg-dot: rgb(23 25 27 / .16);
+  --hatch: rgb(23 25 27 / .05);
+  --watermark: rgb(23 25 27 / .07);
 
   /* status */
-  --ok: #5FD39C;
-  --danger: #FF7B7B;
+  --ok: #187049;
+  --danger: #B32D2D;
 
-  /* neutral shadows */
-  --shadow-1: rgb(0 0 0 / .5);
-  --shadow-2: rgb(0 0 0 / .6);
-  --shadow-3: rgb(0 0 0 / .6);
-
-  /* bat-signal easter egg: flat night overlay, solid disc, bat in the night colour */
-  --bat-night: rgb(4 6 8 / .88);
-  --bat-light: #F6E27A;
-  --bat-ink: #0B0E10;
+  /* bat-signal easter egg: a flat night overlay */
+  --bat-night: rgb(23 25 27 / .86);
 }

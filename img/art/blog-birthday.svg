@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-labelledby="bb-title"><title id="bb-title">A laptop showing a first personal website wireframe, a cupcake with one lit candle, a gift box, bunting and falling confetti</title>
+<style>
+.bb-flame{transform-box:fill-box;transform-origin:50% 100%;animation:bb-flick 1.6s ease-in-out infinite}
+.bb-c1,.bb-c2{animation:bb-fall 9s linear infinite}
+.bb-c2{animation-delay:-4.5s}
+.bb-cur{animation:bb-cur 6s ease-in-out infinite}
+@keyframes bb-flick{0%,100%{transform:scale(1,1) rotate(0)}25%{transform:scale(.94,1.06) rotate(-3deg)}50%{transform:scale(1.04,.92) rotate(2deg)}75%{transform:scale(.97,1.04) rotate(-1deg)}}
+@keyframes bb-fall{0%{transform:translate(0,-6px);opacity:0}10%{opacity:1}85%{opacity:1}100%{transform:translate(3px,14px);opacity:0}}
+@keyframes bb-cur{0%,100%{transform:translate(0,0)}40%{transform:translate(-6px,-3px)}60%{transform:translate(-6px,-3px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<path d="M274 48h0M286 48h0M298 48h0M310 48h0M274 60h0M286 60h0M298 60h0M310 60h0M274 72h0M286 72h0M298 72h0M310 72h0M274 84h0M286 84h0M298 84h0M310 84h0M274 96h0M286 96h0M298 96h0M310 96h0" stroke="#17191B" stroke-width="3" stroke-linecap="round"/>
+<circle cx="160" cy="100" r="86" fill="#0F7A6C"/>
+<g stroke="#17191B" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<!-- bunting -->
+<path d="M26 20Q160 44 294 20" stroke-width="1.25" fill="none"/>
+<path d="M42.1 22.7L55.5 24.7L48.8 35.7z" fill="#CFE6E1" stroke-width="1.25"/><path d="M68.5 26.4L81.9 27.9L75.2 39.2z" fill="#FFFFFF" stroke-width="1.25"/><path d="M94.9 29.2L108.3 30.2L101.6 41.7z" fill="#0B5C52" stroke-width="1.25"/><path d="M121.3 31L134.7 31.6L128 43.3z" fill="#CFE6E1" stroke-width="1.25"/><path d="M147.7 31.9L161.1 32L154.4 43.9z" fill="#FFFFFF" stroke-width="1.25"/><path d="M174.1 31.9L187.5 31.5L180.8 43.7z" fill="#0B5C52" stroke-width="1.25"/><path d="M200.5 30.9L213.9 30.1L207.2 42.5z" fill="#CFE6E1" stroke-width="1.25"/><path d="M226.9 29L240.3 27.7L233.6 40.4z" fill="#FFFFFF" stroke-width="1.25"/><path d="M253.3 26.2L266.7 24.4L260 37.3z" fill="#0B5C52" stroke-width="1.25"/><path d="M279.7 22.4L293.1 20.2L286.4 33.3z" fill="#CFE6E1" stroke-width="1.25"/>
+<path d="M14 161h292" fill="none"/>
+<!-- gift box -->
+<path d="M33 123c-9-9-15-3-11 1 3 2 8 1 11-1zM33 123c4-11 13-9 11-3-1 3-6 3-11 3z" fill="#FFFFFF" stroke-width="1.5"/>
+<rect x="23" y="131" width="34" height="30" fill="#0F7A6C"/>
+<rect x="20" y="123" width="40" height="9" rx="1.5" fill="#0B5C52"/>
+<path d="M30 123h6v38h-6z" fill="#FFFFFF" stroke-width="1.5"/>
+<path d="M44 138l8 4-1 6-8-3z" fill="#FFFFFF" stroke-width="1.25"/>
+<path d="M44 138l-8-3" stroke-width="1.25" fill="none"/>
+<!-- laptop -->
+<rect x="89" y="39" width="120" height="100" rx="6" fill="#17191B"/>
+<path d="M89 139h120l20 22v5H69v-5z" fill="#17191B"/>
+<rect x="84" y="34" width="120" height="100" rx="6" fill="#C9C8C1"/>
+<circle cx="144" cy="37" r="1" fill="#17191B" stroke="none"/>
+<rect x="90" y="40" width="108" height="88" rx="1.5" fill="#FFFFFF"/>
+<g stroke-width="1.25">
+<path d="M90 40h108v9H90z" fill="#E7F2EF"/>
+<circle cx="95" cy="44.5" r="1.4" fill="#E4775B"/><circle cx="100" cy="44.5" r="1.4" fill="#C9C8C1"/><circle cx="105" cy="44.5" r="1.4" fill="#C9C8C1"/>
+<rect x="112" y="42" width="58" height="5" rx="2.5" fill="#FFFFFF"/>
+<circle cx="106" cy="67" r="9" fill="#0F7A6C"/>
+<path d="M100 73.5q6-7 12 0" fill="#FFFFFF"/><circle cx="106" cy="64.5" r="3" fill="#FFFFFF"/>
+<rect x="120" y="58" width="44" height="4" rx="2" fill="#17191B" stroke="none"/>
+<path d="M120 67h32M120 72h40" stroke="#8F918C" stroke-width="2.5"/>
+<rect x="120" y="78" width="18" height="6" rx="3" fill="#0F7A6C"/>
+<rect x="172" y="56" width="20" height="28" fill="#CFE6E1"/>
+<path d="M172 56l20 28M192 56l-20 28" fill="none"/>
+<rect x="98" y="92" width="28" height="28" rx="1.5" fill="#FFFFFF"/><path d="M98 92h28v9H98z" fill="#E7F2EF"/><path d="M102 106h18M102 111h12" stroke="#8F918C" fill="none"/>
+<rect x="131" y="92" width="28" height="28" rx="1.5" fill="#FFFFFF"/><path d="M131 92h28v9h-28z" fill="#E7F2EF"/><path d="M135 106h18M135 111h14" stroke="#8F918C" fill="none"/>
+<rect x="164" y="92" width="28" height="28" rx="1.5" fill="#FFFFFF"/><path d="M164 92h28v9h-28z" fill="#E7F2EF"/><path d="M168 106h16M168 111h18" stroke="#8F918C" fill="none"/>
+<path class="bb-cur" d="M136 82v10l2.5-2.5 2 4.5 1.8-.8-2-4.4h3.5z" fill="#FFFFFF"/>
+</g>
+<rect x="90" y="40" width="108" height="88" rx="1.5" fill="none"/>
+<path d="M84 134h120l20 22H64z" fill="#C9C8C1"/>
+<path d="M86.5 136.5h6.9v2.6h-6.9zM94.9 136.5h6.9v2.6h-6.9zM103.2 136.5h6.9v2.6h-6.9zM111.5 136.5h6.9v2.6h-6.9zM119.8 136.5h6.9v2.6h-6.9zM128.1 136.5h6.9v2.6h-6.9zM136.4 136.5h6.9v2.6h-6.9zM144.7 136.5h6.9v2.6h-6.9zM153 136.5h6.9v2.6h-6.9zM161.3 136.5h6.9v2.6h-6.9zM169.6 136.5h6.9v2.6h-6.9zM177.9 136.5h6.9v2.6h-6.9zM186.2 136.5h6.9v2.6h-6.9zM194.5 136.5h6.9v2.6h-6.9zM82.9 140.5h7.4v2.6h-7.4zM91.7 140.5h7.4v2.6h-7.4zM100.6 140.5h7.4v2.6h-7.4zM109.4 140.5h7.4v2.6h-7.4zM118.2 140.5h7.4v2.6h-7.4zM127 140.5h7.4v2.6h-7.4zM135.9 140.5h7.4v2.6h-7.4zM144.7 140.5h7.4v2.6h-7.4zM153.5 140.5h7.4v2.6h-7.4zM162.4 140.5h7.4v2.6h-7.4zM171.2 140.5h7.4v2.6h-7.4zM180 140.5h7.4v2.6h-7.4zM188.8 140.5h7.4v2.6h-7.4zM197.7 140.5h7.4v2.6h-7.4zM79.3 144.5h7.9v2.6h-7.9zM88.6 144.5h7.9v2.6h-7.9zM98 144.5h7.9v2.6h-7.9zM107.3 144.5h7.9v2.6h-7.9zM116.7 144.5h7.9v2.6h-7.9zM126 144.5h7.9v2.6h-7.9zM135.4 144.5h7.9v2.6h-7.9zM144.7 144.5h7.9v2.6h-7.9zM154 144.5h7.9v2.6h-7.9zM163.4 144.5h7.9v2.6h-7.9zM172.7 144.5h7.9v2.6h-7.9zM182.1 144.5h7.9v2.6h-7.9zM191.4 144.5h7.9v2.6h-7.9zM200.8 144.5h7.9v2.6h-7.9zM75.6 148.5h10.3v2.6h-10.3zM87.4 148.5h10.3v2.6h-10.3zM99.1 148.5h12.4v2.6h-12.4zM113 148.5h62.1v2.6h-62.1zM176.4 148.5h12.4v2.6h-12.4zM190.3 148.5h10.3v2.6h-10.3zM202 148.5h10.3v2.6h-10.3z" fill="#8F918C" stroke="none"/>
+<path d="M64 156h160v3q0 2-2 2H66q-2 0-2-2z" fill="#8F918C"/>
+<path d="M132 156h24v1.2q0 1-1 1h-22q-1 0-1-1z" fill="#C9C8C1" stroke-width="1.25"/>
+<!-- cupcake -->
+<path d="M243 133h46l-6 33h-34z" fill="#17191B"/>
+<rect x="258" y="88" width="6" height="24" rx="1" fill="#FFFFFF"/>
+<path d="M258 95l6-3M258 101l6-3M258 107l6-3" stroke="#0B5C52" fill="none"/>
+<path d="M261 88v-4" stroke-width="1.5" fill="none"/>
+<g class="bb-flame"><path d="M261 70q6 8 4 13a4 4 0 0 1-8 0q-2-5 4-13z" fill="#F2B33D"/><path d="M261 77.5q2.4 3 1.5 5.6a1.5 1.5 0 0 1-3 0q-.9-2.6 1.5-5.6z" fill="#FFFFFF" stroke="none"/></g>
+<path d="M238 128h46l-6 33h-34z" fill="#CFE6E1"/>
+<path d="M245.7 128l4 33M253.3 128l2 33M261 128v33M268.7 128l-2 33M276.3 128l-4 33" stroke-width="1.25" fill="none"/>
+<path d="M234 130c-5-2-4-10 3-11-1-8 7-12 13-8 3-7 15-7 18 0 6-3 14 1 12 8 7 1 8 9 3 11z" fill="#FFFFFF"/>
+<path d="M240 122q5 3 11 0M262 118q5 3 11 0M250 127q8 2 16 0" stroke-width="1.25" fill="none"/>
+<path d="M246 116.5l3-1M270 124.5l3 1" stroke="#0F7A6C" stroke-width="2.5" fill="none"/>
+<path d="M256 122.5l1 2.5M276 116l-2.5 1.5" stroke="#0B5C52" stroke-width="2.5" fill="none"/>
+<path d="M241 126l2-2M264 113l2.5.5" stroke="#17191B" stroke-width="2.5" fill="none"/>
+</g>
+<!-- confetti -->
+<g class="bb-c1" stroke="none">
+<rect x="36" y="58" width="6" height="3" transform="rotate(30 39 59.5)" fill="#0B5C52"/>
+<path d="M64 84l5 1-3 4z" fill="#17191B"/>
+<rect x="214" y="58" width="6" height="3" transform="rotate(-25 217 59.5)" fill="#FFFFFF"/>
+<circle cx="230" cy="98" r="2" fill="#17191B"/>
+<rect x="286" y="118" width="6" height="3" transform="rotate(50 289 119.5)" fill="#0B5C52"/>
+<rect x="112" y="50" width="5" height="3" transform="rotate(-40 114.5 51.5)" fill="#CFE6E1"/>
+<path d="M300 140q2-3 4 0t4 0" stroke="#8F918C" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</g>
+<g class="bb-c2" stroke="none">
+<rect x="50" y="98" width="6" height="3" transform="rotate(-20 53 99.5)" fill="#8F918C"/>
+<path d="M30 70l5-1-1 5z" fill="#0F7A6C"/>
+<rect x="222" y="76" width="6" height="3" transform="rotate(35 225 77.5)" fill="#0B5C52"/>
+<circle cx="76" cy="58" r="1.8" fill="#0B5C52"/>
+<path d="M240 48l5 2-4 3z" fill="#CFE6E1"/>
+<rect x="296" y="108" width="6" height="3" transform="rotate(-30 299 109.5)" fill="#17191B"/>
+<path d="M200 54q2-3 4 0t4 0" stroke="#FFFFFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<circle cx="168" cy="50" r="1.6" fill="#FFFFFF"/>
+</g>
+</svg>

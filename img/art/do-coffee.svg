@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-labelledby="dc-title"><title id="dc-title">A big steaming mug of coffee on a saucer, two empty mugs stacked behind it, a moka pot and scattered coffee beans</title>
+<style>
+.dc-s1,.dc-s2,.dc-s3{animation:dc-steam 4.5s ease-in-out infinite}
+.dc-s2{animation-delay:-1.5s}
+.dc-s3{animation-delay:-3s}
+.dc-hop{transform-box:fill-box;transform-origin:50% 100%;animation:dc-hop 3.6s ease-in-out infinite}
+@keyframes dc-steam{0%,100%{transform:translate(0,1px);opacity:.95}50%{transform:translate(1.5px,-5px);opacity:.4}}
+@keyframes dc-hop{0%,62%,100%{transform:translate(0,0) rotate(0)}70%{transform:translate(0,-9px) rotate(-8deg)}78%{transform:translate(0,0) rotate(0)}83%{transform:translate(0,-3px) rotate(4deg)}88%{transform:translate(0,0)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<defs>
+<path id="dc-mug" d="M70 90v70q0 18 18 18h34q18 0 18-18V90A35 8 0 0 1 70 90zM140 108h6a15 15 0 0 1 0 30h-6z"/>
+<path id="dc-mk" d="M164 100q19-12 38 0l-3 38h2v6h-2l4 40h-38l4-40h-2v-6h2z"/>
+<g id="dc-bean"><ellipse rx="5.2" ry="3.6" fill="#17191B" stroke="#17191B" stroke-width="1.25"/><path d="M-3.8 .6q1.9-2 3.8-.4t3.8-.6" stroke="#8F918C" stroke-width="1.25" fill="none" stroke-linecap="round"/></g>
+</defs>
+<path d="M22 24h0M34 24h0M46 24h0M58 24h0M70 24h0M22 36h0M34 36h0M46 36h0M58 36h0M70 36h0M22 48h0M34 48h0M46 48h0M58 48h0M70 48h0M22 60h0M34 60h0M46 60h0M58 60h0M70 60h0" stroke="#17191B" stroke-width="3" stroke-linecap="round"/>
+<circle cx="118" cy="104" r="80" fill="#0F7A6C"/>
+<g stroke="#17191B" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M16 184h208" fill="none"/>
+<!-- stacked empty mugs -->
+<g transform="translate(4 0)">
+<path d="M30 150h-5a11 11 0 0 0 0 22h5v-6h-4a5 5 0 0 1 0-10h4z" fill="#CFE6E1"/>
+<path d="M30 144v28q0 12 12 12h18q12 0 12-12v-28z" fill="#CFE6E1"/>
+<path d="M58 144v7a2 2 0 0 0 4 0v-7" fill="#8F918C" stroke-width="1.25"/>
+<path d="M36 152v20q0 6 6 6" stroke="#FFFFFF" stroke-width="1.5" fill="none"/>
+<path d="M30 116h-5a11 11 0 0 0 0 22h5v-6h-4a5 5 0 0 1 0-10h4z" fill="#FFFFFF"/>
+<path d="M30 144v-28q0-12 12-12h18q12 0 12 12v28z" fill="#FFFFFF"/>
+<path d="M30 121h42v5H30z" fill="#0B5C52" stroke-width="1.25"/>
+<rect x="28.5" y="140" width="45" height="4.5" rx="1.5" fill="#FFFFFF" stroke-width="1.25"/>
+<path d="M44 132h14" stroke="#8F918C" stroke-width="1.25" fill="none"/>
+</g>
+<!-- moka pot -->
+<use href="#dc-mk" x="5" y="5" fill="#17191B" stroke="none"/>
+<path d="M166 101l-9-6 2 8 7 6z" fill="#C9C8C1"/>
+<path d="M199 106h7q6 0 6 6v18q0 6-6 6h-9l.5-6h6.5v-18h-5.5z" fill="#17191B"/>
+<path d="M166 100h34l-4 38h-26z" fill="#C9C8C1"/>
+<path d="M190 100h10l-4 38h-8z" fill="#8F918C" stroke="none"/>
+<path d="M178 100l1 38M190 100l-2 38" stroke-width="1.25" fill="none"/>
+<path d="M166 100h34l-4 38h-26z" fill="none"/>
+<path d="M167 138h32v6h-32z" fill="#8F918C"/>
+<path d="M170 141h26" stroke-width="1.25" fill="none"/>
+<path d="M169 144h28l4 40h-36z" fill="#C9C8C1"/>
+<path d="M189 144h8l4 40h-11z" fill="#8F918C" stroke="none"/>
+<path d="M177 144l-1 40M189 144l1 40" stroke-width="1.25" fill="none"/>
+<path d="M169 144h28l4 40h-36z" fill="none"/>
+<circle cx="183" cy="162" r="3.5" fill="#8F918C" stroke-width="1.25"/>
+<circle cx="183" cy="162" r="1" fill="#17191B" stroke="none"/>
+<path d="M164 100q19-12 38 0z" fill="#C9C8C1"/>
+<rect x="179" y="86.5" width="8" height="7" rx="2" fill="#17191B"/>
+<path d="M172 104v28" stroke="#FFFFFF" stroke-width="1.5" fill="none"/>
+<path d="M173 150l-1 28" stroke="#FFFFFF" stroke-width="1.5" fill="none"/>
+<!-- saucer + big mug -->
+<ellipse cx="105" cy="179" rx="44" ry="5" fill="#CFE6E1"/>
+<use href="#dc-mug" x="5" y="5" fill="#17191B" stroke="none"/>
+<path d="M140 108h6a15 15 0 0 1 0 30h-6v-8h6a7 7 0 0 0 0-14h-6z" fill="#FFFFFF"/>
+<path d="M70 90v70q0 18 18 18h34q18 0 18-18V90A35 8 0 0 1 70 90z" fill="#FFFFFF"/>
+<path d="M70 128A35 6 0 0 0 140 128v8A35 6 0 0 1 70 136z" fill="#0F7A6C"/>
+<path d="M70 142A35 6 0 0 0 140 142v3A35 6 0 0 1 70 145z" fill="#0B5C52" stroke-width="1.25"/>
+<path d="M78 104v50M78 160q0 8 4 11" stroke="#C9C8C1" stroke-width="2" fill="none"/>
+<ellipse cx="105" cy="90" rx="35" ry="8" fill="#FFFFFF"/>
+<ellipse cx="105" cy="91" rx="30" ry="5.8" fill="#17191B" stroke-width="1.25"/>
+<ellipse cx="105" cy="91.6" rx="25" ry="4.2" fill="#F2B33D" stroke="none"/>
+<path d="M101.5 90.6c-2.2-2 .8-3.8 3.5-1.4 2.7-2.4 5.7-.6 3.5 1.4L105 93z" fill="#FFFFFF" stroke="none"/>
+<!-- steam -->
+<g stroke="#FFFFFF" stroke-width="3" fill="none">
+<path class="dc-s1" d="M92 78c-6-7 6-11 0-19s6-11 0-18"/>
+<path class="dc-s2" d="M106 74c-6-8 6-12 0-20s6-12 0-21"/>
+<path class="dc-s3" d="M120 78c-6-7 6-11 0-19s6-10 0-16"/>
+</g>
+</g>
+<!-- beans -->
+<use href="#dc-bean" transform="translate(46 180.6) rotate(-14)"/>
+<use href="#dc-bean" transform="translate(59 181.4) rotate(24)"/>
+<use href="#dc-bean" transform="translate(52 176) rotate(-40)"/>
+<use href="#dc-bean" transform="translate(212 181) rotate(12)"/>
+<use href="#dc-bean" transform="translate(152 181.6) rotate(-22)"/>
+<g transform="translate(159 180.4)"><g class="dc-hop"><use href="#dc-bean"/></g></g>
+</svg>

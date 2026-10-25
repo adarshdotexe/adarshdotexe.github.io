@@ -3,10 +3,10 @@
   "short_name": "adarsh.exe",
   "start_url": "/",
   "display": "browser",
-  "background_color": "#0D1114",
-  "theme_color": "#0D1114",
+  "background_color": "#F4F3EF",
+  "theme_color": "#F4F3EF",
   "icons": [
-    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
-    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+    { "src": "/img/art/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/img/art/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
   ]
 }

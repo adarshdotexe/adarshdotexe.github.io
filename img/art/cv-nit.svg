@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="cvc-title"><title id="cvc-title">A graduation cap floating over a small campus building</title>
+<style>
+.cvc-cap{animation:cvc-bob 4s ease-in-out infinite}
+.cvc-tassel{transform-box:fill-box;transform-origin:50% 0;animation:cvc-sway 4s ease-in-out infinite}
+@keyframes cvc-bob{0%,100%{transform:translate(0,0)}50%{transform:translate(0,-2.5px)}}
+@keyframes cvc-sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<circle cx="80" cy="82" r="58" fill="#0F7A6C"/>
+<g stroke="#17191B" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<path d="M16 137h128" fill="none"/>
+<path d="M33 101h104v36H33zM65 79l24-16 24 16v58H65z" fill="#17191B"/>
+<rect x="28" y="96" width="104" height="36" fill="#FFFFFF"/>
+<rect x="24" y="90" width="112" height="7" rx="1.5" fill="#0B5C52"/>
+<g fill="#0B5C52" stroke-width="2"><rect x="33" y="103" width="8" height="8" rx="1"/><rect x="46" y="103" width="8" height="8" rx="1"/><rect x="33" y="117" width="8" height="8" rx="1"/><rect x="46" y="117" width="8" height="8" rx="1"/><rect x="106" y="103" width="8" height="8" rx="1"/><rect x="119" y="103" width="8" height="8" rx="1"/><rect x="106" y="117" width="8" height="8" rx="1"/><rect x="119" y="117" width="8" height="8" rx="1"/></g>
+<rect x="60" y="74" width="40" height="58" fill="#CFE6E1"/>
+<path d="M56 74l24-16 24 16z" fill="#FFFFFF"/>
+<circle cx="80" cy="68" r="3" fill="#0F7A6C" stroke-width="2"/>
+<path d="M66 82v40M94 82v40M73 82v14M87 82v14" stroke-width="2" fill="none"/>
+<path d="M73 132v-14a7 7 0 0 1 14 0v14z" fill="#0B5C52"/>
+<rect x="64" y="132" width="32" height="5" fill="#C9C8C1" stroke-width="2"/>
+<g class="cvc-cap">
+<path d="M58 36v11q22 10 44 0V36" fill="#17191B"/>
+<path d="M62 47q18 7 36 0" stroke="#8F918C" stroke-width="2" fill="none"/>
+<path d="M40 30l40-14 40 14-40 14z" fill="#17191B"/>
+<path d="M54 30l26-9" stroke="#8F918C" stroke-width="2" fill="none"/>
+<path d="M80 30l30 4" stroke="#F2B33D" stroke-width="2" fill="none"/>
+<g class="cvc-tassel"><path d="M110 34v13" stroke="#F2B33D" stroke-width="2" fill="none"/><path d="M107 47h6l1.5 10h-9z" fill="#F2B33D" stroke-width="2"/></g>
+<circle cx="80" cy="30" r="2.6" fill="#F2B33D" stroke-width="2"/>
+</g>
+</g>
+</svg>

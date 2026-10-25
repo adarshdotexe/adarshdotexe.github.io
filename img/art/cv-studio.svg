@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="cvs-title"><title id="cvs-title">A laptop with a small rocket lifting off from its screen</title>
+<style>
+.cvs-rocket{animation:cvs-bob 3.4s ease-in-out infinite}
+.cvs-flame{transform-box:fill-box;transform-origin:50% 0;animation:cvs-flick 1.2s ease-in-out infinite}
+.cvs-puff{transform-box:fill-box;transform-origin:center;animation:cvs-puff 3.4s ease-in-out infinite}
+.cvs-cur{animation:cvs-blink 1.6s steps(1) infinite}
+@keyframes cvs-bob{0%,100%{transform:translate(0,0)}50%{transform:translate(2px,-2px)}}
+@keyframes cvs-flick{0%,100%{transform:scale(1,1)}50%{transform:scale(.85,1.25)}}
+@keyframes cvs-puff{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@keyframes cvs-blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<circle cx="80" cy="82" r="58" fill="#0F7A6C"/>
+<g stroke="#17191B" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<rect x="35" y="55" width="92" height="64" rx="4" fill="#17191B"/>
+<path d="M29 119h104l8 10v4H21v-4z" fill="#17191B"/>
+<rect x="30" y="50" width="92" height="64" rx="4" fill="#C9C8C1"/>
+<rect x="36" y="56" width="80" height="52" rx="1.5" fill="#E7F2EF"/>
+<path d="M43 66h16M63 66h10M49 75h20M43 84h12M59 84h16M49 93h14" stroke="#0B5C52" stroke-width="3" fill="none"/>
+<path class="cvs-cur" d="M67 93h6" stroke="#17191B" stroke-width="3" fill="none"/>
+<path d="M24 114h104l8 10q0 3-3 3H19q-3 0-3-3z" fill="#C9C8C1"/>
+<path d="M66 114h20v2.5q0 1.5-1.5 1.5h-17q-1.5 0-1.5-1.5z" fill="#8F918C" stroke-width="1.75"/>
+<g class="cvs-puff" fill="#FFFFFF" stroke-width="2"><circle cx="93" cy="80" r="5"/><circle cx="86" cy="88" r="3.6"/><circle cx="101" cy="72" r="3.6"/></g>
+<g class="cvs-rocket"><g transform="translate(114 52) rotate(45)">
+<path class="cvs-flame" d="M-5 15q5 15 10 0z" fill="#F2B33D" stroke-width="2"/>
+<path d="M-9 3l-8 11h8zM9 3l8 11h-8z" fill="#0B5C52"/>
+<rect x="-5" y="11" width="10" height="5" rx="1" fill="#8F918C" stroke-width="2"/>
+<path d="M0-24q10 9 10 22v14h-20v-14q0-13 10-22z" fill="#FFFFFF"/>
+<path d="M-6-14h12" stroke-width="2" fill="none"/>
+<circle cx="0" cy="-2" r="4.5" fill="#0F7A6C" stroke-width="2.5"/>
+<path d="M0 3v9" stroke="#C9C8C1" stroke-width="2" fill="none"/>
+</g></g>
+</g>
+</svg>
