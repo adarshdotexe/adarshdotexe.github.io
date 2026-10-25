@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Page not found (Adarsh Varshney)</title>
-  <meta name="description" content="This page doesn’t exist, or it moved when I rebuilt the site." />
+  <meta name="description" content="This page doesn’t exist. It probably moved when I rebuilt the site." />
   <meta name="author" content="Adarsh Varshney" />
   <meta name="robots" content="noindex" />
   <meta name="color-scheme" content="light" />
@@ -12,11 +12,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="adarsh.exe" />
   <meta property="og:title" content="Page not found (Adarsh Varshney)" />
-  <meta property="og:description" content="This page doesn’t exist, or it moved when I rebuilt the site." />
+  <meta property="og:description" content="This page doesn’t exist. It probably moved when I rebuilt the site." />
   <meta property="og:image" content="https://adarshdotexe.github.io/img/og.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Adarsh in a teal circle, next to his name and “1 min 55 s → 60 µs”" />
+  <meta property="og:image:alt" content="Adarsh smiling under a flowering tree" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/img/art/favicon-32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="/img/art/favicon.svg" type="image/svg+xml" />
@@ -29,30 +29,20 @@
     (function () {
       var d = document.documentElement;
       d.classList.add("js");
-      var alias = { "": "home", home: "home", top: "home", "about-me": "about-me", about: "about-me", blog: "about-me", writing: "about-me", portfolio: "portfolio", work: "portfolio", projects: "portfolio", resume: "resume", contact: "contact" };
-      window.routeOf = function (h) { var k = String(h || "").replace(/^#\/?/, "").split("/")[0]; return alias.hasOwnProperty(k) ? alias[k] : null; };
-      d.dataset.route = window.routeOf(location.hash) || "home";
+      d.dataset.route = "lost";
     })();
   </script>
   <script type="module" src="/js/app.js"></script>
 </head>
 <body>
-  <div class="field" aria-hidden="true">
-    <div class="field-layer">
-      <i class="field-cluster"></i><i class="field-cluster"></i><i class="field-cluster"></i>
-      <i class="field-hatch"></i>
-    </div>
-  </div>
-
   <main class="lost">
     <div class="lost-card">
-      <img class="lost-art art" src="/img/art/bat-signal.svg" width="640" height="420" alt="" />
-      <h1 class="title" tabindex="-1"><span class="accent solo">404</span></h1>
-      <p>This page doesn’t exist, or it moved when I rebuilt the site.</p>
-      <a class="btn btn-primary" href="/">Back home</a>
+      <img class="lost-art art" src="/img/art/do-travel.svg" width="240" height="200" alt="" />
+      <h1 class="title" tabindex="-1"><span class="accent">404</span></h1>
+      <p>This page doesn’t exist. It probably moved when I rebuilt the site.</p>
+      <a class="btn btn-primary" href="/">Back home<svg class="icon i--arrow" aria-hidden="true"><use href="/img/art/icons.svg#i-arrow"/></svg></a>
     </div>
   </main>
   <div class="bat" aria-hidden="true"><img class="bat-art" data-src="/img/art/bat-signal.svg" width="640" height="420" alt="" /></div>
-
 </body>
 </html>

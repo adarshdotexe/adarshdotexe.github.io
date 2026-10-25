@@ -9,14 +9,13 @@
 
   /* surfaces */
   --bg: #F4F3EF;
-  --frame: #FBFAF7;
+  --frame: #FBFAF7;   /* quiet fills: empty-state card, field hover */
   --panel: #FFFFFF;
   --raised: #F4F3EF;
 
   /* lines */
   --line: #E3E2DC;
   --line-2: #C9C8C1;
-  --ui-line: #17191B;
 
   /* text */
   --ink: #17191B;
@@ -38,9 +37,6 @@
   /* dot matrices (flat, never faded) */
   --signal-dot: rgb(23 25 27 / .42);
   --dot: rgb(23 25 27 / .30);
-  --bg-dot: rgb(23 25 27 / .16);
-  --hatch: rgb(23 25 27 / .05);
-  --watermark: rgb(23 25 27 / .07);
 
   /* status */
   --ok: #187049;
