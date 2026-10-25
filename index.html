@@ -3,14 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Adarsh Varshney (adarsh.exe)</title>
+  <title>Adarsh Varshney (adarsh.exe), engineer at NVIDIA</title>
   <meta name="description" content="Hi, I’m Adarsh, an engineer at NVIDIA. I build the tools my team uses to work out GPU power, and one went from 1 min 55 s to 60 µs per run." />
   <meta name="author" content="Adarsh Varshney" />
   <meta name="google-site-verification" content="ZZE3YBez3cDJ4H-9Rp-yiPapp_-jmg1HnLvKzu8h3yg" />
   <link rel="canonical" href="https://adarshdotexe.github.io/" />
-  <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D1114" />
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#D7DFE5" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0D1114" />
   <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="adarsh.exe" />
   <meta property="og:url" content="https://adarshdotexe.github.io/" />
@@ -27,7 +26,7 @@
   <meta name="twitter:description" content="I build the tools my team at NVIDIA uses to work out GPU power. One of them went from 1 min 55 s to 60 µs per run." />
   <meta name="twitter:image" content="https://adarshdotexe.github.io/img/og.jpg" />
   <meta name="twitter:image:alt" content="Adarsh smiling under a flowering tree" />
-  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="favicon.ico" sizes="32x32" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="manifest" href="site.webmanifest" />
@@ -37,11 +36,8 @@
   <link rel="stylesheet" href="css/components.css" />
   <script>
     (function () {
-      var d = document.documentElement, t = null;
+      var d = document.documentElement;
       d.classList.add("js");
-      try { t = localStorage.getItem("theme"); } catch (e) {}
-      if (t === "light" || t === "dark") d.dataset.theme = t;
-      d.dataset.themeNow = t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       var alias = { "": "home", home: "home", top: "home", "about-me": "about-me", about: "about-me", blog: "about-me", writing: "about-me", portfolio: "portfolio", work: "portfolio", projects: "portfolio", resume: "resume", contact: "contact" };
       window.routeOf = function (h) { var k = String(h || "").replace(/^#\/?/, "").split("/")[0]; return alias.hasOwnProperty(k) ? alias[k] : null; };
       d.dataset.route = window.routeOf(location.hash) || "home";
@@ -70,15 +66,9 @@
     <symbol id="i-work" viewBox="0 0 24 24"><rect x="3.5" y="7.5" width="17" height="12" rx="2.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></symbol>
     <symbol id="i-resume" viewBox="0 0 24 24"><path d="M14 3.5H7.5A1.5 1.5 0 0 0 6 5v14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19V7.5z"/><path d="M14 3.5v4h4M9 12h6M9 15.5h6"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="m4.5 7 7.5 6 7.5-6"/></symbol>
-    <symbol id="i-left" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6"/></symbol>
-    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></symbol>
-    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
-    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
     <symbol id="i-github" viewBox="0 0 24 24"><path d="M9.5 20v-2.6c-2.7.6-3.3-1.2-3.6-1.9M14.5 20v-2.8c0-.8-.3-1.3-.7-1.7 2.4-.3 4.7-1.2 4.7-5.1 0-1.1-.4-2-1-2.7.1-.4.3-1.4-.1-2.7 0 0-.9-.3-2.9 1.1a10 10 0 0 0-5 0C7.5 3 6.6 3.3 6.6 3.3c-.4 1.3-.2 2.3-.1 2.7-.6.7-1 1.6-1 2.7 0 3.9 2.3 4.8 4.7 5.1-.3.3-.6.8-.7 1.5"/></symbol>
     <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5V16M8 7.8v.1M11.5 16v-5.5M11.5 13c0-1.6 1-2.6 2.3-2.6s2.2.9 2.2 2.6V16"/></symbol>
     <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.8"/><path d="M16.9 7.1v.1"/></symbol>
-    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
-    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></symbol>
     <symbol id="i-quote" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M4.5 18v-3.6c0-3.6 1.5-6.3 4.6-8.1l1.1 1.6c-1.7 1.1-2.6 2.4-2.8 4.1h2.8V18zm8.5 0v-3.6c0-3.6 1.5-6.3 4.6-8.1l1.1 1.6c-1.7 1.1-2.6 2.4-2.8 4.1h2.8V18z"/></symbol>
     <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.3 2.3 3.5 5.2 3.5 8.5s-1.2 6.2-3.5 8.5c-2.3-2.3-3.5-5.2-3.5-8.5s1.2-6.2 3.5-8.5"/></symbol>
     <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M5 9.5h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 11h1.5a2.5 2.5 0 0 1 0 5H16M8.5 3.5V6M12 3.5V6"/></symbol>
@@ -89,7 +79,7 @@
 
   <div class="field" aria-hidden="true">
     <div class="field-layer">
-      <i class="field-cluster"></i><i class="field-cluster"></i><i class="field-cluster"></i><i class="field-cluster"></i><i class="field-cluster"></i>
+      <i class="field-cluster"></i><i class="field-cluster"></i><i class="field-cluster"></i>
       <i class="field-hatch"></i>
     </div>
   </div>
@@ -102,48 +92,49 @@
       <p class="idbar-name">Adarsh Varshney</p>
       <p class="idbar-role">ASIC Engineer @ NVIDIA</p>
     </div>
-    <button class="btn-icon theme-toggle" type="button" aria-label="Switch to light theme">
-      <svg class="icon i-sun" aria-hidden="true"><use href="#i-sun"/></svg>
-      <svg class="icon i-moon" aria-hidden="true"><use href="#i-moon"/></svg>
-    </button>
   </header>
 
   <div class="frame">
     <aside class="card" aria-label="About Adarsh">
-      <span class="photo"><img src="img/portrait-336.webp" width="168" height="168" alt="Adarsh smiling under a flowering tree, in a denim shirt and jeans" fetchpriority="high" /></span>
+      <span class="photo"><img src="img/portrait-336.webp" srcset="img/portrait-240.webp 240w, img/portrait-336.webp 336w" sizes="(max-width: 1179px) 112px, 168px" width="168" height="168" alt="Adarsh smiling under a flowering tree, in a denim shirt and jeans" fetchpriority="high" /></span>
       <p class="card-name">Adarsh Varshney</p>
       <p class="card-role"><span>ASIC Engineer @ NVIDIA</span></p>
-      <p class="status"><span class="node is-live" aria-hidden="true"></span><span>Hyderabad, India</span> <time class="clock" aria-label="Local time in Hyderabad">00:00 IST</time></p>
+      <p class="status"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Hyderabad, India</span></p>
       <div class="socials">
         <a href="https://github.com/adarshdotexe" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
         <a href="https://www.linkedin.com/in/adarshvarshney/" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
         <a href="https://www.instagram.com/adarshdotexe/" aria-label="Instagram"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a>
       </div>
-      <a class="btn btn-primary cv" href="AdarshVarshneyResume.pdf" download>
-        <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
-        <span>Download CV</span>
-        <span class="cv-meta">PDF, 2 pages, 55 KB</span>
-      </a>
-      <p class="card-foot">Made with ♥ by Adarsh Varshney</p>
+      <!-- CV link removed until the PDF is regenerated -->
+      <p class="card-foot" aria-hidden="true">Made with ♥ by Adarsh Varshney</p>
     </aside>
+
+    <nav class="rail" aria-label="Screens" aria-keyshortcuts="ArrowLeft ArrowRight">
+      <div class="rail-group">
+        <a class="rail-link" href="#home" data-route="home"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span class="rail-label">Home</span></a>
+        <a class="rail-link" href="#about-me" data-route="about-me"><svg class="icon" aria-hidden="true"><use href="#i-about"/></svg><span class="rail-label">About</span></a>
+        <a class="rail-link" href="#portfolio" data-route="portfolio"><svg class="icon" aria-hidden="true"><use href="#i-work"/></svg><span class="rail-label">Work</span></a>
+        <a class="rail-link" href="#resume" data-route="resume"><svg class="icon" aria-hidden="true"><use href="#i-resume"/></svg><span class="rail-label">Résumé</span></a>
+        <a class="rail-link" href="#contact" data-route="contact"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span class="rail-label">Contact</span></a>
+      </div>
+    </nav>
 
     <main id="main" class="stage" tabindex="-1">
 
       <!-- Home -->
-      <section class="panel panel-home" id="home" aria-labelledby="home-title" data-title="Adarsh Varshney (adarsh.exe)">
+      <section class="panel panel-home" id="home" aria-labelledby="home-title" data-title="Adarsh Varshney (adarsh.exe), engineer at NVIDIA">
         <span id="top"></span>
         <div class="home">
-          <span class="photo"><img src="img/portrait-336.webp" width="120" height="120" alt="" /></span>
-          <h1 class="hero" id="home-title" tabindex="-1">Adarsh Varshney</h1>
+          <h1 class="hero-name" id="home-title" tabindex="-1">Adarsh Varshney</h1>
+          <p class="hero" data-rise>Hi, I’m Adarsh! I build the tools my team at NVIDIA uses to work out how much power a GPU will draw.</p>
           <p class="rotor" data-rise>
             <span class="node" aria-hidden="true"></span>
             <span class="roll" aria-hidden="true" data-roll="ASIC Engineer @ NVIDIA|AI Tooling Builder|RAG Wrangler|Competitive Programmer|Gamer|Binge Watcher|Music Lover|Tech Enthusiast"><span class="roll-item is-on">Batman</span></span>
             <span class="sr">Batman. Also: ASIC Engineer at NVIDIA, AI tooling builder, RAG wrangler, competitive programmer, gamer, binge watcher, music lover, tech enthusiast.</span>
           </p>
-          <p class="intro" data-rise>Hi, I’m Adarsh! I build the tools my team at NVIDIA uses to work out how much power a GPU will draw.</p>
           <div class="actions" data-rise>
             <a class="btn btn-primary" href="#portfolio">See my work</a>
-            <a class="btn btn-secondary" href="#contact">Say hi</a>
+            <a class="btn btn-secondary" href="#contact">Drop me a message</a>
           </div>
           <div class="tile fact" data-rise>
             <p class="fact-value"><span class="sr">One minute fifty-five seconds down to sixty microseconds per run, about 1.9 million times faster.</span><span class="nb" aria-hidden="true">1&nbsp;min 55&nbsp;s</span><svg class="icon arrow" aria-hidden="true"><use href="#i-arrow"/></svg><span class="nb to" aria-hidden="true">60&nbsp;µs</span></p>
@@ -157,45 +148,40 @@
         <span id="about"></span>
         <div class="card-slot"></div>
         <header class="panel-head">
-          <h2 class="title" id="about-title" tabindex="-1">About <span class="accent">Me</span></h2>
-          <p class="lede">The childhood obsession with all things tech never wore off, and now it pays rent.</p>
+          <h1 class="title" id="about-title" tabindex="-1">About <span class="accent">Me</span></h1>
+          <p class="lede">The childhood obsession with all things tech never wore off, and now it pays rent. I speak Hindi, English and some Telugu.</p>
         </header>
-        <dl class="info" data-rise>
-          <dt>Speaks</dt><dd>Hindi, English and some Telugu</dd>
-        </dl>
 
-        <section class="block" aria-labelledby="whatido-title" data-rise>
-          <h3 class="title-block" id="whatido-title">What <span class="accent">I Do</span></h3>
+        <section class="block" aria-labelledby="whatido-title">
+          <h2 class="title-block" id="whatido-title">What <span class="accent">I Do</span></h2>
           <ul class="grid grid-3 services">
             <li class="tile service">
               <svg class="icon tile-icon" aria-hidden="true"><use href="#i-globe"/></svg>
-              <h4 id="t-travel">Travel &amp; Shopping</h4>
-              <p>I collect trinkets from every new place.</p>
-              <button class="node-toggle" type="button" aria-expanded="false" aria-controls="travel-more" data-open-label="Hide more about travel" data-closed-label="Show more about travel" aria-label="Show more about travel"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-              <div class="more" id="travel-more" data-collapsible><div><p>I love to discover new places and see what the world has to offer and collect small trinkets as mementos to decorate in our family’s almirah collection of such trinkets me and my sister have collected over the years.</p></div></div>
+              <h3>Travel &amp; Shopping</h3>
+              <p>I love to discover new places and see what the world has to offer and collect small trinkets as mementos to decorate in our family’s almirah collection of such trinkets me and my sister have collected over the years.</p>
             </li>
             <li class="tile service">
               <svg class="icon tile-icon" aria-hidden="true"><use href="#i-coffee"/></svg>
-              <h4>Drink Coffee</h4>
+              <h3>Drink Coffee</h3>
               <p>Like a lot. A LOT. of coffee.</p>
             </li>
             <li class="tile service">
               <svg class="icon tile-icon" aria-hidden="true"><use href="#i-flag"/></svg>
-              <h4>Leadership Roles</h4>
+              <h3>Leadership Roles</h3>
               <p>Head Boy, Club Secretary, Class Representative.</p>
-              <button class="node-toggle" type="button" aria-expanded="false" aria-controls="lead-more" data-open-label="Hide more about leadership" data-closed-label="Show more about leadership" aria-label="Show more about leadership"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-              <div class="more" id="lead-more" data-collapsible><div><p>Love the rush of orchestrating something amazing with a well coordinated team. These days it’s mentoring interns and unblocking teammates at NVIDIA.</p></div></div>
+              <button class="node-toggle" type="button" aria-expanded="false" aria-controls="lead-more" data-open-label="Hide more about leadership" data-closed-label="Show more about leadership" aria-label="Show more about leadership"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
+              <div class="more" id="lead-more" data-collapsible data-closed><div><p>Love the rush of orchestrating something amazing with a well coordinated team. These days it’s mentoring interns and unblocking teammates at NVIDIA.</p></div></div>
             </li>
           </ul>
         </section>
 
-        <section class="block" aria-labelledby="friends-title" data-rise>
-          <h3 class="title-block" id="friends-title">Friends <span class="accent">&amp; Testimonials</span></h3>
+        <section class="block" aria-labelledby="friends-title">
+          <h2 class="title-block" id="friends-title">Friends <span class="accent">&amp; Testimonials</span></h2>
           <p class="sr" id="q-class">Classmates from III B.Tech CSE, NIT Andhra Pradesh</p>
           <ul class="grid grid-3 quotes">
             <li>
               <figure class="tile quote" aria-describedby="q-class">
-                <span class="avatar" role="img" aria-label="Mohan Koruprolu"><svg class="mono" data-mono="MK" viewBox="0 0 13 13" aria-hidden="true"><path d="M1.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0"/></svg></span>
+                <span class="avatar" aria-hidden="true">M</span>
                 <span class="quote-mark" aria-hidden="true"><svg class="icon"><use href="#i-quote"/></svg></span>
                 <blockquote><p>This guy is a genius. It would take me around a thousand years or so to reach the same level as him.</p></blockquote>
                 <figcaption><p class="who">Mohan Koruprolu</p><p class="rel">Friend</p></figcaption>
@@ -203,7 +189,7 @@
             </li>
             <li>
               <figure class="tile quote" aria-describedby="q-class">
-                <span class="avatar" role="img" aria-label="Nelli James"><svg class="mono" data-mono="NJ" viewBox="0 0 13 13" aria-hidden="true"><path d="M1.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0"/></svg></span>
+                <span class="avatar" aria-hidden="true">N</span>
                 <span class="quote-mark" aria-hidden="true"><svg class="icon"><use href="#i-quote"/></svg></span>
                 <blockquote><p>He’s The Jack of All Trades. The only person I would trust with tech advice.</p></blockquote>
                 <figcaption><p class="who">Nelli James</p><p class="rel">Bestie</p></figcaption>
@@ -211,7 +197,7 @@
             </li>
             <li>
               <figure class="tile quote" aria-describedby="q-class">
-                <span class="avatar" role="img" aria-label="Krishna Chaitanya"><svg class="mono" data-mono="KC" viewBox="0 0 13 13" aria-hidden="true"><path d="M1.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0"/></svg></span>
+                <span class="avatar" aria-hidden="true">K</span>
                 <span class="quote-mark" aria-hidden="true"><svg class="icon"><use href="#i-quote"/></svg></span>
                 <blockquote><p>He has helped me pass in a lot of courses, his explainations are clear and gives solid advice.</p></blockquote>
                 <figcaption><p class="who">Krishna Chaitanya</p><p class="rel">Friend</p></figcaption>
@@ -220,16 +206,16 @@
           </ul>
         </section>
 
-        <section class="block" id="blog" aria-label="Blog" data-rise>
+        <section class="block" id="blog" aria-label="Blog">
           <span id="writing"></span>
           <div class="disclose">
-            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="blog-more" data-open-label="Hide blog posts" data-closed-label="Show blog posts" aria-label="Show blog posts"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="blog-more" data-open-label="Hide blog posts" data-closed-label="Show blog posts" aria-label="Show blog posts"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
             <p class="disclose-label">Blog posts from 2022</p>
           </div>
-          <div class="more" id="blog-more" data-collapsible><div>
+          <div class="more" id="blog-more" data-collapsible data-closed><div>
             <ul class="rows posts">
-              <li class="post-row"><time class="num" datetime="2022-04-11">11 Apr 2022</time><a class="link" href="writing/hello-world.html">Happy Birthday Me!</a></li>
-              <li class="post-row"><time class="num" datetime="2022-09-16">16 Sept 2022</time><a class="link" href="writing/fundamentals.html">Fundamentals, Programming Fundamentals</a></li>
+              <li><time class="year" datetime="2022-04-11">11 Apr 2022</time><a class="link" href="writing/hello-world.html">Happy Birthday Me!</a></li>
+              <li><time class="year" datetime="2022-09-16">16 Sep 2022</time><a class="link" href="writing/fundamentals.html">Fundamentals, Programming Fundamentals</a></li>
             </ul>
           </div></div>
         </section>
@@ -239,80 +225,82 @@
       <section class="panel" id="portfolio" aria-labelledby="work-title" data-title="Portfolio (Adarsh Varshney)">
         <span id="work"></span><span id="projects"></span>
         <header class="panel-head">
-          <h2 class="title" id="work-title" tabindex="-1"><span class="accent">Portfolio</span></h2>
+          <h1 class="title" id="work-title" tabindex="-1"><span class="accent solo">Portfolio</span></h1>
         </header>
         <ol class="works">
-          <li class="tile work" id="power-model" data-rise>
-            <div class="media"><svg class="mono" data-mono="µs" viewBox="0 0 13 13" aria-hidden="true"><path d="M1.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0"/></svg></div>
+          <li class="tile work is-featured" id="power-model">
+            <div class="media"><svg class="mono is-data is-wide" viewBox="0 0 23 9" aria-hidden="true"><path d="M1.08 1.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M2.08 1.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M3.08 1.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M0.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M0.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M0.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M1.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M2.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M3.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M0.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M4.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M0.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M4.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M1.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M2.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M3.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M7.08 1.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M8.08 1.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M9.08 1.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M6.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M10.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M6.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M9.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M10.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M6.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M8.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M10.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M6.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M7.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M10.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M6.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M10.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M7.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M8.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M9.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M12.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M16.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M12.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M16.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M12.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M16.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M12.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M15.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M16.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M12.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M13.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M14.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M16.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M12.08 8.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M19.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M20.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M21.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M22.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M18.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M19.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M20.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M21.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M22.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M18.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M19.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M20.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M21.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0"/></svg></div>
             <div class="work-body">
-              <span class="chip">NVIDIA</span>
-              <h3 id="w1">The power model</h3>
-              <p class="work-line">The web app and the Python client share one engine.</p>
+              <p class="chips"><span class="chip">NVIDIA</span><span class="chip num">2026</span></p>
+              <h2 id="w1">GPU power model</h2>
+              <p class="work-line">40 engineers use it every day. A run used to take 1&nbsp;min 55&nbsp;s, and now it takes 60&nbsp;µs.</p>
             </div>
-            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w1-more" data-open-label="Hide details" data-closed-label="Show details: The power model" aria-label="Show details: The power model"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-            <div class="more" id="w1-more" data-collapsible><div>
-              <p>A run is one what-if: change a clock or a voltage and get the power back for every block and rail. Each what-if becomes a tiny program that only redoes the steps whose inputs changed, and a slower reference engine checks its answers. It’s TypeScript on Bun and SvelteKit. I rewrote it from scratch in about 60 days (1,044 commits).</p>
-              <p>I can’t show the internals (it’s NVIDIA stuff), but the 1&nbsp;min 55&nbsp;s and the 60&nbsp;µs are from my own runs.</p>
+            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w1-more" data-open-label="Hide details: GPU power model" data-closed-label="Show details: GPU power model" aria-label="Show details: GPU power model"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
+            <div class="more" id="w1-more" data-collapsible data-closed><div>
+              <p>My team works out how much power a GPU will draw long before there’s any silicon to measure. That used to mean a spreadsheet with one row per configuration and a queue of batch jobs, and later a desktop tool.</p>
+              <p>A run is one what-if: change a clock or a voltage and get the power back for every block and rail. I rewrote the tool from scratch in TypeScript on Bun and SvelteKit, in about 60 days (1,044 commits). Each what-if becomes a small program that only redoes the steps whose inputs changed. The web app and the Python client share that one engine, so a number in a notebook and a number on screen always agree.</p>
+              <p>The speed came from the algorithm, not from threads. I built a worker pool, measured it and deleted it. I also gave up bit-for-bit identical answers for speed, so a slower reference engine checks every compiled answer.</p>
             </div></div>
           </li>
-          <li class="tile work" id="pace" data-rise>
-            <div class="media"><svg class="mono" data-mono="QA" viewBox="0 0 13 13" aria-hidden="true"><path d="M2.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0"/></svg></div>
+          <li class="tile work" id="pace">
+            <div class="media"><svg class="mono" viewBox="0 0 13 13" aria-hidden="true"><path d="M2.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M3.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M4.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M5.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M6.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M7.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M8.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M9.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M10.08 2.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M1.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M11.08 3.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M1.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M11.08 4.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M1.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M4.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M6.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M8.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M11.08 5.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M1.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M11.08 6.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M1.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M11.08 7.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M2.08 8.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M3.08 8.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M4.08 8.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M5.08 8.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M6.08 8.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M7.08 8.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M9.08 8.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M10.08 8.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M7.08 9.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M9.08 9.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M8.08 10.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0M9.08 10.5a0.42 0.42 0 1 0 0.84 0a0.42 0.42 0 1 0 -0.84 0"/></svg></div>
             <div class="work-body">
-              <span class="chip">NVIDIA</span>
-              <h3 id="w2">PACE</h3>
+              <p class="chips"><span class="chip">NVIDIA</span><span class="chip num">2025</span></p>
+              <h2 id="w2">PACE</h2>
               <p class="work-line">A chatbot over our team’s docs. Twelve interns ramped up on it and rated it 9.5/10.</p>
             </div>
-            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w2-more" data-open-label="Hide details" data-closed-label="Show details: PACE" aria-label="Show details: PACE"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-            <div class="more" id="w2-more" data-collapsible><div>
-              <p>PACE stands for Power Architecture Chat Engine. It answers questions from our codebase and Confluence pages, using OpenWebUI, ChromaDB, LiteLLM and FastAPI, and I built it so agent workflows could sit on top later. When it gave a wrong answer, it was usually because the page behind it was outdated, so we fixed the pages too. It won NTech 2025, NVIDIA’s internal paper competition.</p>
+            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w2-more" data-open-label="Hide details: PACE" data-closed-label="Show details: PACE" aria-label="Show details: PACE"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
+            <div class="more" id="w2-more" data-collapsible data-closed><div>
+              <p>Our team’s know-how was spread across a codebase and a lot of Confluence pages, and new interns had to dig through all of it. PACE stands for Power Architecture Chat Engine. It answers their questions from those pages, using OpenWebUI, ChromaDB, LiteLLM and FastAPI.</p>
+              <p>When it gave a wrong answer, it was usually because the page behind it was outdated, so we fixed the pages too. It won NTech 2025, NVIDIA’s internal paper competition. I built it so agent workflows could sit on top of it next.</p>
             </div></div>
           </li>
-          <li class="tile work" id="lokasu" data-rise>
-            <div class="media"><svg class="mono" data-mono="LK" viewBox="0 0 13 13" aria-hidden="true"><path d="M1.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0"/></svg></div>
+          <li class="tile work" id="lokasu">
+            <div class="media"><img src="img/work-lokasu.webp" width="240" height="150" alt="The lokasu.com home page: “Give us the mess.” next to a cloud of 3D blocks" loading="lazy" decoding="async" /></div>
             <div class="work-body">
-              <span class="chip num">2026</span>
-              <h3 id="w3">Lokasu</h3>
+              <p class="chips"><span class="chip num">2026</span></p>
+              <h2 id="w3">Lokasu</h2>
               <p class="work-line">My own studio. <a class="link" href="https://lokasu.com">lokasu.com</a> and its free <a class="link" href="https://lokasu.com/launch-check/">Launch Check</a> are live.</p>
             </div>
-            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w3-more" data-open-label="Hide details" data-closed-label="Show details: Lokasu" aria-label="Show details: Lokasu"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-            <div class="more" id="w3-more" data-collapsible><div>
+            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w3-more" data-open-label="Hide details: Lokasu" data-closed-label="Show details: Lokasu" aria-label="Show details: Lokasu"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
+            <div class="more" id="w3-more" data-collapsible data-closed><div>
               <p>I designed and coded lokasu.com in SvelteKit and Three.js. Thirteen 3D models share the same 512 parts and morph from one to the next, and your cursor pushes them around. Launch Check runs on a Cloudflare Worker. Paste a link and in under 20 seconds it tells you what will break when you share it, like a missing preview image or a dead link. It doesn’t need an account.</p>
               <p>Two more are in progress and private for now. Creator Studio reads your own notes and saved links, suggests post ideas that cite their sources, and publishes nothing until you approve the exact text. Home Canvas helps people in India furnish a new flat on its actual floor plan before they move in.</p>
             </div></div>
           </li>
-          <li class="tile work" id="vilje" data-rise>
-            <div class="media"><svg class="mono" data-mono="VT" viewBox="0 0 13 13" aria-hidden="true"><path d="M1.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0"/></svg></div>
+          <li class="tile work" id="vilje">
+            <div class="media"><img src="img/work-viljepdf.webp" width="240" height="150" alt="ViljePDF comparing two revisions of a public NIST test drawing" loading="lazy" decoding="async" /></div>
             <div class="work-body">
-              <span class="chip num">2026</span>
-              <h3 id="w4">Vilje Tech</h3>
+              <p class="chips"><span class="chip num">2026</span></p>
+              <h2 id="w4">Vilje Tech</h2>
               <p class="work-line">AI and automation for Nordic companies. I build ViljePDF, ViljeCAD and Inwoice.</p>
             </div>
-            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w4-more" data-open-label="Hide details" data-closed-label="Show details: Vilje Tech" aria-label="Show details: Vilje Tech"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-            <div class="more" id="w4-more" data-collapsible><div>
+            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w4-more" data-open-label="Hide details: Vilje Tech" data-closed-label="Show details: Vilje Tech" aria-label="Show details: Vilje Tech"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
+            <div class="more" id="w4-more" data-collapsible data-closed><div>
               <p>ViljePDF reads engineering drawings that have no text layer, shows every value next to the spot it came from so a person can check it, and compares two revisions line by line. It runs locally on ONNX Runtime with no cloud calls. On held-out public datasets it scores F1 0.99 on GD&amp;T frames and parts lists.</p>
-              <p>ViljeCAD turns drawing PDFs into a 3D model, a floor plan, a bill of materials and an IFC file. The code measures every line on the sheet and the AI model decides what each line means. Its accuracy is checked against the ink on the drawing, down to 0.01&nbsp;mm.</p>
+              <p>ViljeCAD turns drawing PDFs into a 3D model, a floor plan, a bill of materials and an IFC file. The code measures every line on the sheet and the AI model decides what each line means. Its accuracy is checked against the measurements printed on the drawing, to 0.01&nbsp;mm.</p>
               <p>Inwoice takes Swedish supplier invoices from the inbox to Fortnox or Visma. AI reads each invoice, and bookkeeping rules plus a person’s approval decide what gets posted. It’s built against a spec of 113 features, and every one of them is tied to a test.</p>
             </div></div>
           </li>
-          <li class="tile work" id="starcraft" data-rise>
+          <li class="tile work" id="starcraft">
             <div class="media"><svg class="mono" data-mono="SC" viewBox="0 0 13 13" aria-hidden="true"><path d="M2.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0"/></svg></div>
             <div class="work-body">
-              <span class="chip">College</span>
-              <h3 id="w5">StarCraft II paper</h3>
+              <p class="chips"><span class="chip">College</span><span class="chip num">2024</span></p>
+              <h2 id="w5">StarCraft II paper</h2>
               <p class="work-line">My final-year project on StarCraft II tactics, published by <a class="link" href="https://doi.org/10.1007/978-981-95-1357-4_9">Springer</a>.</p>
             </div>
-            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w5-more" data-open-label="Hide details" data-closed-label="Show details: StarCraft II paper" aria-label="Show details: StarCraft II paper"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-            <div class="more" id="w5-more" data-collapsible><div>
+            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="w5-more" data-open-label="Hide details: StarCraft II paper" data-closed-label="Show details: StarCraft II paper" aria-label="Show details: StarCraft II paper"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
+            <div class="more" id="w5-more" data-collapsible data-closed><div>
               <p>Instead of learning the game one click at a time, our agent chose between bigger tactics, using a knowledge-infused policy gradient with UCB. Across five mini-games it beat DeepMind’s baseline agent at gathering resources and training units, and lost badly in fights. Written at NIT Andhra Pradesh and published in the ICTIS 2025 proceedings in January 2026.</p>
             </div></div>
           </li>
         </ol>
-        <div class="work-more" data-rise>
+        <div class="work-more">
           <div class="disclose">
-            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="more-projects" data-open-label="Hide more projects" data-closed-label="Show 6 more projects" aria-label="Show 6 more projects"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="more-projects" data-open-label="Hide more projects" data-closed-label="Show 6 more projects" aria-label="Show 6 more projects"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
             <p class="disclose-label">6 more projects</p>
           </div>
-          <div class="more" id="more-projects" data-collapsible><div>
+          <div class="more" id="more-projects" data-collapsible data-closed><div>
             <ul>
               <li>My merged PR adding NVIDIA NIM embeddings to <a class="link" href="https://github.com/continuedev/continue/pull/2233">Continue</a>, the open-source coding assistant.</li>
               <li><a class="link" href="https://github.com/adarshdotexe/dotfiles">dotfiles</a>, which takes a bare machine to my setup in one command, no sudo needed.</li>
@@ -328,88 +316,92 @@
       <!-- Résumé -->
       <section class="panel" id="resume" aria-labelledby="cv-title" data-title="Résumé (Adarsh Varshney)">
         <header class="panel-head">
-          <h2 class="title" id="cv-title" tabindex="-1"><span class="accent">Résumé</span></h2>
+          <h1 class="title" id="cv-title" tabindex="-1"><span class="accent solo">Résumé</span></h1>
         </header>
 
-        <section class="block" aria-labelledby="exp-title" data-rise>
-          <h3 class="title-block" id="exp-title"><span class="accent">Experience</span></h3>
+        <section class="block" aria-labelledby="exp-title">
+          <h2 class="title-block" id="exp-title"><span class="accent solo">Experience</span></h2>
           <ol class="timeline">
             <li class="tl-item">
               <div class="tl-when"><p class="tl-period">2024–now</p><p class="tl-org">NVIDIA, Power Architecture Analysis</p></div>
               <div class="tl-what">
-                <h4 id="cv1">ASIC Engineer</h4>
+                <h3 id="cv1">ASIC Engineer</h3>
                 <p>I build the tools our power engineers run all day.</p>
-                <div class="more" id="cv1-more" data-collapsible data-open><div><p>I rewrote our power-analysis platform in TypeScript, and 40 engineers use it daily. Building a model now takes about 60 times less effort. I also built PACE, the chatbot our interns ramp up on, which won NTech 2025. Picked up a top-contributor nod in the FY2025 cycle, and a good part of my week goes to mentoring interns.</p></div></div>
+                <div class="more" id="cv1-more" data-collapsible data-open><div><p>I rewrote our power-analysis platform in TypeScript, and 40 engineers use it daily. Building a model now takes about 60 times less effort. I also built PACE, the chatbot our interns ramp up on, which won NTech 2025. I was named a top contributor in the FY2025 cycle, and a good part of my week goes to mentoring interns.</p></div></div>
               </div>
-              <button class="node-toggle tl-mark is-live" type="button" aria-expanded="true" aria-controls="cv1-more" aria-describedby="cv1" data-open-label="Hide details" data-closed-label="Show details" aria-label="Hide details"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+              <button class="node-toggle tl-mark" type="button" aria-expanded="true" aria-controls="cv1-more" aria-describedby="cv1" data-open-label="Hide details" data-closed-label="Show details" aria-label="Hide details"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
               <span class="node is-live tl-mark tl-mark-static" aria-hidden="true"></span>
             </li>
             <li class="tl-item">
               <div class="tl-when"><p class="tl-period">2024–now</p><p class="tl-org">Other work</p></div>
               <div class="tl-what">
-                <h4 id="cv2">Lokasu, Vilje Tech, freelance edge AI</h4>
-                <div class="more" id="cv2-more" data-collapsible><div><p>Lokasu (2026–now) is my own studio, and Vilje Tech (2026–now) is where I build ViljePDF, ViljeCAD and Inwoice. Both are on the Portfolio screen. Since 2024 I’ve also freelanced on edge AI, putting age and gender models on Intel NUCs for retail analytics. Public datasets in, ONNX/OpenVINO magic out.</p></div></div>
+                <h3 id="cv2">Lokasu, Vilje Tech, freelance edge AI</h3>
+                <p>What I build outside NVIDIA.</p>
+                <div class="more" id="cv2-more" data-collapsible data-closed><div><p>Lokasu (2026–now) is my own studio, and Vilje Tech (2026–now) is where I build ViljePDF, ViljeCAD and Inwoice. Both are on the Portfolio screen. Since 2024 I’ve also freelanced on edge AI, putting age and gender models on Intel NUCs for retail analytics. I trained them on public datasets and ran them with ONNX and OpenVINO.</p></div></div>
               </div>
-              <button class="node-toggle tl-mark" type="button" aria-expanded="false" aria-controls="cv2-more" aria-describedby="cv2" data-open-label="Hide details" data-closed-label="Show details" aria-label="Show details"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+              <button class="node-toggle tl-mark" type="button" aria-expanded="false" aria-controls="cv2-more" aria-describedby="cv2" data-open-label="Hide details" data-closed-label="Show details" aria-label="Show details"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
               <span class="node tl-mark tl-mark-static" aria-hidden="true"></span>
             </li>
             <li class="tl-item">
               <div class="tl-when"><p class="tl-period">2022</p><p class="tl-org">MRM Procom &amp; Testright Nanosystems</p></div>
               <div class="tl-what">
-                <h4 id="cv3">The Intern Era</h4>
-                <div class="more" id="cv3-more" data-collapsible><div><p>At MRM Procom I built an Android app to control their smart devices (100% Espresso coverage, because chaos needs tests) and got a Certificate of Recommendation for it. At Testright I wrote a custom camera module that cut R&amp;D time by 3 to 4 weeks and pushed diamond-classification accuracy up by 23%.</p></div></div>
+                <h3 id="cv3">The Intern Era</h3>
+                <p>Two internships, and an Android app with 100% Espresso coverage, because chaos needs tests.</p>
+                <div class="more" id="cv3-more" data-collapsible data-closed><div><p>At MRM Procom I built that Android app to control their smart devices and got a Certificate of Recommendation for it. At Testright I wrote a custom camera module that cut R&amp;D time by 3 to 4 weeks and pushed diamond-classification accuracy up by 23%.</p></div></div>
               </div>
-              <button class="node-toggle tl-mark" type="button" aria-expanded="false" aria-controls="cv3-more" aria-describedby="cv3" data-open-label="Hide details" data-closed-label="Show details" aria-label="Show details"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+              <button class="node-toggle tl-mark" type="button" aria-expanded="false" aria-controls="cv3-more" aria-describedby="cv3" data-open-label="Hide details" data-closed-label="Show details" aria-label="Show details"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
               <span class="node tl-mark tl-mark-static" aria-hidden="true"></span>
             </li>
           </ol>
         </section>
 
-        <section class="block" aria-labelledby="edu-title" data-rise>
-          <h3 class="title-block" id="edu-title"><span class="accent">Education</span></h3>
+        <section class="block" aria-labelledby="edu-title">
+          <h2 class="title-block" id="edu-title"><span class="accent solo">Education</span></h2>
           <ol class="timeline">
             <li class="tl-item">
               <div class="tl-when"><p class="tl-period">2020–24</p><p class="tl-org">NIT Andhra Pradesh</p></div>
               <div class="tl-what">
-                <h4 id="cv4">B.Tech, CSE</h4>
-                <div class="more" id="cv4-more" data-collapsible><div><p>Core CS with a minor in AI for Signal Processing, plus an unhealthy number of clubs and associations. In-major CGPA 8.66/10. I was a TA for the DSA and competitive programming labs (120 students, lectures rated 4.8/5) and started CS007, an after-class programming course for juniors. The final-year project on StarCraft II became a Springer chapter.</p></div></div>
+                <h3 id="cv4">B.Tech, CSE</h3>
+                <p>Core CS with a minor in AI for Signal Processing, plus an unhealthy number of clubs and associations.</p>
+                <div class="more" id="cv4-more" data-collapsible data-closed><div><p>In-major CGPA 8.66/10. I was a TA for the DSA and competitive programming labs (120 students, lectures rated 4.8/5) and started CS007, an after-class programming course for juniors. The final-year project on StarCraft II became a Springer chapter.</p></div></div>
               </div>
-              <button class="node-toggle tl-mark" type="button" aria-expanded="false" aria-controls="cv4-more" aria-describedby="cv4" data-open-label="Hide details" data-closed-label="Show details" aria-label="Show details"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+              <button class="node-toggle tl-mark" type="button" aria-expanded="false" aria-controls="cv4-more" aria-describedby="cv4" data-open-label="Hide details" data-closed-label="Show details" aria-label="Show details"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
               <span class="node tl-mark tl-mark-static" aria-hidden="true"></span>
             </li>
             <li class="tl-item">
               <div class="tl-when"><p class="tl-period">2018–20</p><p class="tl-org">FIITJEE, Hyderabad</p></div>
               <div class="tl-what">
-                <h4 id="cv5">Junior college</h4>
-                <div class="more" id="cv5-more" data-collapsible><div><p>The primary cause for a break from social interactions and everything cheerful for a span of two years, but also one of the main reasons for doing well in JEE (98.88 percentile).</p></div></div>
+                <h3>Junior college</h3>
+                <p>The primary cause for a break from social interactions and everything cheerful for a span of two years, but also one of the main reasons for doing well in JEE (98.88 percentile).</p>
               </div>
-              <button class="node-toggle tl-mark" type="button" aria-expanded="false" aria-controls="cv5-more" aria-describedby="cv5" data-open-label="Hide details" data-closed-label="Show details" aria-label="Show details"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
-              <span class="node tl-mark tl-mark-static" aria-hidden="true"></span>
+              <span class="node tl-mark" aria-hidden="true"></span>
             </li>
           </ol>
         </section>
 
-        <section class="block" aria-labelledby="skills-title" data-rise>
-          <h3 class="title-block" id="skills-title">Programming <span class="accent">Skills</span></h3>
-          <p class="sr" id="skills-legend">Bar length shows how often I use it. The praying one is always full.</p>
+        <section class="block" aria-labelledby="skills-title">
+          <h2 class="title-block" id="skills-title">Programming <span class="accent">Skills</span></h2>
+          <p class="meter-legend" id="skills-legend">Bar = how often I use it</p>
           <ul class="meters" aria-describedby="skills-legend">
             <li><div class="meter-head"><span class="meter-name">TypeScript and Svelte</span><span class="meter-level">daily</span></div><div class="meter-track" aria-hidden="true"><span class="meter-fill" style="--v:100%"></span></div></li>
-            <li><div class="meter-head"><span class="meter-name">Praying that my code works</span><span class="meter-level">100%</span></div><div class="meter-track" aria-hidden="true"><span class="meter-fill" style="--v:100%"></span></div></li>
             <li><div class="meter-head"><span class="meter-name">Python</span><span class="meter-level">daily</span></div><div class="meter-track" aria-hidden="true"><span class="meter-fill" style="--v:100%"></span></div></li>
+            <li><div class="meter-head"><span class="meter-name">Rust</span><span class="meter-level">shipped before</span></div><div class="meter-track" aria-hidden="true"><span class="meter-fill" style="--v:50%"></span></div></li>
+            <li><div class="meter-head"><span class="meter-name">Java and Android</span><span class="meter-level">shipped before</span></div><div class="meter-track" aria-hidden="true"><span class="meter-fill" style="--v:50%"></span></div></li>
+            <li><div class="meter-head"><span class="meter-name">Praying that my code works</span><span class="meter-level">100%</span></div><div class="meter-track" aria-hidden="true"><span class="meter-fill" style="--v:100%"></span></div></li>
           </ul>
           <div class="disclose skills-more">
-            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="tools-more" data-open-label="Hide all tools" data-closed-label="Show all tools" aria-label="Show all tools"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button>
+            <button class="node-toggle" type="button" aria-expanded="false" aria-controls="tools-more" data-open-label="Hide all tools" data-closed-label="Show all tools" aria-label="Show all tools"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="bar-v" d="M12 6v12"/></svg></button>
             <p class="disclose-label">All tools</p>
           </div>
-          <div class="more" id="tools-more" data-collapsible><div><p>Languages: TypeScript, Python, SQL, C/C++, Java, and Rust from an earlier version of the power tool. Web: SvelteKit, Bun, React, FastAPI. AI: RAG with ChromaDB and LiteLLM, agents, ONNX and OpenVINO on edge boxes. Every day: AI coding agents. Also Linux, Docker, Git and AWS.</p></div></div>
+          <div class="more" id="tools-more" data-collapsible data-closed><div><p>Languages: TypeScript, Python, SQL, C/C++, Java, and Rust from an earlier version of the power tool. Web: SvelteKit, Bun, React, FastAPI. AI: RAG with ChromaDB and LiteLLM, agents, ONNX and OpenVINO on edge boxes. Every day: AI coding agents. Also Linux, Docker, Git and AWS.</p></div></div>
         </section>
 
-        <section class="block" aria-labelledby="ach-title" data-rise>
-          <h3 class="title-block" id="ach-title"><span class="accent">Achievements</span></h3>
+        <section class="block" aria-labelledby="ach-title">
+          <h2 class="title-block" id="ach-title"><span class="accent solo">Achievements</span></h2>
           <ul class="rows">
-            <li><span class="node" aria-hidden="true"></span><span class="item-title">NTech 2025 winner, for PACE</span></li>
-            <li><span class="node" aria-hidden="true"></span><span class="item-title">ET Campus Stars 2022–23, one of 87 from 35,000+</span></li>
-            <li><span class="node" aria-hidden="true"></span><span class="item-title">IEEEXtreme 16.0, 31st in India</span></li>
+            <li><span class="year">2025</span><span class="item-title">NTech winner, for PACE</span></li>
+            <li><span class="year">2022–23</span><span class="item-title">ET Campus Stars, one of 87 from 35,000+</span></li>
+            <li><span class="year">2022</span><span class="item-title">IEEEXtreme 16.0, 31st in India</span></li>
           </ul>
         </section>
       </section>
@@ -417,11 +409,11 @@
       <!-- Contact -->
       <section class="panel" id="contact" aria-labelledby="contact-title" data-title="Contact (Adarsh Varshney)">
         <header class="panel-head">
-          <h2 class="title" id="contact-title" tabindex="-1"><span class="accent">Contact</span></h2>
+          <h1 class="title" id="contact-title" tabindex="-1"><span class="accent solo">Contact</span></h1>
           <p class="lede">Drop me a message about anything. I’m on IST, so replies can come at odd hours.</p>
         </header>
         <div class="contact-grid">
-          <div data-rise>
+          <div>
             <div class="tile mail-tile">
               <span class="ring" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span>
               <a class="link" href="mailto:adarshvarshney1104@gmail.com">adarshvarshney1104@gmail.com</a>
@@ -433,8 +425,8 @@
               <a class="btn btn-secondary" href="https://www.instagram.com/adarshdotexe/"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg>Instagram</a>
             </div>
           </div>
-          <section aria-labelledby="form-title" data-rise>
-            <h3 class="title-block" id="form-title">Send a <span class="accent">Message</span></h3>
+          <section aria-labelledby="form-title">
+            <h2 class="title-block" id="form-title">Send a <span class="accent">Message</span></h2>
             <form class="form" action="https://formspree.io/f/xvolbzrz" method="POST">
               <div class="field-wrap">
                 <input class="input" id="f-name" name="name" type="text" autocomplete="name" placeholder=" " required aria-describedby="e-name" />
@@ -449,7 +441,7 @@
                 <p class="err" id="e-email" data-msg="That email doesn’t look right."></p>
               </div>
               <div class="field-wrap">
-                <textarea class="input" id="f-msg" name="message" rows="5" placeholder=" " required aria-describedby="e-msg"></textarea>
+                <textarea class="input" id="f-msg" name="message" rows="4" placeholder=" " required aria-describedby="e-msg"></textarea>
                 <label class="float" for="f-msg">Message</label>
                 <span class="trace" aria-hidden="true"></span>
                 <p class="err" id="e-msg" data-msg="Please write a message."></p>
@@ -463,30 +455,11 @@
         </div>
       </section>
     </main>
-
-    <nav class="rail" aria-label="Screens">
-      <div class="rail-group">
-        <a class="rail-link" href="#home" data-route="home"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span class="rail-label">Home</span></a>
-        <a class="rail-link" href="#about-me" data-route="about-me"><svg class="icon" aria-hidden="true"><use href="#i-about"/></svg><span class="rail-label">About</span></a>
-        <a class="rail-link" href="#portfolio" data-route="portfolio"><svg class="icon" aria-hidden="true"><use href="#i-work"/></svg><span class="rail-label">Work</span></a>
-        <a class="rail-link" href="#resume" data-route="resume"><svg class="icon" aria-hidden="true"><use href="#i-resume"/></svg><span class="rail-label">Résumé</span></a>
-        <a class="rail-link" href="#contact" data-route="contact"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span class="rail-label">Contact</span></a>
-      </div>
-      <div class="rail-group rail-arrows">
-        <button class="rail-btn" type="button" data-step="-1" aria-label="Previous screen"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
-        <button class="rail-btn" type="button" data-step="1" aria-label="Next screen"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
-      </div>
-      <div class="rail-theme">
-        <button class="btn-icon theme-toggle" type="button" aria-label="Switch to light theme">
-          <svg class="icon i-sun" aria-hidden="true"><use href="#i-sun"/></svg>
-          <svg class="icon i-moon" aria-hidden="true"><use href="#i-moon"/></svg>
-        </button>
-      </div>
-    </nav>
   </div>
 
+  <footer class="sr"><p>Made with ♥ by Adarsh Varshney</p></footer>
   <div class="toast" role="status" aria-live="polite"></div>
   <p class="sr" id="announce" aria-live="polite"></p>
-  <div class="bat" aria-hidden="true"><svg class="mono" data-mono="BAT" viewBox="0 0 21 11"><path d="M2.1 1.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 1.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 1.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M18.1 1.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 2.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 2.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 2.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 2.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 2.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M17.1 2.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M18.1 2.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M12.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M15.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M16.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M17.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M18.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M19.1 3.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M6.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M12.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M13.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M14.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M15.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M16.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M17.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M18.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M19.1 4.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M1.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M6.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M12.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M13.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M14.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M15.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M16.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M17.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M18.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M19.1 5.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M2.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M4.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M6.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M7.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M12.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M13.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M14.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M15.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M16.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M17.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M18.1 6.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M3.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M5.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M6.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M8.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M12.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M14.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M15.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M17.1 7.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M6.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M9.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M11.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M14.1 8.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0M10.1 9.5a0.4 0.4 0 1 0 0.8 0a0.4 0.4 0 1 0 -0.8 0"/></svg></div>
+  <div class="bat" aria-hidden="true"><div class="bat-disc"><svg viewBox="0 0 41 19"><path d="M0.5 0.5h0M40.5 0.5h0M0.5 1.5h0M1.5 1.5h0M2.5 1.5h0M18.5 1.5h0M22.5 1.5h0M38.5 1.5h0M39.5 1.5h0M40.5 1.5h0M0.5 2.5h0M1.5 2.5h0M2.5 2.5h0M3.5 2.5h0M18.5 2.5h0M22.5 2.5h0M37.5 2.5h0M38.5 2.5h0M39.5 2.5h0M40.5 2.5h0M0.5 3.5h0M1.5 3.5h0M2.5 3.5h0M3.5 3.5h0M4.5 3.5h0M5.5 3.5h0M18.5 3.5h0M22.5 3.5h0M35.5 3.5h0M36.5 3.5h0M37.5 3.5h0M38.5 3.5h0M39.5 3.5h0M40.5 3.5h0M0.5 4.5h0M1.5 4.5h0M2.5 4.5h0M3.5 4.5h0M4.5 4.5h0M5.5 4.5h0M6.5 4.5h0M7.5 4.5h0M17.5 4.5h0M18.5 4.5h0M19.5 4.5h0M20.5 4.5h0M21.5 4.5h0M22.5 4.5h0M23.5 4.5h0M33.5 4.5h0M34.5 4.5h0M35.5 4.5h0M36.5 4.5h0M37.5 4.5h0M38.5 4.5h0M39.5 4.5h0M40.5 4.5h0M1.5 5.5h0M2.5 5.5h0M3.5 5.5h0M4.5 5.5h0M5.5 5.5h0M6.5 5.5h0M7.5 5.5h0M8.5 5.5h0M9.5 5.5h0M10.5 5.5h0M11.5 5.5h0M15.5 5.5h0M16.5 5.5h0M17.5 5.5h0M18.5 5.5h0M19.5 5.5h0M20.5 5.5h0M21.5 5.5h0M22.5 5.5h0M23.5 5.5h0M24.5 5.5h0M25.5 5.5h0M29.5 5.5h0M30.5 5.5h0M31.5 5.5h0M32.5 5.5h0M33.5 5.5h0M34.5 5.5h0M35.5 5.5h0M36.5 5.5h0M37.5 5.5h0M38.5 5.5h0M39.5 5.5h0M1.5 6.5h0M2.5 6.5h0M3.5 6.5h0M4.5 6.5h0M5.5 6.5h0M6.5 6.5h0M7.5 6.5h0M8.5 6.5h0M9.5 6.5h0M10.5 6.5h0M11.5 6.5h0M12.5 6.5h0M13.5 6.5h0M14.5 6.5h0M15.5 6.5h0M16.5 6.5h0M17.5 6.5h0M18.5 6.5h0M19.5 6.5h0M20.5 6.5h0M21.5 6.5h0M22.5 6.5h0M23.5 6.5h0M24.5 6.5h0M25.5 6.5h0M26.5 6.5h0M27.5 6.5h0M28.5 6.5h0M29.5 6.5h0M30.5 6.5h0M31.5 6.5h0M32.5 6.5h0M33.5 6.5h0M34.5 6.5h0M35.5 6.5h0M36.5 6.5h0M37.5 6.5h0M38.5 6.5h0M39.5 6.5h0M1.5 7.5h0M2.5 7.5h0M3.5 7.5h0M4.5 7.5h0M5.5 7.5h0M6.5 7.5h0M7.5 7.5h0M8.5 7.5h0M9.5 7.5h0M10.5 7.5h0M11.5 7.5h0M12.5 7.5h0M13.5 7.5h0M14.5 7.5h0M15.5 7.5h0M16.5 7.5h0M17.5 7.5h0M18.5 7.5h0M19.5 7.5h0M20.5 7.5h0M21.5 7.5h0M22.5 7.5h0M23.5 7.5h0M24.5 7.5h0M25.5 7.5h0M26.5 7.5h0M27.5 7.5h0M28.5 7.5h0M29.5 7.5h0M30.5 7.5h0M31.5 7.5h0M32.5 7.5h0M33.5 7.5h0M34.5 7.5h0M35.5 7.5h0M36.5 7.5h0M37.5 7.5h0M38.5 7.5h0M39.5 7.5h0M1.5 8.5h0M2.5 8.5h0M3.5 8.5h0M4.5 8.5h0M5.5 8.5h0M6.5 8.5h0M7.5 8.5h0M8.5 8.5h0M9.5 8.5h0M10.5 8.5h0M11.5 8.5h0M12.5 8.5h0M13.5 8.5h0M14.5 8.5h0M15.5 8.5h0M16.5 8.5h0M17.5 8.5h0M18.5 8.5h0M19.5 8.5h0M20.5 8.5h0M21.5 8.5h0M22.5 8.5h0M23.5 8.5h0M24.5 8.5h0M25.5 8.5h0M26.5 8.5h0M27.5 8.5h0M28.5 8.5h0M29.5 8.5h0M30.5 8.5h0M31.5 8.5h0M32.5 8.5h0M33.5 8.5h0M34.5 8.5h0M35.5 8.5h0M36.5 8.5h0M37.5 8.5h0M38.5 8.5h0M39.5 8.5h0M2.5 9.5h0M3.5 9.5h0M4.5 9.5h0M5.5 9.5h0M6.5 9.5h0M7.5 9.5h0M8.5 9.5h0M9.5 9.5h0M10.5 9.5h0M11.5 9.5h0M12.5 9.5h0M13.5 9.5h0M14.5 9.5h0M15.5 9.5h0M16.5 9.5h0M17.5 9.5h0M18.5 9.5h0M19.5 9.5h0M20.5 9.5h0M21.5 9.5h0M22.5 9.5h0M23.5 9.5h0M24.5 9.5h0M25.5 9.5h0M26.5 9.5h0M27.5 9.5h0M28.5 9.5h0M29.5 9.5h0M30.5 9.5h0M31.5 9.5h0M32.5 9.5h0M33.5 9.5h0M34.5 9.5h0M35.5 9.5h0M36.5 9.5h0M37.5 9.5h0M38.5 9.5h0M2.5 10.5h0M3.5 10.5h0M6.5 10.5h0M7.5 10.5h0M8.5 10.5h0M9.5 10.5h0M10.5 10.5h0M11.5 10.5h0M12.5 10.5h0M13.5 10.5h0M14.5 10.5h0M15.5 10.5h0M16.5 10.5h0M17.5 10.5h0M18.5 10.5h0M19.5 10.5h0M20.5 10.5h0M21.5 10.5h0M22.5 10.5h0M23.5 10.5h0M24.5 10.5h0M25.5 10.5h0M26.5 10.5h0M27.5 10.5h0M28.5 10.5h0M29.5 10.5h0M30.5 10.5h0M31.5 10.5h0M32.5 10.5h0M33.5 10.5h0M34.5 10.5h0M37.5 10.5h0M38.5 10.5h0M2.5 11.5h0M6.5 11.5h0M7.5 11.5h0M8.5 11.5h0M9.5 11.5h0M10.5 11.5h0M11.5 11.5h0M12.5 11.5h0M13.5 11.5h0M14.5 11.5h0M15.5 11.5h0M16.5 11.5h0M17.5 11.5h0M18.5 11.5h0M19.5 11.5h0M20.5 11.5h0M21.5 11.5h0M22.5 11.5h0M23.5 11.5h0M24.5 11.5h0M25.5 11.5h0M26.5 11.5h0M27.5 11.5h0M28.5 11.5h0M29.5 11.5h0M30.5 11.5h0M31.5 11.5h0M32.5 11.5h0M33.5 11.5h0M34.5 11.5h0M38.5 11.5h0M7.5 12.5h0M10.5 12.5h0M11.5 12.5h0M12.5 12.5h0M13.5 12.5h0M14.5 12.5h0M15.5 12.5h0M16.5 12.5h0M17.5 12.5h0M18.5 12.5h0M19.5 12.5h0M20.5 12.5h0M21.5 12.5h0M22.5 12.5h0M23.5 12.5h0M24.5 12.5h0M25.5 12.5h0M26.5 12.5h0M27.5 12.5h0M28.5 12.5h0M29.5 12.5h0M30.5 12.5h0M33.5 12.5h0M11.5 13.5h0M12.5 13.5h0M13.5 13.5h0M14.5 13.5h0M15.5 13.5h0M16.5 13.5h0M17.5 13.5h0M18.5 13.5h0M19.5 13.5h0M20.5 13.5h0M21.5 13.5h0M22.5 13.5h0M23.5 13.5h0M24.5 13.5h0M25.5 13.5h0M26.5 13.5h0M27.5 13.5h0M28.5 13.5h0M29.5 13.5h0M11.5 14.5h0M12.5 14.5h0M15.5 14.5h0M16.5 14.5h0M17.5 14.5h0M18.5 14.5h0M19.5 14.5h0M20.5 14.5h0M21.5 14.5h0M22.5 14.5h0M23.5 14.5h0M24.5 14.5h0M25.5 14.5h0M28.5 14.5h0M29.5 14.5h0M11.5 15.5h0M16.5 15.5h0M17.5 15.5h0M18.5 15.5h0M19.5 15.5h0M20.5 15.5h0M21.5 15.5h0M22.5 15.5h0M23.5 15.5h0M24.5 15.5h0M29.5 15.5h0M16.5 16.5h0M17.5 16.5h0M19.5 16.5h0M20.5 16.5h0M21.5 16.5h0M23.5 16.5h0M24.5 16.5h0M19.5 17.5h0M20.5 17.5h0M21.5 17.5h0M20.5 18.5h0"/></svg></div></div>
 </body>
 </html>

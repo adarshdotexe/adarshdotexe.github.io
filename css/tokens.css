@@ -1,213 +1,50 @@
-/* adarsh.exe design tokens: colour, type, space, radius, elevation, z, motion */
-
-@font-face {
-  font-family: "Sora";
-  font-style: normal;
-  font-weight: 500 700;
-  font-display: swap;
-  src: url("../fonts/sora-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Figtree";
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("../fonts/figtree-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* metric-matched fallbacks to keep the swap from shifting layout */
-@font-face {
-  font-family: "Sora fallback";
-  src: local("Arial");
-  size-adjust: 110%;
-  ascent-override: 92%;
-  descent-override: 27%;
-  line-gap-override: 0%;
-}
-@font-face {
-  font-family: "Figtree fallback";
-  src: local("Arial");
-  size-adjust: 96%;
-  ascent-override: 99%;
-  descent-override: 26%;
-  line-gap-override: 0%;
-}
+/* adarsh.exe palette. Every colour on the site comes from this one block.
+   To change the palette, replace this file. Also update the two literal copies of --bg
+   (meta theme-color in the HTML heads and theme_color/background_color in site.webmanifest);
+   app.js re-reads --bg into theme-color at runtime. */
 
 :root {
-  color-scheme: light;
-
-  /* colour: light */
-  --bg: #D7DFE5;
-  --bg-dot: rgb(18 23 27 / .10);
-  --frame: #F6F8F9;
-  --panel: #FFFFFF;
-  --raised: #EFF3F5;
-  --line: #E0E6EA;
-  --line-2: #C7D0D6;
-  --ui-line: #7C8892;
-  --ink: #11161A;
-  --ink-2: #46525B;
-  --ink-3: #5F6B75;
-  --signal: #0596C0;
-  --signal-ink: #0A7396;
-  --signal-wash: rgb(5 150 192 / .10);
-  --signal-dot: rgb(5 150 192 / .45);
-  --on-signal: #04202A;
-  --ok: #187049;
-  --danger: #B83232;
-  --shadow-k: .28;
-  --shadow-k2: .22;
-  --shadow-k3: .35;
-  --inset-hi: 0 0 0 0 transparent;
-
-  /* type */
-  --f-display: "Sora", "Sora fallback", system-ui, sans-serif;
-  --f-text: "Figtree", "Figtree fallback", system-ui, sans-serif;
-  --t-hero: clamp(2.75rem, 2rem + 3.2vw, 4.5rem);
-  --t-rotor: clamp(1.125rem, 1rem + .6vw, 1.5rem);
-  --t-h1: clamp(1.875rem, 1.5rem + 1.2vw, 2.5rem);
-  --t-h2: 1.375rem;
-  --t-h3: 1.0625rem;
-  --t-card-name: 2rem;
-  --t-body: 1rem;
-  --t-lede: 1.125rem;
-  --t-small: .875rem;
-  --t-micro: .75rem;
-  --t-num: clamp(2rem, 1.6rem + 1.4vw, 2.75rem);
-  --lh-tight: 1.1;
-  --lh-head: 1.3;
-  --lh-body: 1.6;
-  --track-display: -0.024em;
-  --measure: 68ch;
-  --year-col: 5.5rem;
-
-  /* space, 4 px base */
-  --s1: 4px;
-  --s2: 8px;
-  --s3: 12px;
-  --s4: 16px;
-  --s5: 24px;
-  --s6: 32px;
-  --s7: 48px;
-  --s8: 64px;
-  --s9: 96px;
-
-  /* radius: inner = outer - padding */
-  --r-frame: 28px;
-  --r-panel: 20px;
-  --r-tile: 16px;
-  --r-media: 12px;
-  --r-control: 12px;
-  --r-chip: 8px;
-  --r-pill: 999px;
-
-  /* elevation */
-  --e-1: 0 10px 10px -8px rgb(0 0 0 / var(--shadow-k));
-  --e-2: 0 16px 28px -14px rgb(0 0 0 / var(--shadow-k2));
-  --e-3: 0 40px 90px -30px rgb(0 0 0 / var(--shadow-k3)), var(--inset-hi);
-  --e-pop: 0 30px 80px -20px rgb(0 0 0 / .45);
-
-  /* z */
-  --z-bg: -1;
-  --z-panel: 1;
-  --z-panel-active: 2;
-  --z-rail: 10;
-  --z-bar: 20;
-  --z-dialog: 40;
-  --z-toast: 50;
-
-  /* layout */
-  --card-w: clamp(300px, 26vw, 360px);
-  --rail-w: 64px;
-  --hit: 48px;
-  --photo: 168px;
-  --dot-pitch: 6px;
-
-  /* motion */
-  --ease-out: cubic-bezier(.22, .8, .24, 1);
-  --ease-io: cubic-bezier(.6, 0, .3, 1);
-  --d-press: 120ms;
-  --d-hover: 220ms;
-  --d-swap: 420ms;
-  --d-fill: 700ms;
-  --d-rise: 320ms;
-  --stagger: 40ms;
-  --d-breathe: 2400ms;
-  --d-toast: 2400ms;
-
-  /* bat-signal easter egg */
-  --bat-light: rgb(246 226 122 / .10);
-  --bat-light-2: rgb(246 226 122 / .07);
-  --bat-night: rgb(4 6 8 / .84);
-  --bat-ink: rgb(246 226 122 / .55);
-}
-
-/* colour: dark (system default when the visitor has no stored choice) */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --bg: #0D1114;
-    --bg-dot: rgb(43 195 234 / .10);
-    --frame: #1A1F24;
-    --panel: #14181C;
-    --raised: #20262C;
-    --line: #2A3138;
-    --line-2: #3A434B;
-    --ui-line: #6B7781;
-    --ink: #E8ECEF;
-    --ink-2: #A9B3BB;
-    --ink-3: #8C97A0;
-    --signal: #2BC3EA;
-    --signal-ink: #5BD3F0;
-    --signal-wash: rgb(43 195 234 / .12);
-    --signal-dot: rgb(43 195 234 / .45);
-    --on-signal: #04202A;
-    --ok: #5FD39C;
-    --danger: #FF7B7B;
-    --shadow-k: .5;
-    --shadow-k2: .6;
-    --shadow-k3: .6;
-    --inset-hi: inset 0 1px 0 rgb(255 255 255 / .04);
-  }
-}
-:root[data-theme="dark"] {
   color-scheme: dark;
+
+  /* surfaces */
   --bg: #0D1114;
-  --bg-dot: rgb(43 195 234 / .10);
   --frame: #1A1F24;
   --panel: #14181C;
   --raised: #20262C;
+
+  /* lines */
   --line: #2A3138;
   --line-2: #3A434B;
   --ui-line: #6B7781;
+
+  /* text */
   --ink: #E8ECEF;
   --ink-2: #A9B3BB;
   --ink-3: #8C97A0;
+
+  /* accent: interactive, current, data highlight, accent word */
   --signal: #2BC3EA;
   --signal-ink: #5BD3F0;
-  --signal-wash: rgb(43 195 234 / .12);
-  --signal-dot: rgb(43 195 234 / .45);
   --on-signal: #04202A;
+  --selection: rgb(43 195 234 / .24);
+
+  /* dot-matrix patterns (flat, never faded) */
+  --signal-dot: rgb(43 195 234 / .45);
+  --dot: rgb(232 236 239 / .22);
+  --bg-dot: rgb(232 236 239 / .07);
+  --hatch: rgb(232 236 239 / .06);
+
+  /* status */
   --ok: #5FD39C;
   --danger: #FF7B7B;
-  --shadow-k: .5;
-  --shadow-k2: .6;
-  --shadow-k3: .6;
-  --inset-hi: inset 0 1px 0 rgb(255 255 255 / .04);
-}
 
-@media (min-width: 1440px) {
-  :root { --t-body: 1.0625rem; }
-}
-@media (max-width: 1279px) {
-  :root { --t-card-name: 1.5rem; --photo: 152px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --d-swap: 120ms;
-    --d-fill: 0ms;
-    --d-rise: 0ms;
-    --stagger: 0ms;
-  }
+  /* neutral shadows */
+  --shadow-1: rgb(0 0 0 / .5);
+  --shadow-2: rgb(0 0 0 / .6);
+  --shadow-3: rgb(0 0 0 / .6);
+
+  /* bat-signal easter egg: flat night overlay, solid disc, bat in the night colour */
+  --bat-night: rgb(4 6 8 / .88);
+  --bat-light: #F6E27A;
+  --bat-ink: #0B0E10;
 }

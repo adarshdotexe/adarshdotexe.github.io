@@ -1,4 +1,4 @@
-// adarsh.exe: router + swap, roll, rise, collapsibles, theme, clock, drift, copy, form, bat-signal, analytics.
+// adarsh.exe: router + swap, roll, rise, collapsibles, wheel, drift, copy, form, bat-signal, analytics.
 const doc = document.documentElement;
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -7,23 +7,10 @@ const mobile = matchMedia("(max-width: 1023px)");
 const finePointer = matchMedia("(pointer: fine)");
 const announce = (msg) => { const a = $("#announce"); if (!a) return; a.textContent = ""; setTimeout(() => (a.textContent = msg), 30); };
 
-/* ---------- theme ---------- */
-const systemDark = matchMedia("(prefers-color-scheme: dark)");
-function stored() { try { return localStorage.getItem("theme"); } catch { return null; } }
-function effectiveTheme() { return doc.dataset.theme || (systemDark.matches ? "dark" : "light"); }
-function syncTheme() {
-  const now = effectiveTheme();
-  doc.dataset.themeNow = now;
-  for (const b of $$(".theme-toggle")) b.setAttribute("aria-label", now === "dark" ? "Switch to light theme" : "Switch to dark theme");
-}
-function setTheme(next) {
-  const apply = () => { doc.dataset.theme = next; try { localStorage.setItem("theme", next); } catch {} syncTheme(); };
-  if (document.startViewTransition && !reduced.matches) document.startViewTransition(apply);
-  else apply();
-}
-for (const b of $$(".theme-toggle")) b.addEventListener("click", () => setTheme(effectiveTheme() === "dark" ? "light" : "dark"));
-systemDark.addEventListener("change", () => { if (!stored()) syncTheme(); });
-syncTheme();
+/* ---------- theme-color follows the palette's --bg (tokens.css) ---------- */
+const themeMeta = $('meta[name="theme-color"]');
+const bgToken = getComputedStyle(doc).getPropertyValue("--bg").trim();
+if (themeMeta && bgToken) themeMeta.setAttribute("content", bgToken);
 
 /* ---------- collapsibles (node toggles) ---------- */
 function setOpen(btn, open) {
@@ -50,7 +37,8 @@ function rise(panel) {
   if (!panel) return;
   if (visited.has(panel.id)) return;
   visited.add(panel.id);
-  if (!reduced.matches) {
+  // Rise runs only where blocks opt in (Home, on first load)
+  if (!reduced.matches && panel.querySelector("[data-rise]")) {
     $$("[data-rise]", panel).forEach((el, i) => el.style.setProperty("--i", String(Math.min(i, 5))));
     panel.classList.add("is-rising");
     setTimeout(() => panel.classList.remove("is-rising"), 700);
@@ -124,10 +112,10 @@ if (panels.length) {
     const i = (order.indexOf(current) + d + order.length) % order.length;
     location.hash = order[i];
   };
-  for (const b of $$(".rail-btn[data-step]")) b.addEventListener("click", () => step(Number(b.dataset.step)));
+  // ← / → swap screens, but not while focus is on a control or a link
   document.addEventListener("keydown", (e) => {
     if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
-    if (e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.target.closest("a, button, input, textarea, select, summary, [contenteditable]")) return;
     if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
       pendingQuick = true;
       step(e.key === "ArrowRight" ? 1 : -1);
@@ -180,19 +168,15 @@ if (roll && !reduced.matches) {
   }, 3800);
 }
 
-/* ---------- clock (Hyderabad, IST) ---------- */
-const clock = $(".clock");
-if (clock) {
-  const fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: false });
-  const tick = () => {
-    const t = fmt.format(new Date());
-    clock.textContent = `${t} IST`;
-    clock.setAttribute("datetime", t);
-    clock.setAttribute("aria-label", `Local time in Hyderabad: ${t}`);
-    setTimeout(tick, 60000 - (Date.now() % 60000) + 50);
-  };
-  tick();
-}
+/* ---------- wheel over the card or the backdrop scrolls the visible panel (desktop) ---------- */
+window.addEventListener("wheel", (e) => {
+  if (mobile.matches || e.ctrlKey || doc.hasAttribute("data-bat")) return;
+  if (e.target.closest(".stage")) return;
+  const panel = $$(".stage .panel").find((p) => p.offsetParent !== null);
+  if (!panel) return;
+  const k = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? panel.clientHeight : 1;
+  panel.scrollBy({ top: e.deltaY * k, behavior: "auto" });
+}, { passive: true });
 
 /* ---------- drift (backdrop follows the pointer, max 12 px) ---------- */
 const layer = $(".field-layer");
@@ -256,6 +240,8 @@ if (form) {
       const r = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
       if (!r.ok) throw new Error(String(r.status));
       form.reset();
+      const photo = $(".card .photo");
+      if (photo && !reduced.matches) { photo.classList.remove("is-sent"); void photo.offsetWidth; photo.classList.add("is-sent"); }
       status.classList.add("is-ok");
       status.textContent = "Thanks! It’s in my inbox and I’ll get back to you soon.";
     } catch {
@@ -268,7 +254,7 @@ if (form) {
   });
 }
 
-/* ---------- bat-signal: type "batman", Esc to leave ---------- */
+/* ---------- bat-signal: type "batman" or long-press the rotator; Esc or a tap to leave ---------- */
 const bat = $(".bat");
 if (bat) {
   let buffer = "";
@@ -302,6 +288,18 @@ if (bat) {
     buffer = (buffer + e.key.toLowerCase()).slice(-6);
     if (buffer === "batman") { buffer = ""; toggle(!on()); }
   });
+  // touch: a long press on the rotator turns it on; any tap turns it off again
+  const rotorEl = $(".rotor");
+  let hold = null;
+  const cancel = () => { clearTimeout(hold); hold = null; };
+  rotorEl?.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse") return;
+    cancel();
+    hold = setTimeout(() => { hold = null; toggle(!on()); }, 600);
+  });
+  for (const ev of ["pointerup", "pointercancel", "pointerleave"]) rotorEl?.addEventListener(ev, cancel);
+  rotorEl?.addEventListener("contextmenu", (e) => { if (e.pointerType !== "mouse") e.preventDefault(); });
+  document.addEventListener("pointerdown", (e) => { if (on() && !e.target.closest(".rotor")) toggle(false); });
 }
 
 /* ---------- analytics, after the page is interactive ---------- */

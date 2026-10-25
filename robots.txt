@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+# outdated CV with personal details; unlinked until it is regenerated
+Disallow: /AdarshVarshneyResume.pdf
 
 Sitemap: https://adarshdotexe.github.io/sitemap.xml
